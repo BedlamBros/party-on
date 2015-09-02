@@ -1,0 +1,25 @@
+{
+    "parties": [
+        {
+            "_id": "123",
+            "formattedAddress": "629 S Woodlawn",
+            "latitude": 21.23,
+            "longitude": -83.213,
+            "maleCost": 3,
+            "femaleCost": 3,
+            "startTime": 1441098946,
+            "byob": true,
+            "colloquialName": "Daze Inn"
+        },
+        {
+            "_id": "456",
+            "formattedAddress": "123 N Jefferson",
+            "latitude": 21.63,
+            "longitude": -83.2783,
+            "maleCost": 5,
+            "femaleCost": 0,
+            "startTime": 1441098946,
+            "byob": false,
+        },
+    ],
+}
