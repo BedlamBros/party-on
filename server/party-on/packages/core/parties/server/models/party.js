@@ -135,7 +135,7 @@ PartySchema.statics.load = function(id, cb) {
  * @param {String} universityName Name of the university at which to search
  * @return {Promise} A promise that will deliver query results
  */
-PartySchema.statics.currentForUniversity = function(universityName) {
+PartySchema.statics.currentForUniversity = function(universityName, cb) {
   if (!_.contains(supportedUniversities, universityName)) {
     return new mongoose.Promise()
       .reject(new Error('University ' + universityName + ' is not supported'));

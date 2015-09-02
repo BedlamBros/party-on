@@ -12,5 +12,8 @@
   },
   "dependencies": {
     "underscore": "latest"                 
-  }
+  },
+  "devDependencies": {
+    "request": "latest"
+  } 
 }

@@ -26,7 +26,7 @@ module.exports = function(passport) {
     });
   });
 
-/*
+
   // Use local strategy
   passport.use(new LocalStrategy({
       usernameField: 'email',
@@ -53,7 +53,7 @@ module.exports = function(passport) {
       });
     }
   ));
-*/
+
 
 /*
   // Use twitter strategy
@@ -228,7 +228,6 @@ module.exports = function(passport) {
         });
       });
     }
-  ));
+  ));*/
   return passport;
 };
-*/

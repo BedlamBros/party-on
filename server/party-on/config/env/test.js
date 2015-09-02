@@ -12,6 +12,7 @@ module.exports = {
   logging: {
     format: 'common'
   },
+  hostname: 'http://localhost:3001',
   app: {
     name: 'MEAN - A Modern Stack - Test'
   },
