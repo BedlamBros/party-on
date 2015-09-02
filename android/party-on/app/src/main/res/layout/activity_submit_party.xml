@@ -1,14 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submit_form_activity_title"
-        android:textStyle=""
-        android:layout_centerHorizontal="true"/>
+        android:textSize="@dimen/party_title_text_size"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/submit_form_activity_title"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/submit_form_activity_title"
+        android:orientation="horizontal"
+        android:id="@+id/layout_title">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/submit_form_title_title"
+            android:textSize="@dimen/party_title_text_size"
+            android:textColor="@color/primary_hard"
+            android:id="@+id/submit_form_title"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/submit_form_activity_title"
+            android:layout_toRightOf="@id/submit_form_title"
+            android:maxLength="@integer/title_char_limit"
+            android:singleLine="true"
+            android:hint="@string/party_title_default"
+            android:imeOptions="actionNext"
+            android:id="@+id/submit_form_edit_title"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_title"
+        android:orientation="horizontal"
+        android:id="@+id/layout_desc">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/submit_form_title"
+        android:text="@string/submit_form_desc_title"
+        android:textSize="@dimen/party_title_text_size"
+        android:textColor="@color/primary_hard"
+        android:id="@+id/submit_form_desc"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/submit_form_edit_title"
+        android:hint="@string/party_desc_default"
+        android:maxLength="@integer/desc_char_limit"
+        android:imeOptions="actionNext"
+        android:id="@+id/submit_form_edit_desc"/>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/edit_row_height"
+            android:layout_below="@id/layout_desc"
+            android:orientation="horizontal"
+            android:id="@+id/layout_loc">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/submit_form_title"
+                android:layout_toLeftOf="@id/submit_form_edit_desc"
+                android:text="@string/submit_form_loc_title"
+                android:textSize="@dimen/party_title_text_size"
+                android:textColor="@color/primary_hard"
+                android:id="@+id/submit_form_loc"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/submit_form_edit_title"
+                android:hint="@string/party_loc_default"
+                android:imeOptions="actionSearch"
+                android:id="@+id/submit_form_edit_loc"/>
+
+            <ImageButton
+                android:layout_height="@dimen/edit_row_height"
+                android:layout_width="@dimen/edit_row_height"
+                android:src="@drawable/define_location"
+                android:layout_gravity="right"
+                android:onClick="onGetLocationClick" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_loc"
+            android:orientation="horizontal"
+            android:id="@+id/layout_start_time">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/submit_form_title"
+                android:layout_toLeftOf="@id/submit_form_edit_desc"
+                android:text="@string/submit_form_starts_at_title"
+                android:textSize="@dimen/party_title_text_size"
+                android:textColor="@color/primary_hard"
+                android:id="@+id/submit_form_starts_at"/>
+
+            <TimePicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/submit_form_edit_title"
+                android:id="@+id/submit_form_edit_starts_at"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_start_time"
+            android:orientation="horizontal"
+            android:id="@+id/layout_end_time">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/submit_form_title"
+                android:layout_toLeftOf="@id/submit_form_edit_desc"
+                android:text="@string/submit_form_ends_at_title"
+                android:textSize="@dimen/party_title_text_size"
+                android:textColor="@color/secondary_hard"
+                android:id="@+id/submit_form_ends_at"/>
+
+            <TimePicker
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edit_row_height"
+                android:layout_below="@id/submit_form_edit_title"
+                android:id="@+id/submit_form_edit_ends_at"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/secondary_soft"
+        android:textColor="@color/primary_hard"
+        android:text="@string/submit_form_button_unsubmittable"
+        android:onClick="onSubmitButtonClick"
+        android:id="@+id/submit_button"/>
 
 </RelativeLayout>

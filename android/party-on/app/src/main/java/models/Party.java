@@ -3,6 +3,8 @@ package models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 /**
@@ -173,6 +175,32 @@ public class Party  implements Parcelable{
 
     public String getformatted_address() {
         return formatted_address;
+    }
+
+    @Override
+    public String toString() {
+        return "Party{" +
+                "oId='" + oId + '\'' +
+                ", title='" + title + '\'' +
+                ", desc='" + desc + '\'' +
+                ", lat=" + lat +
+                ", lon=" + lon +
+                ", formatted_address='" + formatted_address + '\'' +
+                ", male_cost=" + male_cost +
+                ", female_cost=" + female_cost +
+                ", colloq_name='" + colloq_name + '\'' +
+                ", byob=" + byob +
+                ", uni=" + uni +
+                ", start_time=" + start_time +
+                ", created_at=" + created_at +
+                ", expires_at=" + expires_at +
+                ", ends_at=" + ends_at +
+                '}';
+    }
+
+    public String toJson(){
+        Gson mGson = new Gson();
+        return mGson.toJson(this.toString());
     }
 
     /*
