@@ -7,6 +7,7 @@
  */
 var expect = require('expect.js'),
   config = require('meanio').loadConfig(),
+  async = require('async'),
   request = require('request'),
   _ = require('underscore'),
   mongoose = require('mongoose'),
@@ -216,8 +217,97 @@ describe('Create and save user', function() {
       });
     });
 
-    describe('something else', function() {
+    describe('Retrieving a list of relevant parties near me', function() {
+      var now = new Date();
+      var oneHour = 60 * 60 * 1000;
 
+      var tooOldDate = new Date(now.getTime() - (oneHour * 14));
+      var tooFarOffDate = new Date(now.getTime() + (oneHour * 48));
+      var justYoungEnoughDate = new Date(now.getTime() - (oneHour * 7));
+      var justCloseEnoughDate = new Date(now.getTime() + (oneHour * 23));
+
+      var tooOldParty, tooFarOffParty,
+        justYoungEnoughParty, justCloseEnoughParty;
+
+      it('should be able to POST parties with different start dates', function(done) {
+        this.timeout(10000);
+
+        // create parties with interesting start dates
+        var parties = _.map(
+          [tooOldDate, tooFarOffDate, justYoungEnoughDate, justCloseEnoughDate],
+          function(date) {
+            return _.omit(
+              _.extend(party.toJSON(), {startTime: date}),
+              '_id');
+          });
+
+        var postJobs = [];
+        for (var idx in parties) {
+          // create a list of POST jobs for these parties
+          postJobs.push((function(i){
+            return function(cb) {
+            request({
+              uri: config.hostname + '/api/parties',
+              auth: {
+                bearer: loginToken
+              },
+              method: 'POST',
+              json: parties[i]
+            }, function(err, resp, body) {
+              expect(err).to.be(null);
+              expect(resp.statusCode).to.be(200);
+              cb(err, new Party(body));
+            });
+          };
+          })(idx));
+        }
+        // POST all 4 parties in parallel
+        async.parallel(postJobs, function(err, results) {
+          expect(err).to.be(null);
+          tooOldParty = results[0];
+          tooFarOffParty = results[1];
+          justYoungEnoughParty = results[2];
+          justCloseEnoughParty = results[3];
+          done();
+        });
+      });
+
+      it('should retrive only time-relevant parties', function(done) {
+        this.timeout(10000);
+        
+        request({
+          uri: config.hostname + '/api/parties/university/Indiana%20University',
+          auth: {
+            bearer: loginToken
+          },
+          method: 'GET'
+          }, function(err, resp, body) {
+            // @hack - re-serialize body because 
+            // it uses some black magic that makes it
+            // come as not a real json object at all
+            expect(err).to.be(null);
+            expect(resp.statusCode).to.be(200);
+            body = JSON.parse(body.toString());
+            expect(_.has(body, 'parties')).to.be(true);
+            var relevantPartyIds = _.map(body.parties, function(party) {
+              return party._id.toString();
+            });
+            var ours = [justYoungEnoughParty, justCloseEnoughParty, tooOldParty, tooFarOffParty];
+            // parties in sweet spot time interval should be returned
+            _.forEach([justYoungEnoughParty, justCloseEnoughParty],
+              function(party) {
+                expect(_.contains(relevantPartyIds, party.id.toString()))
+                  .to.be(true);
+            });
+            // parties outside of sweet spot time interval should not be returned
+            _.forEach([tooOldParty, tooFarOffParty],
+              function(party) {
+                expect(_.contains(relevantPartyIds, party.id.toString()))
+                  .to.be(false);
+            });
+            done();
+        });
+      });
     });
   });
 });
