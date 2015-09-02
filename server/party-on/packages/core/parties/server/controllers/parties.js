@@ -17,7 +17,11 @@ module.exports = function(Parties) {
         party: function(req, res, next, id) {
             Party.load(id, function(err, party) {
                 if (err) return next(err);
-                if (!party) return next(new Error('Failed to load party ' + id));
+                if (!party) {
+                  return res.status(404).json({
+                    error: "Party for id " + id + " does not exist"
+                  });
+                }
                 req.party = party;
                 next();
             });
@@ -31,7 +35,7 @@ module.exports = function(Parties) {
             
             party.save(function(err) {
                 if (err) {
-                    return res.status(500).json({
+                    return res.staus(500).json({
                         error: 'Cannot save the party'
                     });
                 }
@@ -53,7 +57,8 @@ module.exports = function(Parties) {
          */
         update: function(req, res) {
             var party = req.party;
-            party = _.extend(party, req.body);
+            party = new Party(_.extend(party.toJSON(), req.body));
+            party.isNew = false;
             
             party.save(function(err) {
                 if (err) {
@@ -61,7 +66,7 @@ module.exports = function(Parties) {
                         error: 'Cannot update the party'
                     });
                 }
-
+              
                 /*Parties.events.publish({
                     action: 'updated',
                     user: {
@@ -111,14 +116,12 @@ module.exports = function(Parties) {
                 name: req.party.title,
                 url: config.hostname + '/parties/' + req.party._id
             });*/
-
-            res.json(req.party);
+            res.json(req.party.toJSON());
         },
         /**
          * List of Parties for University
          */
         listCurrent: function(req, res) {
-            console.log('listcur');
             Party.currentForUniversity(req.params.universityName)
             .then(function(parties) {
               res.json(parties);

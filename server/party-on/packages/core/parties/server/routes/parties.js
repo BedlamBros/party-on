@@ -27,13 +27,13 @@ module.exports = function(Parties, app, auth) {
   var parties = require('../controllers/parties')(Parties);
 
   app.route('/api/parties')
-    //.post(auth.requiresLogin, hasPermissions, parties.create);
     .post(auth.requiresLogin, parties.create);
   app.route('/api/parties/:partyId')
     .get(auth.isMongoId, parties.show)
-    //.put(auth.isMongoId, auth.requiresLogin, hasAuthorization, hasPermissions, parties.update)
     .put(auth.isMongoId, auth.requiresLogin, hasAuthorization, parties.update)
     .delete(auth.isMongoId, auth.requiresLogin, hasAuthorization, parties.destroy);
   app.route('/api/parties/university/:universityName')
     .get(parties.listCurrent);
+
+  app.param('partyId', parties.party);
 };
