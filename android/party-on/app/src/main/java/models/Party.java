@@ -11,10 +11,10 @@ import java.util.ArrayList;
 public class Party  implements Parcelable{
     private String oId;
     private String title;
-    private String desc;
+    private String desc; //256 char limit
     private float lat;
     private float lon;
-    private String formatted_address; //256 char limit
+    private String formatted_address;
     //private ArrayList<Flag> flag_list;
     private int male_cost;
     private int female_cost;
@@ -22,14 +22,15 @@ public class Party  implements Parcelable{
     private boolean byob;
     private University uni;
     private long start_time;
-    private long created_at; //UNIX timestamp
+    private long created_at; //UNIX timestamps
     private long expires_at;
+    private long ends_at;
 
     //TODO include constructors with fewer args
     public Party(String OId, String title, String desc, float lat, float lon,
                  String formatted_address, ArrayList<Flag> flag_list, int male_cost,
                  String colloq_name, boolean byob, int female_cost, long created_at,
-                 University uni, long start_time, long expires_at){
+                 University uni, long start_time, long expires_at, long ends_at){
         this.oId = oId; //auto
         this.female_cost = female_cost; //optional default 0
         this.male_cost = male_cost; //optional default 0
@@ -44,7 +45,8 @@ public class Party  implements Parcelable{
         this.byob = byob; //required default true
         this.start_time = start_time; //optional default created_at
         this.created_at = created_at; //auto
-        this.expires_at = expires_at; //optional default start_time + 6 hours
+        this.expires_at = expires_at; //auto default start_time + 6 hours
+        this.ends_at = ends_at;
     }
 
     //can also be instantiated from a Parcel
