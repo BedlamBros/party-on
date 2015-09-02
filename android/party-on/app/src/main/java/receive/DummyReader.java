@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,17 +33,18 @@ public class DummyReader {
         JSONObject json_object = parseJSON();
         Iterator<String> i = json_object.keys();
         Log.d("receive", filename + "=" + json_object.toString());
-        while (i.hasNext()){
-            try {
-                String key = i.next();
-                JSONObject sub_object = (JSONObject) json_object.get(key);
-                String title = (String) sub_object.get("title"); //TODO shouldn't be hardcoded, add all values
-                String desc = (String) sub_object.get("desc");
-                String readable_loc = (String) sub_object.get("readable_loc");
+        while (i.hasNext()) try {
+            String key = i.next();
+            JSONArray mJson_array = (JSONArray) json_object.get(key);
+            for (int inc = 0; inc < mJson_array.length(); inc++) {
+                JSONObject mJson_sub_object = (JSONObject) mJson_array.get(inc);
+                String title = (String) mJson_sub_object.get("title"); //TODO shouldn't be hardcoded, add all values
+                String desc = (String) mJson_sub_object.get("desc");
+                String readable_loc = (String) mJson_sub_object.get("readable_loc");
                 party_list.add(new Party(title, desc, readable_loc));
-            } catch (JSONException ex){
-                ex.printStackTrace();
             }
+        } catch (JSONException ex) {
+            ex.printStackTrace();
         }
         return party_list;
     }

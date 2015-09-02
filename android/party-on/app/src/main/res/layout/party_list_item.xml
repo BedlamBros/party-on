@@ -6,11 +6,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/party_title_default"
+        android:textSize="@dimen/party_title_text_size"
         android:id="@+id/party_title"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/party_desc_default"
+        android:textSize="@dimen/party_desc_text_size"
+        android:layout_below="@id/party_title"
         android:id="@+id/party_desc"/>
 
 </RelativeLayout>

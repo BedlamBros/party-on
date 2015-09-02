@@ -26,6 +26,7 @@ module.exports = function(passport) {
     });
   });
 
+/*
   // Use local strategy
   passport.use(new LocalStrategy({
       usernameField: 'email',
@@ -52,7 +53,9 @@ module.exports = function(passport) {
       });
     }
   ));
+*/
 
+/*
   // Use twitter strategy
   passport.use(new TwitterStrategy({
       consumerKey: config.strategies.twitter.clientID,
@@ -87,6 +90,7 @@ module.exports = function(passport) {
       });
     }
   ));
+*/
 
   // Use facebook strategy
   passport.use(new FacebookStrategy({
@@ -124,6 +128,7 @@ module.exports = function(passport) {
     }
   ));
 
+/*
   // Use github strategy
   passport.use(new GitHubStrategy({
       clientID: config.strategies.github.clientID,
@@ -156,7 +161,9 @@ module.exports = function(passport) {
       });
     }
   ));
+*/
 
+/*
   // Use google strategy
   passport.use(new GoogleStrategy({
       clientID: config.strategies.google.clientID,
@@ -224,3 +231,4 @@ module.exports = function(passport) {
   ));
   return passport;
 };
+*/

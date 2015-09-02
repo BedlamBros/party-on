@@ -91,7 +91,7 @@ module.exports = function(MeanUser, app, auth, database, passport) {
           failureRedirect: '/auth/login',
         }), users.authCallback);
   }
-
+/*
   if(config.strategies.github.enabled)
   {
       // Setting the github oauth routes
@@ -152,5 +152,6 @@ module.exports = function(MeanUser, app, auth, database, passport) {
           failureRedirect: '/auth/login'
         }), users.authCallback);
   }
+  */
 
 };
