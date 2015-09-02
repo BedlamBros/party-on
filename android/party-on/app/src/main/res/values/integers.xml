@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="title_char_limit" type="integer">20</item>
+    <item name="desc_char_limit" type="integer">256</item>
+    <item name="loc_char_limit" type="integer">30</item>
+</resources>

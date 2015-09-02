@@ -5,9 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Switch
+    <android.support.v7.widget.Toolbar
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:id="@+id/toolbar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/party_title_text_size"
+            android:layout_gravity="left"
+            android:text="@string/toolbar_party_list"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_party"
+            android:onClick="onAddPartyClick"
+            android:id="@+id/toolbar_add_party"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/switch_height"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/primary_hard"
         android:textColorHighlight="@color/secondary_hard"
