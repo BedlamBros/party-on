@@ -58,6 +58,8 @@ public class ListPartyAdapter extends ArrayAdapter<Party> {
         mTv_title.setText(mParty_list.get(position).getTitle());
         TextView mTv_desc = (TextView) convert_view.findViewById(R.id.party_desc);
         mTv_desc.setText(mParty_list.get(position).getDesc());
+        TextView mTv_readable_loc = (TextView) convert_view.findViewById(R.id.party_readable_loc);
+        mTv_readable_loc.setText(mParty_list.get(position).getformatted_address());
         convert_view.setOnClickListener(mPartyItemClickListener);
         return convert_view;
     }

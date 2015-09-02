@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="primary_hard" type="color">#550C00</item>
+    <item name="primary_soft" type="color">#FFB6AA</item>
+    <item name="secondary_hard" type="color">#0F414F</item>
+    <item name="secondary_soft" type="color">#6B949F</item>
+    <item name="accent" type="color">#729C34</item>
+
+</resources>

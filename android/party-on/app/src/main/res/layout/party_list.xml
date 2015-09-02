@@ -9,6 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:textColor="@color/primary_hard"
+        android:textColorHighlight="@color/secondary_hard"
         android:textOff="@string/list_view_off_option"
         android:textOn="@string/list_view_on_option"/>
 
@@ -17,6 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ListPartyActivity"
+        android:divider="@color/accent"
+        android:dividerHeight="@dimen/party_list_divider_size"
         android:id="@+id/android:list">
 
     </ListView>
