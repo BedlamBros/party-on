@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class UniversityPickerController: UIViewController {
     
@@ -20,6 +21,12 @@ class UniversityPickerController: UIViewController {
         self.view.addSubview(titleLabel)
         
         super.viewWillAppear(animated)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "EnterAppSegue" {
+            CurrentUniversity.sharedInstance = CurrentUniversity(name: "Indiana University", location: CLLocationCoordinate2D(latitude: 39.1691355, longitude: -86.5149053))
+        }
     }
     
 }

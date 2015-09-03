@@ -11,6 +11,8 @@
 		500068C91B94C33E008E6BB7 /* PartySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500068C81B94C33E008E6BB7 /* PartySearchViewController.swift */; };
 		500068CB1B94D4CC008E6BB7 /* Party.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500068CA1B94D4CC008E6BB7 /* Party.swift */; };
 		509827421B959B6600154D4B /* parties.json in Resources */ = {isa = PBXBuildFile; fileRef = 509827411B959B6600154D4B /* parties.json */; };
+		50D3AA251B97C2BE00CBA394 /* PartyAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */; };
+		50D3AA271B97D02000CBA394 /* disclosure_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 50D3AA261B97D02000CBA394 /* disclosure_indicator.png */; };
 		50DE456F1B94DB6E0075CBF9 /* PartyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE456E1B94DB6E0075CBF9 /* PartyTableViewCell.swift */; };
 		50DE45711B94E0D40075CBF9 /* PartyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE45701B94E0D40075CBF9 /* PartyDetailViewController.swift */; };
 		50DE45751B950A990075CBF9 /* UniversityPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE45741B950A990075CBF9 /* UniversityPickerController.swift */; };
@@ -47,6 +49,8 @@
 		500068CE1B94D741008E6BB7 /* libPods-party-on-SwiftyJSON.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-party-on-SwiftyJSON.a"; path = "Pods/build/Debug-iphoneos/libPods-party-on-SwiftyJSON.a"; sourceTree = "<group>"; };
 		500068D01B94D7DA008E6BB7 /* libPods-party-on.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-party-on.a"; path = "Pods/build/Debug-iphoneos/libPods-party-on.a"; sourceTree = "<group>"; };
 		509827411B959B6600154D4B /* parties.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parties.json; sourceTree = "<group>"; };
+		50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyAnnotation.swift; sourceTree = "<group>"; };
+		50D3AA261B97D02000CBA394 /* disclosure_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = disclosure_indicator.png; path = ../../../../../Downloads/disclosure_indicator.png; sourceTree = "<group>"; };
 		50DE456E1B94DB6E0075CBF9 /* PartyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyTableViewCell.swift; sourceTree = "<group>"; };
 		50DE45701B94E0D40075CBF9 /* PartyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyDetailViewController.swift; sourceTree = "<group>"; };
 		50DE45741B950A990075CBF9 /* UniversityPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversityPickerController.swift; sourceTree = "<group>"; };
@@ -90,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				50DE456E1B94DB6E0075CBF9 /* PartyTableViewCell.swift */,
+				50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -117,6 +122,7 @@
 		50F4B5141B94507800748D02 /* party-on */ = {
 			isa = PBXGroup;
 			children = (
+				50DE456D1B94DB5C0075CBF9 /* Views */,
 				50F4B53A1B94BD1500748D02 /* models */,
 				50F4B5371B94BC6500748D02 /* Controllers */,
 				50F4B5171B94507800748D02 /* AppDelegate.swift */,
@@ -131,6 +137,7 @@
 		50F4B5151B94507800748D02 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				50D3AA261B97D02000CBA394 /* disclosure_indicator.png */,
 				50F4B5161B94507800748D02 /* Info.plist */,
 				509827411B959B6600154D4B /* parties.json */,
 			);
@@ -168,7 +175,6 @@
 		50F4B53A1B94BD1500748D02 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				50DE456D1B94DB5C0075CBF9 /* Views */,
 				50F4B53F1B94BEC000748D02 /* ServerModel.swift */,
 				50F4B53B1B94BD3C00748D02 /* User.swift */,
 				50F4B53D1B94BD4F00748D02 /* MainUser.swift */,
@@ -284,6 +290,7 @@
 			files = (
 				50F4B51D1B94507800748D02 /* Main.storyboard in Resources */,
 				50F4B5221B94507800748D02 /* LaunchScreen.xib in Resources */,
+				50D3AA271B97D02000CBA394 /* disclosure_indicator.png in Resources */,
 				509827421B959B6600154D4B /* parties.json in Resources */,
 				50F4B51F1B94507800748D02 /* Images.xcassets in Resources */,
 			);
@@ -359,6 +366,7 @@
 				50DE456F1B94DB6E0075CBF9 /* PartyTableViewCell.swift in Sources */,
 				50F4B5391B94BC8D00748D02 /* LoginViewController.swift in Sources */,
 				50F4B5181B94507800748D02 /* AppDelegate.swift in Sources */,
+				50D3AA251B97C2BE00CBA394 /* PartyAnnotation.swift in Sources */,
 				50F4B5421B94BFF600748D02 /* University.swift in Sources */,
 				50F4B5441B94C05E00748D02 /* CurrentUniversity.swift in Sources */,
 				50DE45751B950A990075CBF9 /* UniversityPickerController.swift in Sources */,

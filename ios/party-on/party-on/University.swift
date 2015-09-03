@@ -14,7 +14,7 @@ class University: NSObject, ServerModel {
     
     var oID: String!
     var name: String?
-    var location: CLLocationCoordinate2D?
+    var location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(0, 0)
     
     override init() {
         super.init()
@@ -22,6 +22,12 @@ class University: NSObject, ServerModel {
     
     required init(json: JSON) {
         super.init()
+    }
+    
+    convenience init(name: String, location: CLLocationCoordinate2D) {
+        self.init()
+        self.name = name
+        self.location = location
     }
     
 }

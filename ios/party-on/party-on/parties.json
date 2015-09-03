@@ -3,8 +3,8 @@
         {
             "_id": "123",
             "formattedAddress": "629 S Woodlawn",
-            "latitude": 21.23,
-            "longitude": -83.213,
+            "latitude": 39.160536,
+            "longitude": -86.522332,
             "maleCost": 3,
             "femaleCost": 3,
             "startTime": 1441098946,
@@ -14,8 +14,8 @@
         {
             "_id": "456",
             "formattedAddress": "123 N Jefferson",
-            "latitude": 21.63,
-            "longitude": -83.2783,
+            "latitude": 39.167687,
+            "longitude": -86.507493,
             "maleCost": 5,
             "femaleCost": 0,
             "startTime": 1441098946,
