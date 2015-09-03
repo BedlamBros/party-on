@@ -25,7 +25,7 @@ class UniversityPickerController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EnterAppSegue" {
-            CurrentUniversity.sharedInstance = CurrentUniversity(name: "Indiana University", location: CLLocationCoordinate2D(latitude: 39.1691355, longitude: -86.5149053))
+            University.currentUniversity = University(name: "Indiana University", location: CLLocationCoordinate2D(latitude: 39.1691355, longitude: -86.5149053))
         }
     }
     

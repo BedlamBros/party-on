@@ -12,8 +12,10 @@ import SwiftyJSON
 
 class University: NSObject, ServerModel {
     
+    static var currentUniversity: University! = nil
+    
     var oID: String!
-    var name: String?
+    var name: String!
     var location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(0, 0)
     
     override init() {
