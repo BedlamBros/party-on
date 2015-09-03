@@ -7,8 +7,11 @@
 //
 
 import UIKit
-import SwiftyJSON
 import MapKit
+import SwiftyJSON
+import SVProgressHUD
+
+public let SADFACE_CHAR: Character = "\u{1F61E}"
 
 class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate {
     
@@ -17,10 +20,11 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var useMapViewSegmentedControl: UISegmentedControl?
     weak var refreshControl: UIRefreshControl!
     
-    private var nearbyParties: [Party] = []
     private var listOrMapViewFrame: CGRect = CGRectMake(0, 0, 0, 0)
     private weak var selectedParty: Party?
 
+    private var requeryLock: NSLock = NSLock()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.listView?.dataSource = self
@@ -36,16 +40,13 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         
         let tableRefreshControl = UIRefreshControl()
         tableRefreshControl.backgroundColor = UIColor.purpleColor()
-        tableRefreshControl.addTarget(self, action: "reloadData", forControlEvents: UIControlEvents.ValueChanged)
+        tableRefreshControl.addTarget(self, action: "requery", forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = tableRefreshControl
         self.listView?.addSubview(tableRefreshControl)
         
         let partyJsonArray = JSON(data: NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("parties", ofType: "json")!)!)["parties"].arrayValue
         
-        // initialize with dummy parties
-        self.nearbyParties = Array(map(partyJsonArray, { (singlePartyJson: JSON) -> Party in
-            Party(json: singlePartyJson)
-        }))
+        requery()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -86,16 +87,18 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         let cellReuseIdentifier = "PartySearchCell"
         let cell: PartyTableViewCell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier, forIndexPath: indexPath) as! PartyTableViewCell
         
-        let party = self.nearbyParties[indexPath.row]
+        
+        let party = PartiesDataStore.sharedInstance.nearbyParties[indexPath.row]
         cell.nameLabel?.text = (party.colloquialName != nil) ? party.colloquialName : party.formattedAddress
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row < self.nearbyParties.count {
+        let parties = PartiesDataStore.sharedInstance.nearbyParties
+        if indexPath.row < parties.count {
             // selecting a party from the tableView
-            selectedParty = self.nearbyParties[indexPath.row]
+            selectedParty = parties[indexPath.row]
             self.performSegueWithIdentifier(partyDetailSegueIdentifier, sender: self)
         } else {
             // some sort of inconsistency between tableView and party data
@@ -111,7 +114,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.nearbyParties.count
+        return PartiesDataStore.sharedInstance.nearbyParties.count
     }
     
     
@@ -169,7 +172,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
                 // Switch to map
                 self.mapView!.removeAnnotations(self.mapView!.annotations)
                 
-                for party in self.nearbyParties {
+                for party in PartiesDataStore.sharedInstance.nearbyParties {
                     // add party annotations
                     let point = PartyAnnotation()
                     point.party = party
@@ -186,12 +189,39 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
-    func reloadData() {
-        NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "didFinishRequerying", userInfo: nil, repeats: false)
-    }
-    
-    func didFinishRequerying() {
-        self.refreshControl.endRefreshing()
+    func requery() {
+        // only requery if not already requerying
+        if self.requeryLock.tryLock() {
+            
+            // lock UI elements that shouldn't be used during requery
+            self.useMapViewSegmentedControl?.userInteractionEnabled = false
+            
+            PartiesDataStore.sharedInstance.requeryNearbyParties { (err, parties) -> Void in
+                var errorAlertMsg: String?
+                if err != nil {
+                    // experienced an error during requery
+                    println("reloadData error " + err!.description)
+                    errorAlertMsg = "Oops, had trouble contacting the server"
+                } else if PartiesDataStore.sharedInstance.nearbyParties.count == 0 {
+                    // got no parties back
+                    errorAlertMsg = "Looks like there aren't any parties going on near you"
+                }
+                
+                self.refreshControl.endRefreshing()
+                self.listView?.reloadData()
+                
+                if errorAlertMsg != nil {
+                    // some kind of error happened, alert user
+                    var cancelButtonTitle = "Ok "
+                    cancelButtonTitle.append(SADFACE_CHAR)
+                    
+                    UIAlertView(title: "Uh oh", message: errorAlertMsg, delegate: nil, cancelButtonTitle: cancelButtonTitle).show()
+                }
+                // ALWAYS release lock and frozen UI
+                self.requeryLock.unlock()
+                self.useMapViewSegmentedControl?.userInteractionEnabled = true
+            }
+        }
     }
     
     // MARK: - Primitive Constants

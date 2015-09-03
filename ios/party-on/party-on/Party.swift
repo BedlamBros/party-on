@@ -51,7 +51,6 @@ class Party: NSObject, ServerModel {
         
         self.maleCost = json["maleCost"].number!.unsignedLongValue
         self.femaleCost = json["femaleCost"].number!.unsignedLongValue
-        self.startTime = NSDate(timeIntervalSince1970: NSTimeInterval(json["startTime"].number!.longValue))
         self.byob = json["byob"].boolValue
         
         // optional properties
@@ -61,8 +60,14 @@ class Party: NSObject, ServerModel {
         if let description = json["description"].string {
             self.descrip = description
         }
-        if let endTime = json["endTime"].number {
-            privateEndTime = NSDate(timeIntervalSince1970: NSTimeInterval(endTime.longValue))
+        
+        // MongoDB dates
+        let mongoDateFormatter = NSDateFormatter()
+        mongoDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        
+        self.startTime = mongoDateFormatter.dateFromString(json["startTime"].stringValue)
+        if let endTimeDateString = json["endTime"].string {
+            privateEndTime = mongoDateFormatter.dateFromString(endTimeDateString)
         }
         
         

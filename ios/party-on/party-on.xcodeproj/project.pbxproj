@@ -13,6 +13,8 @@
 		509827421B959B6600154D4B /* parties.json in Resources */ = {isa = PBXBuildFile; fileRef = 509827411B959B6600154D4B /* parties.json */; };
 		50D3AA251B97C2BE00CBA394 /* PartyAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */; };
 		50D3AA271B97D02000CBA394 /* disclosure_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 50D3AA261B97D02000CBA394 /* disclosure_indicator.png */; };
+		50D3AA291B97FDAE00CBA394 /* PartiesDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3AA281B97FDAE00CBA394 /* PartiesDataStore.swift */; };
+		50D3AA2C1B98214B00CBA394 /* SVProgressHUD+BlockUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3AA2B1B98214B00CBA394 /* SVProgressHUD+BlockUI.swift */; };
 		50DE456F1B94DB6E0075CBF9 /* PartyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE456E1B94DB6E0075CBF9 /* PartyTableViewCell.swift */; };
 		50DE45711B94E0D40075CBF9 /* PartyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE45701B94E0D40075CBF9 /* PartyDetailViewController.swift */; };
 		50DE45751B950A990075CBF9 /* UniversityPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE45741B950A990075CBF9 /* UniversityPickerController.swift */; };
@@ -26,7 +28,6 @@
 		50F4B53E1B94BD4F00748D02 /* MainUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B53D1B94BD4F00748D02 /* MainUser.swift */; };
 		50F4B5401B94BEC000748D02 /* ServerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B53F1B94BEC000748D02 /* ServerModel.swift */; };
 		50F4B5421B94BFF600748D02 /* University.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B5411B94BFF600748D02 /* University.swift */; };
-		50F4B5441B94C05E00748D02 /* CurrentUniversity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B5431B94C05E00748D02 /* CurrentUniversity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		509827411B959B6600154D4B /* parties.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parties.json; sourceTree = "<group>"; };
 		50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyAnnotation.swift; sourceTree = "<group>"; };
 		50D3AA261B97D02000CBA394 /* disclosure_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = disclosure_indicator.png; path = ../../../../../Downloads/disclosure_indicator.png; sourceTree = "<group>"; };
+		50D3AA281B97FDAE00CBA394 /* PartiesDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartiesDataStore.swift; sourceTree = "<group>"; };
+		50D3AA2B1B98214B00CBA394 /* SVProgressHUD+BlockUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SVProgressHUD+BlockUI.swift"; sourceTree = "<group>"; };
 		50DE456E1B94DB6E0075CBF9 /* PartyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyTableViewCell.swift; sourceTree = "<group>"; };
 		50DE45701B94E0D40075CBF9 /* PartyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyDetailViewController.swift; sourceTree = "<group>"; };
 		50DE45741B950A990075CBF9 /* UniversityPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversityPickerController.swift; sourceTree = "<group>"; };
@@ -68,7 +71,6 @@
 		50F4B53D1B94BD4F00748D02 /* MainUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainUser.swift; sourceTree = "<group>"; };
 		50F4B53F1B94BEC000748D02 /* ServerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerModel.swift; sourceTree = "<group>"; };
 		50F4B5411B94BFF600748D02 /* University.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = University.swift; sourceTree = "<group>"; };
-		50F4B5431B94C05E00748D02 /* CurrentUniversity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUniversity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 			children = (
 				50DE456E1B94DB6E0075CBF9 /* PartyTableViewCell.swift */,
 				50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */,
+				50D3AA2B1B98214B00CBA394 /* SVProgressHUD+BlockUI.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -177,10 +180,10 @@
 			children = (
 				50F4B53F1B94BEC000748D02 /* ServerModel.swift */,
 				50F4B53B1B94BD3C00748D02 /* User.swift */,
-				50F4B53D1B94BD4F00748D02 /* MainUser.swift */,
 				50F4B5411B94BFF600748D02 /* University.swift */,
-				50F4B5431B94C05E00748D02 /* CurrentUniversity.swift */,
 				500068CA1B94D4CC008E6BB7 /* Party.swift */,
+				50F4B53D1B94BD4F00748D02 /* MainUser.swift */,
+				50D3AA281B97FDAE00CBA394 /* PartiesDataStore.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -364,11 +367,12 @@
 				50F4B5401B94BEC000748D02 /* ServerModel.swift in Sources */,
 				50DE45711B94E0D40075CBF9 /* PartyDetailViewController.swift in Sources */,
 				50DE456F1B94DB6E0075CBF9 /* PartyTableViewCell.swift in Sources */,
+				50D3AA291B97FDAE00CBA394 /* PartiesDataStore.swift in Sources */,
 				50F4B5391B94BC8D00748D02 /* LoginViewController.swift in Sources */,
 				50F4B5181B94507800748D02 /* AppDelegate.swift in Sources */,
 				50D3AA251B97C2BE00CBA394 /* PartyAnnotation.swift in Sources */,
 				50F4B5421B94BFF600748D02 /* University.swift in Sources */,
-				50F4B5441B94C05E00748D02 /* CurrentUniversity.swift in Sources */,
+				50D3AA2C1B98214B00CBA394 /* SVProgressHUD+BlockUI.swift in Sources */,
 				50DE45751B950A990075CBF9 /* UniversityPickerController.swift in Sources */,
 				500068C91B94C33E008E6BB7 /* PartySearchViewController.swift in Sources */,
 			);
