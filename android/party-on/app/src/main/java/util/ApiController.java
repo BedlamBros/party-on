@@ -13,10 +13,10 @@ import java.util.Map;
 
 public class ApiController {
 	private static ApiController instance;
-	final String url = "http://ec2-54-148-115-3.us-west-2.compute.amazonaws.com:8080/api/login";
+	final static String URL = "http://ec2-52-27-42-182.us-west-2.compute.amazonaws.com";
 	
 	protected ApiController(){
-		//avoid construction outside getInstance
+		//avoid instantiation outside getInstance
 	}
 	
 	public static ApiController getInstance(){
@@ -28,7 +28,7 @@ public class ApiController {
 	
 	public void makeLoginRequest(String username, String password){
 		DefaultHttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(url);
+		HttpPost httpPost = new HttpPost(URL);
 		//Map<String, String> params = new HashMap<String, String>();
 		//params.put("username", username);
 		//params.put("password", password);

@@ -2,6 +2,7 @@ package receive;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -82,6 +83,7 @@ public class ListPartyAdapter extends ArrayAdapter<Party> {
                     Log.d("receive", "party clicked " + party.toString());
                     //now start the PartyFullscreenActivity
                     Intent mIntent = new Intent(mContext, ViewPartyActivity.class);
+                    Log.d("party_detail", "ListPartyAdapter setting party_extra: " + party.toString());
                     mIntent.putExtra(mContext.getResources().getString(R.string.party_extra_name), party);
                     mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(mIntent);

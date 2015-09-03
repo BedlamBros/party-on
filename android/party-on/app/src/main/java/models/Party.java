@@ -32,12 +32,13 @@ public class Party  implements Parcelable, ApiObject{
     private long expires_at;
     private long ends_at;
 
-    //TODO include constructors with fewer args
+    //only one constructor exists. All instnatiation calls are made to
+    //party factory
     public Party(String OId, String title, String desc, float lat, float lon,
-                 String formatted_address, ArrayList<Flag> flag_list, int male_cost,
-                 String colloq_name, boolean byob, int female_cost, long created_at,
-                 University uni, long start_time, long expires_at, long ends_at){
-        this.oId = oId; //auto
+                 String formatted_address, int male_cost, int female_cost,
+                 String colloq_name, boolean byob, University uni,
+                 long created_at, long start_time, long expires_at, long ends_at){
+        this.oId = OId; //auto
         this.female_cost = female_cost; //optional default 0
         this.male_cost = male_cost; //optional default 0
         this.title = title; //required, on listview
@@ -45,7 +46,6 @@ public class Party  implements Parcelable, ApiObject{
         this.lat = lat; //auto
         this.lon = lon; //auto
         this.formatted_address = formatted_address; //auto, on listview
-        //this.flag_list = new ArrayList<Flag>(flag_list); //optional
         this.colloq_name = colloq_name; //optional, on listview
         this.uni = uni; //required default user's preference
         this.byob = byob; //required default true
@@ -53,24 +53,6 @@ public class Party  implements Parcelable, ApiObject{
         this.created_at = created_at; //auto
         this.expires_at = expires_at; //auto default start_time + 6 hours
         this.ends_at = ends_at;
-    }
-
-    //can also be instantiated from a Parcel
-    protected Party(Parcel in) {
-        oId = in.readString();
-        title = in.readString();
-        desc = in.readString();
-        lat = in.readFloat();
-        lon = in.readFloat();
-        formatted_address = in.readString();
-        male_cost = in.readInt();
-        female_cost = in.readInt();
-        colloq_name = in.readString();
-        byob = in.readByte() != 0x00;
-        uni = (University) in.readValue(University.class.getClassLoader());
-        start_time = in.readLong();
-        created_at = in.readLong();
-        expires_at = in.readLong();
     }
 
     //partially complete constructor for wireframing
@@ -85,8 +67,7 @@ public class Party  implements Parcelable, ApiObject{
     }
 
     public Party fromJson(JSONObject json){
-        //TODO create Party constructor from JsonObject
-        return null;
+        return new PartyFactory().create(json);
     }
 
     @Override
@@ -110,7 +91,6 @@ public class Party  implements Parcelable, ApiObject{
         if (colloq_name != null ? !colloq_name.equals(party.colloq_name) : party.colloq_name != null)
             return false;
         return !(uni != null ? !uni.equals(party.uni) : party.uni != null);
-
     }
 
     @Override
@@ -132,12 +112,31 @@ public class Party  implements Parcelable, ApiObject{
         return result;
     }
 
-    //implement methods required by Parcelable interface
-    public int describeContents(){
+    protected Party(Parcel in) {
+        oId = in.readString();
+        title = in.readString();
+        desc = in.readString();
+        lat = in.readFloat();
+        lon = in.readFloat();
+        formatted_address = in.readString();
+        male_cost = in.readInt();
+        female_cost = in.readInt();
+        colloq_name = in.readString();
+        byob = in.readByte() != 0x00;
+        uni = (University) in.readValue(University.class.getClassLoader());
+        start_time = in.readLong();
+        created_at = in.readLong();
+        expires_at = in.readLong();
+        ends_at = in.readLong();
+    }
+
+    @Override
+    public int describeContents() {
         return 0;
     }
 
-    public void writeToParcel(Parcel dest, int flags){
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(oId);
         dest.writeString(title);
         dest.writeString(desc);
@@ -152,8 +151,10 @@ public class Party  implements Parcelable, ApiObject{
         dest.writeLong(start_time);
         dest.writeLong(created_at);
         dest.writeLong(expires_at);
+        dest.writeLong(ends_at);
     }
 
+    @SuppressWarnings("unused")
     public static final Parcelable.Creator<Party> CREATOR = new Parcelable.Creator<Party>() {
         @Override
         public Party createFromParcel(Parcel in) {
@@ -224,5 +225,39 @@ public class Party  implements Parcelable, ApiObject{
 
     public long getExpires_at() {
         return expires_at;
+    }
+
+    public long getStart_time() {
+        return start_time;
+    }
+
+    public long getEnds_at() {
+        return ends_at;
+    }
+
+    public static class PartyFactory{
+        protected Party create(JSONObject json){
+            //TODO create party from json
+            return null;
+        }
+
+        protected Party create(Parcel in){
+            String oId = in.readString();
+            String title = in.readString();
+            String desc = in.readString();
+            float lat = in.readFloat();
+            float lon = in.readFloat();
+            String formatted_address = in.readString();
+            int male_cost = in.readInt();
+            int female_cost = in.readInt();
+            String colloq_name = in.readString();
+            boolean byob = in.readByte() != 0x00;
+            University uni = (University) in.readValue(University.class.getClassLoader());
+            long starts_at = in.readLong();
+            long created_at = in.readLong();
+            long expires_at = in.readLong();
+            return new Party(oId, title, desc, lat, lon, formatted_address, male_cost, female_cost,
+                                colloq_name, byob, uni, created_at, starts_at, expires_at, 0);
+        }
     }
 }
