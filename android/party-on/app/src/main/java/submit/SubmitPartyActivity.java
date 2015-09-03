@@ -12,6 +12,9 @@ import android.widget.TimePicker;
 
 import net.john.partyon.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by John on 9/2/2015.
  */
@@ -21,6 +24,8 @@ public class SubmitPartyActivity extends Activity {
     private String mDesc;
     private float mLat;
     private float mLon;
+
+    private long ms_end_offset;
 
     //helpful for iterating through required views
     private final int REQUIRED_ETS = 2;
@@ -60,6 +65,13 @@ public class SubmitPartyActivity extends Activity {
         required_views[0] = mTitle_et;
         required_views[1] = mDesc_et;
         required_views[2] = mTimePicker_start;
+
+        //first item requests focus
+        required_views[0].requestFocus();
+
+        //get hours offset
+        ms_end_offset = getResources().getInteger(R.integer.ends_at_offset_hours) * 1000 * 60 + 60;
+        setTimePickerOffsets();
     }
 
     private void drawSubmitButton(){
@@ -101,4 +113,9 @@ public class SubmitPartyActivity extends Activity {
             return false;
         }
     };
+
+    private void setTimePickerOffsets(){
+        Date mSimple_curr_date = new Date(System.currentTimeMillis() + ms_end_offset);
+        mTimePicker_end.setCurrentHour(mSimple_curr_date.getHours());
+    }
 }

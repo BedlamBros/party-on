@@ -5,12 +5,16 @@ import android.os.Parcelable;
 
 import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+
+import submit.ApiObject;
 
 /**
  * Created by John on 8/31/2015.
  */
-public class Party  implements Parcelable{
+public class Party  implements Parcelable, ApiObject{
     private String oId;
     private String title;
     private String desc; //256 char limit
@@ -78,6 +82,11 @@ public class Party  implements Parcelable{
         this.expires_at = System.currentTimeMillis() + (1000 * 60 * 60);
         //this.flag_list = new ArrayList<Flag>();
         //flag_list.add(Flag.GREEN);
+    }
+
+    public Party fromJson(JSONObject json){
+        //TODO create Party constructor from JsonObject
+        return null;
     }
 
     @Override

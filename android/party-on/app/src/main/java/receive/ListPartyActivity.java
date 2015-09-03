@@ -24,7 +24,7 @@ public class ListPartyActivity extends ListActivity {
     private ArrayList<Party> mParty_list;
     private ListPartyAdapter mListPartyAdapter;
 
-    //handles the vibrating response on the add_party button
+    //handles the vibrating response on the ic_add_party button
     VibrateClickResponseListener mVibrate_response_listener;
 
     @Override
@@ -37,7 +37,6 @@ public class ListPartyActivity extends ListActivity {
         //used only for testing w/o server
         DummyReader mDummy_reader = new DummyReader(DUMMY_FILENAME, this);
         mParty_list = new ArrayList<Party>(mDummy_reader.getPartyList());
-        Log.d("receive", "party_list length is " + mParty_list.size());
 
         //set the adapter to propagate list from party_list
         mListPartyAdapter = new ListPartyAdapter(getApplicationContext(), mParty_list);
@@ -54,6 +53,10 @@ public class ListPartyActivity extends ListActivity {
         //start the SubmitPartyActivity
         Intent i = new Intent(ListPartyActivity.this, SubmitPartyActivity.class);
         ListPartyActivity.this.startActivity(i);
+    }
+
+    public void onHamburgerClick(View view){
+        //TODO start the preference fragment here
     }
 
     public ListPartyAdapter getListAdapter(){

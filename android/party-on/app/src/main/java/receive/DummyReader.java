@@ -18,7 +18,7 @@ import models.Party;
 /**
  * Created by John on 8/31/2015.
  */
-public class DummyReader {
+public class DummyReader implements PartyListLoadable{
     String filename;
     Context ctx;
 

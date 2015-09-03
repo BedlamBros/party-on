@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,21 +11,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:background="@drawable/toolbar_background"
         android:id="@+id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_drawer"
+                android:onClick="onHamburgerClick" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/party_title_text_size"
-            android:layout_gravity="left"
+            android:layout_centerHorizontal="true"
             android:text="@string/toolbar_party_list"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/add_party"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_add_party"
             android:onClick="onAddPartyClick"
-            android:id="@+id/toolbar_add_party"/>
+            android:id="@+id/toolbar_ic_add_party"/>
+
+        </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
 

@@ -1,4 +1,4 @@
-package net.john.partyon;
+package net.john.partyon.submit;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
