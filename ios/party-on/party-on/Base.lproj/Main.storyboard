@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="G76-qo-02O">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="G76-qo-02O">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--University Picker Controller-->
         <scene sceneID="HFv-gU-PpJ">
             <objects>
                 <viewController id="E6b-LP-2N3" customClass="UniversityPickerController" customModule="party_on" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Td5-Mq-hGx"/>
+                        <viewControllerLayoutGuide type="bottom" id="ccX-Go-rpZ"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Taz-8R-HSf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nux-MN-nv5">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nux-MN-nv5">
                                 <rect key="frame" x="65" y="241" width="122" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Indiana University">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -35,13 +39,20 @@
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="PartySearchViewController" customModule="party_on" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="etT-OI-ywi"/>
+                        <viewControllerLayoutGuide type="bottom" id="mUs-qh-oEg"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Hjp-gb-gIc">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jSv-pm-Ice" customClass="MKMapView">
                                 <rect key="frame" x="0.0" y="109" width="320" height="459"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Hjp-gb-gIc">
+                                <rect key="frame" x="0.0" y="109" width="320" height="459"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PartySearchCell" id="8qO-Zk-my1" customClass="PartyTableViewCell" customModule="party_on" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="86" width="320" height="44"/>
@@ -50,11 +61,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NDD-qH-RM3">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDD-qH-RM3">
                                                     <rect key="frame" x="8" y="0.0" width="279" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -65,9 +75,8 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="iFB-Am-7Ne">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="iFB-Am-7Ne">
                                 <rect key="frame" x="44" y="73" width="233" height="29"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <segments>
                                     <segment title="List"/>
                                     <segment title="Map"/>
@@ -78,6 +87,18 @@
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="iFB-Am-7Ne" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="28" id="AFJ-qg-Fzr"/>
+                            <constraint firstItem="mUs-qh-oEg" firstAttribute="top" secondItem="jSv-pm-Ice" secondAttribute="bottom" id="IrI-fa-rjM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jSv-pm-Ice" secondAttribute="trailing" constant="-16" id="cRw-EA-1la"/>
+                            <constraint firstItem="mUs-qh-oEg" firstAttribute="top" secondItem="Hjp-gb-gIc" secondAttribute="bottom" id="dwP-M1-5Td"/>
+                            <constraint firstItem="Hjp-gb-gIc" firstAttribute="top" secondItem="etT-OI-ywi" secondAttribute="bottom" constant="45" id="ef6-hw-apD"/>
+                            <constraint firstItem="Hjp-gb-gIc" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="epD-cI-vGp"/>
+                            <constraint firstItem="jSv-pm-Ice" firstAttribute="top" secondItem="etT-OI-ywi" secondAttribute="bottom" constant="45" id="eqq-vk-aC9"/>
+                            <constraint firstItem="jSv-pm-Ice" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="nj4-uP-au1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="iFB-Am-7Ne" secondAttribute="trailing" constant="27" id="wVG-BI-RX2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Hjp-gb-gIc" secondAttribute="trailing" constant="-16" id="yV9-3T-ZnZ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Parties" id="MA6-xW-22z">
                         <barButtonItem key="leftBarButtonItem" title="Change University" id="0RD-s4-8y5">
@@ -93,6 +114,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="listView" destination="Hjp-gb-gIc" id="r2B-rC-rGn"/>
+                        <outlet property="mapView" destination="jSv-pm-Ice" id="SMq-d8-0Dq"/>
                         <outlet property="useMapViewSegmentedControl" destination="iFB-Am-7Ne" id="CjI-kJ-c8r"/>
                         <segue destination="NEN-Ex-lSU" kind="push" identifier="PartyDetailSegue" id="Qlb-W9-eU8"/>
                     </connections>
@@ -105,15 +127,18 @@
         <scene sceneID="O7K-QW-HeZ">
             <objects>
                 <viewController id="NEN-Ex-lSU" customClass="PartyDetailViewController" customModule="party_on" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="okz-cs-d9h"/>
+                        <viewControllerLayoutGuide type="bottom" id="jRe-Ni-9B5"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZCn-jk-Jh7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Party Detail View" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="91a-II-pO4">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Party Detail View" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91a-II-pO4">
                                 <rect key="frame" x="95" y="20" width="130" height="21"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -129,15 +154,18 @@
         <scene sceneID="4Rk-16-dCr">
             <objects>
                 <viewController id="jTs-I4-lhW" customClass="LoginViewController" customModule="party_on" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Bnw-ya-OFU"/>
+                        <viewControllerLayoutGuide type="bottom" id="Rrg-OP-h6W"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4Mb-70-Io8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOGIN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="S42-lw-MCp">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LOGIN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S42-lw-MCp">
                                 <rect key="frame" x="134" y="93" width="53" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>

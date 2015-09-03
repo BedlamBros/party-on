@@ -16,11 +16,10 @@ public let SADFACE_CHAR: Character = "\u{1F61E}"
 class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate {
     
     @IBOutlet var listView: UITableView?
-    var mapView: MKMapView?
+    @IBOutlet var mapView: MKMapView?
     @IBOutlet weak var useMapViewSegmentedControl: UISegmentedControl?
     weak var refreshControl: UIRefreshControl!
     
-    private var listOrMapViewFrame: CGRect = CGRectMake(0, 0, 0, 0)
     private weak var selectedParty: Party?
 
     private var requeryLock: NSLock = NSLock()
@@ -32,10 +31,6 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         
         let myframe = self.view.frame
         
-        if let t = self.listView {
-            self.listOrMapViewFrame = t.frame
-        }
-        self.mapView = MKMapView(frame: self.listOrMapViewFrame)
         self.mapView?.delegate = self
         
         let tableRefreshControl = UIRefreshControl()
@@ -166,8 +161,8 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
             switch (useMapViewSegmentedControl!.selectedSegmentIndex) {
             case 0:
                 // Switch to list
-                self.mapView?.removeFromSuperview()
-                self.view.addSubview(self.listView!)
+                self.mapView?.hidden = true
+                self.listView?.hidden = false
             case 1:
                 // Switch to map
                 self.mapView!.removeAnnotations(self.mapView!.annotations)
@@ -180,8 +175,9 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
                     self.mapView?.addAnnotation(point)
                 }
                 
-                self.listView?.removeFromSuperview()
-                self.view.addSubview(self.mapView!)
+                self.listView?.hidden = true
+                self.mapView?.hidden = false
+                
                 self.mapView!.showAnnotations(self.mapView!.annotations, animated: true)
             default:
                 break
