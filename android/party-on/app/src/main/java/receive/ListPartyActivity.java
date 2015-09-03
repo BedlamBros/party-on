@@ -28,6 +28,8 @@ public class ListPartyActivity extends ListActivity {
     private ArrayList<Party> mParty_list;
     private ListPartyAdapter mListPartyAdapter;
 
+    ApiPartyListReader mApiPartyListReader;
+
     //handles the vibrating response on the ic_add_party button
     VibrateClickResponseListener mVibrate_response_listener;
 
@@ -43,13 +45,15 @@ public class ListPartyActivity extends ListActivity {
         list = (ListView) findViewById(android.R.id.list);
         Log.d("receive", "list to string = " + list.toString());
 
+        new Thread(ApiPartyListReader.getInstance(getApplicationContext())).start();
+
         //used only for testing w/o server
-        DummyReader mDummy_reader = new DummyReader(DUMMY_FILENAME, this);
-        mParty_list = new ArrayList<Party>(mDummy_reader.getPartyList());
+       // DummyReader mDummy_reader = new DummyReader(DUMMY_FILENAME, this);
+       // mParty_list = new ArrayList<Party>(mDummy_reader.getPartyList());
 
         //set the adapter to propagate list from party_list
-        mListPartyAdapter = new ListPartyAdapter(getApplicationContext(), mParty_list);
-        list.setAdapter(mListPartyAdapter);
+        //mListPartyAdapter = new ListPartyAdapter(getApplicationContext(), mParty_list);
+       // list.setAdapter(mListPartyAdapter);
 
         //instantiate the response listener now while not doing anything
         mVibrate_response_listener = new VibrateClickResponseListener(this);
