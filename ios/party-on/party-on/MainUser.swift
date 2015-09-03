@@ -8,12 +8,8 @@
 
 import UIKit
 
-private let privateSharedInstance = MainUser()
-
 class MainUser: User {
     
-    class var sharedInstance: MainUser {
-        return privateSharedInstance
-    }
+    static var sharedInstance: MainUser? = nil
     
 }

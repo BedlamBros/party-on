@@ -29,13 +29,13 @@ module.exports = function(Parties) {
         /**
          * Create a party
          */
-        create: function(req, res) {
+        create: function(req, res, next) {
             var party = new Party(req.body);
             party.user = req.user;
             
             party.save(function(err) {
                 if (err) {
-                    return res.staus(500).json({
+                    res.status(500).json({
                         error: 'Cannot save the party'
                     });
                 }
@@ -48,9 +48,8 @@ module.exports = function(Parties) {
                     url: config.hostname + '/parties/' + parties._id,
                     name: party.title
                 });*/
-
                 res.json(party);
-            });
+            })
         },
         /**
          * Update a party
@@ -124,7 +123,9 @@ module.exports = function(Parties) {
         listCurrent: function(req, res) {
             Party.currentForUniversity(req.params.universityName)
             .then(function(parties) {
-              res.json(parties);
+              res.json({
+                  parties: parties
+              });
             }, 
             function(err) {
               return res.status(500).json({
