@@ -6,45 +6,51 @@
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
     android:layout_marginRight="@dimen/activity_horizontal_margin">
 
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/submit_form_activity_title"
-        android:textSize="@dimen/party_title_text_size"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/submit_form_activity_title"/>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/submit_form_activity_title"
-        android:orientation="horizontal"
-        android:id="@+id/layout_title">
+        android:paddingBottom="100dp"
+        android:id="@+id/submission_form">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/submit_form_title_title"
+            android:text="@string/submit_form_activity_title"
             android:textSize="@dimen/party_title_text_size"
-            android:textColor="@color/primary_hard"
-            android:id="@+id/submit_form_title"/>
+            android:layout_centerHorizontal="true"
+            android:id="@+id/submit_form_activity_title"/>
 
-        <EditText
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/submit_form_activity_title"
-            android:layout_toRightOf="@id/submit_form_title"
-            android:maxLength="@integer/title_char_limit"
-            android:singleLine="true"
-            android:hint="@string/party_title_default"
-            android:imeOptions="actionNext"
-            android:id="@+id/submit_form_edit_title"/>
+            android:orientation="horizontal"
+            android:id="@+id/layout_title">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/submit_form_title_title"
+                android:textSize="@dimen/party_title_text_size"
+                android:textColor="@color/primary_hard"
+                android:id="@+id/submit_form_title"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/submit_form_activity_title"
+                android:layout_toRightOf="@id/submit_form_title"
+                android:maxLength="@integer/title_char_limit"
+                android:singleLine="true"
+                android:hint="@string/party_title_default"
+                android:imeOptions="actionNext"
+                android:id="@+id/submit_form_edit_title"/>
+
+        </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -101,7 +107,7 @@
             <ImageButton
                 android:layout_height="@dimen/edit_row_height"
                 android:layout_width="@dimen/edit_row_height"
-                android:src="@drawable/define_location"
+                android:src="@drawable/ic_define_location"
                 android:layout_gravity="right"
                 android:onClick="onGetLocationClick" />
 
@@ -119,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/submit_form_title"
                 android:layout_toLeftOf="@id/submit_form_edit_desc"
+                android:layout_gravity="center_vertical"
                 android:text="@string/submit_form_starts_at_title"
                 android:textSize="@dimen/party_title_text_size"
                 android:textColor="@color/primary_hard"
@@ -144,6 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/submit_form_title"
                 android:layout_toLeftOf="@id/submit_form_edit_desc"
+                android:layout_gravity="center_vertical"
                 android:text="@string/submit_form_ends_at_title"
                 android:textSize="@dimen/party_title_text_size"
                 android:textColor="@color/secondary_hard"
@@ -151,13 +159,15 @@
 
             <TimePicker
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/edit_row_height"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/submit_form_edit_title"
                 android:id="@+id/submit_form_edit_ends_at"/>
 
         </LinearLayout>
 
     </RelativeLayout>
+
+</ScrollView>
 
     <Button
         android:layout_width="fill_parent"

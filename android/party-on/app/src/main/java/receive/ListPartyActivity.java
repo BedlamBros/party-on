@@ -7,6 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.widget.LoginButton;
+
 import net.john.partyon.R;
 
 import java.util.ArrayList;
@@ -24,20 +28,24 @@ public class ListPartyActivity extends ListActivity {
     private ArrayList<Party> mParty_list;
     private ListPartyAdapter mListPartyAdapter;
 
-    //handles the vibrating response on the add_party button
+    //handles the vibrating response on the ic_add_party button
     VibrateClickResponseListener mVibrate_response_listener;
 
     @Override
     public void onCreate(Bundle saved_instance){
         super.onCreate(saved_instance);
+
+        //initialize the Facebook sdk to get the login button
+        FacebookSdk.sdkInitialize(this);
+
         setContentView(R.layout.party_list);
+
         list = (ListView) findViewById(android.R.id.list);
         Log.d("receive", "list to string = " + list.toString());
 
         //used only for testing w/o server
         DummyReader mDummy_reader = new DummyReader(DUMMY_FILENAME, this);
         mParty_list = new ArrayList<Party>(mDummy_reader.getPartyList());
-        Log.d("receive", "party_list length is " + mParty_list.size());
 
         //set the adapter to propagate list from party_list
         mListPartyAdapter = new ListPartyAdapter(getApplicationContext(), mParty_list);
@@ -47,6 +55,18 @@ public class ListPartyActivity extends ListActivity {
         mVibrate_response_listener = new VibrateClickResponseListener(this);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        //AppEventsLogger.activateApp(this); //used for facebook analytics
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        //AppEventsLogger.deactivateApp(this); //used for facebook analytics
+    }
+
     public void onAddPartyClick(View view){
         //call the vibrating response
         mVibrate_response_listener.getVibratingClickListener().onClick(view);
@@ -54,6 +74,10 @@ public class ListPartyActivity extends ListActivity {
         //start the SubmitPartyActivity
         Intent i = new Intent(ListPartyActivity.this, SubmitPartyActivity.class);
         ListPartyActivity.this.startActivity(i);
+    }
+
+    public void onHamburgerClick(View view){
+        //TODO start the preference fragment here
     }
 
     public ListPartyAdapter getListAdapter(){

@@ -14,11 +14,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import models.Party;
+import models.University;
 
 /**
  * Created by John on 8/31/2015.
  */
-public class DummyReader {
+public class DummyReader implements PartyListLoadable{
     String filename;
     Context ctx;
 
@@ -41,7 +42,11 @@ public class DummyReader {
                 String title = (String) mJson_sub_object.get("title"); //TODO shouldn't be hardcoded, add all values
                 String desc = (String) mJson_sub_object.get("desc");
                 String readable_loc = (String) mJson_sub_object.get("readable_loc");
-                party_list.add(new Party(title, desc, readable_loc));
+                University uni = new University("001", 170.06f, 80.004f);
+                party_list.add(new Party("000001", title, desc, 170.006f, 80.004f,
+                        "123 N Jefferson st.", 5, 0, "The House", true, uni, System.currentTimeMillis(),
+                        (System.currentTimeMillis() + (1000 * 60 * 60)), (System.currentTimeMillis() + (1000 * 60 * 60)),
+                        (System.currentTimeMillis() + (1000 * 60 * 60))));
             }
         } catch (JSONException ex) {
             ex.printStackTrace();

@@ -27,10 +27,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/party_desc"
-        android:textIsSelectable="true"
         android:textSize="@dimen/party_title_text_size"
-        android:drawableStart="@drawable/treasure_map"
-        android:drawableLeft="@drawable/treasure_map"
+        android:drawableStart="@drawable/ic_treasure_map"
+        android:drawableLeft="@drawable/ic_treasure_map"
         android:textColor="@color/secondary_hard"
         android:id="@+id/party_readable_loc"/>
 
