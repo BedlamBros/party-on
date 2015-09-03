@@ -7,6 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.widget.LoginButton;
+
 import net.john.partyon.R;
 
 import java.util.ArrayList;
@@ -30,7 +34,12 @@ public class ListPartyActivity extends ListActivity {
     @Override
     public void onCreate(Bundle saved_instance){
         super.onCreate(saved_instance);
+
+        //initialize the Facebook sdk to get the login button
+        FacebookSdk.sdkInitialize(this);
+
         setContentView(R.layout.party_list);
+
         list = (ListView) findViewById(android.R.id.list);
         Log.d("receive", "list to string = " + list.toString());
 
@@ -44,6 +53,18 @@ public class ListPartyActivity extends ListActivity {
 
         //instantiate the response listener now while not doing anything
         mVibrate_response_listener = new VibrateClickResponseListener(this);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        //AppEventsLogger.activateApp(this); //used for facebook analytics
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        //AppEventsLogger.deactivateApp(this); //used for facebook analytics
     }
 
     public void onAddPartyClick(View view){

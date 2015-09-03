@@ -22,23 +22,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_drawer"
+                android:layout_alignParentLeft="true"
                 android:onClick="onHamburgerClick" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/party_title_text_size"
-            android:layout_centerHorizontal="true"
-            android:text="@string/toolbar_party_list"/>
+            <com.facebook.login.widget.LoginButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/facebook_auth_bttn"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_add_party"
-            android:onClick="onAddPartyClick"
-            android:id="@+id/toolbar_ic_add_party"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_add_party"
+                android:onClick="onAddPartyClick"
+                android:id="@+id/toolbar_ic_add_party"/>
 
         </RelativeLayout>
 

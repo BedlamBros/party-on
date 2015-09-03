@@ -123,7 +123,8 @@ public class Party  implements Parcelable, ApiObject{
         female_cost = in.readInt();
         colloq_name = in.readString();
         byob = in.readByte() != 0x00;
-        uni = (University) in.readValue(University.class.getClassLoader());
+        //TODO add the uni parcelable back in when model is done
+        //uni = (University) in.readValue(University.class.getClassLoader());
         start_time = in.readLong();
         created_at = in.readLong();
         expires_at = in.readLong();
@@ -147,7 +148,7 @@ public class Party  implements Parcelable, ApiObject{
         dest.writeInt(female_cost);
         dest.writeString(colloq_name);
         dest.writeByte((byte) (byob ? 0x01 : 0x00));
-        dest.writeValue(uni);
+        //dest.writeValue(uni);
         dest.writeLong(start_time);
         dest.writeLong(created_at);
         dest.writeLong(expires_at);
@@ -233,6 +234,19 @@ public class Party  implements Parcelable, ApiObject{
 
     public long getEnds_at() {
         return ends_at;
+    }
+
+    public boolean isByob() {
+        return byob;
+    }
+
+    public int getFemale_cost() {
+        return female_cost;
+    }
+
+    public int getMale_cost() {
+
+        return male_cost;
     }
 
     public static class PartyFactory{

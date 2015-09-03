@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.util.Log;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import net.john.partyon.R;
@@ -27,6 +28,8 @@ public class ViewPartyActivity extends Activity {
     private TextView mTv_desc;
     private TextView mTv_starts_at;
     private TextView mTv_ends_at;
+    private TextView mTv_gendered_prices;
+    private CheckBox mCb_byob;
 
     public void onCreate(Bundle saved_instance){
         super.onCreate(saved_instance);
@@ -38,6 +41,8 @@ public class ViewPartyActivity extends Activity {
         mTv_desc = (TextView) findViewById(R.id.fullscreen_party_item_desc);
         mTv_starts_at = (TextView) findViewById(R.id.fullscreen_party_item_starts_at);
         mTv_ends_at = (TextView) findViewById(R.id.fullscreen_party_item_ends_at);
+        mTv_gendered_prices = (TextView) findViewById(R.id.fullscreen_party_item_gendered_prices);
+        mCb_byob = (CheckBox) findViewById(R.id.fullscreen_party_item_byob);
 
         try {
             getPartyFromExtra();
@@ -61,14 +66,18 @@ public class ViewPartyActivity extends Activity {
     }
 
     private void fillViewFromParty(){
+        //all of these fields are required by the model and therefore will be shown
         mTv_title.setText(mParty.getTitle());
-        mTv_readable_loc.setText(mParty.getformatted_address());
-        mTv_desc.setText(mParty.getDesc());
+        mTv_readable_loc.setText(getResources().getString(R.string.submit_form_loc_title) + mParty.getformatted_address());
+        mTv_desc.setText(getResources().getString(R.string.submit_form_desc_title) + mParty.getDesc());
         Date mDate_starts_at = new Date(mParty.getStart_time());
-        mTv_starts_at.setText(mDate_starts_at.toString());
+        mTv_starts_at.setText(getResources().getString(R.string.submit_form_starts_at_title) + mDate_starts_at.toString());
         Date mDate_ends_at = new Date(mParty.getEnds_at());
-        mTv_ends_at.setText(mDate_ends_at.toString());
-
+        mTv_ends_at.setText(getResources().getString(R.string.submit_form_ends_at_title) + mDate_ends_at.toString());
+        mTv_gendered_prices.setText(getResources().getString(R.string.submit_form_male_price_title)
+            + "$" +  mParty.getMale_cost() + "/" + getResources().getString(R.string.submit_form_female_price_title)
+            + "$" + mParty.getFemale_cost());
+        mCb_byob.setChecked(mParty.isByob());
     }
 
     public Party getParty(){

@@ -13,7 +13,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/edit_row_height"
+        android:paddingBottom="100dp"
         android:id="@+id/submission_form">
 
         <TextView
@@ -125,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/submit_form_title"
                 android:layout_toLeftOf="@id/submit_form_edit_desc"
+                android:layout_gravity="center_vertical"
                 android:text="@string/submit_form_starts_at_title"
                 android:textSize="@dimen/party_title_text_size"
                 android:textColor="@color/primary_hard"
@@ -150,6 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/submit_form_title"
                 android:layout_toLeftOf="@id/submit_form_edit_desc"
+                android:layout_gravity="center_vertical"
                 android:text="@string/submit_form_ends_at_title"
                 android:textSize="@dimen/party_title_text_size"
                 android:textColor="@color/secondary_hard"
