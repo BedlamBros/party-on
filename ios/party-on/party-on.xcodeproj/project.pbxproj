@@ -10,6 +10,7 @@
 		39B826AE5271AE14C3C6018B /* Pods_party_on.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A663BBB54B3D7CC419B2244 /* Pods_party_on.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		500068C91B94C33E008E6BB7 /* PartySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500068C81B94C33E008E6BB7 /* PartySearchViewController.swift */; };
 		500068CB1B94D4CC008E6BB7 /* Party.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500068CA1B94D4CC008E6BB7 /* Party.swift */; };
+		5001C9AC1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001C9AB1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png */; };
 		5047658E1B98BFA900303DF0 /* ModalMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */; };
 		504765901B98DBB700303DF0 /* LicenseDocumentation.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5047658F1B98DBB700303DF0 /* LicenseDocumentation.txt */; };
 		504765921B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */; };
@@ -55,6 +56,7 @@
 		500068CC1B94D6C7008E6BB7 /* libPods-party-on-SwiftyJSON.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-party-on-SwiftyJSON.a"; path = "Pods/build/Debug-iphoneos/libPods-party-on-SwiftyJSON.a"; sourceTree = "<group>"; };
 		500068CE1B94D741008E6BB7 /* libPods-party-on-SwiftyJSON.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-party-on-SwiftyJSON.a"; path = "Pods/build/Debug-iphoneos/libPods-party-on-SwiftyJSON.a"; sourceTree = "<group>"; };
 		500068D01B94D7DA008E6BB7 /* libPods-party-on.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-party-on.a"; path = "Pods/build/Debug-iphoneos/libPods-party-on.a"; sourceTree = "<group>"; };
+		5001C9AB1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Placeholder_Icon.png; sourceTree = "<group>"; };
 		5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalMapViewController.swift; sourceTree = "<group>"; };
 		5047658F1B98DBB700303DF0 /* LicenseDocumentation.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LicenseDocumentation.txt; sourceTree = "<group>"; };
 		504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Indiana_University_(Athletics)_logo.png"; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 		50F4B5151B94507800748D02 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5001C9AB1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png */,
 				504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */,
 				50D3AA261B97D02000CBA394 /* disclosure_indicator.png */,
 				50F4B5161B94507800748D02 /* Info.plist */,
@@ -333,6 +336,7 @@
 				509827421B959B6600154D4B /* parties.json in Resources */,
 				50F4B51F1B94507800748D02 /* Images.xcassets in Resources */,
 				504765921B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png in Resources */,
+				5001C9AC1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png in Resources */,
 				504765901B98DBB700303DF0 /* LicenseDocumentation.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -543,6 +547,7 @@
 					"$(PROJECT_DIR)/party-on",
 				);
 				INFOPLIST_FILE = "party-on/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -562,6 +567,7 @@
 					"$(PROJECT_DIR)/party-on",
 				);
 				INFOPLIST_FILE = "party-on/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
