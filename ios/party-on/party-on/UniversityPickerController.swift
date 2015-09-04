@@ -11,8 +11,24 @@ import CoreLocation
 
 class UniversityPickerController: UIViewController {
     
+    @IBOutlet weak var indianaUniversityLogo: UIImageView?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let preferredUniversity = University.getStoredUniversityPreference() {
+            // bypass this controller if university preference is already set
+            University.currentUniversity = preferredUniversity
+            if let searchPartiesController = self.storyboard?.instantiateViewControllerWithIdentifier(searchPartyStoryboardIdentifier) as? PartySearchViewController {
+                self.navigationController?.pushViewController(searchPartiesController, animated: false)
+            }
+        }
+    }
+    
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = true
+        
+        let clickUniversityGestureRecognizer = UITapGestureRecognizer(target: self, action: "selectUniversity:")
+        self.indianaUniversityLogo?.addGestureRecognizer(clickUniversityGestureRecognizer)
         
         let viewFrame = self.view.frame
         let titleFrameVertPercentage: CGFloat = 0.1
@@ -23,10 +39,15 @@ class UniversityPickerController: UIViewController {
         super.viewWillAppear(animated)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "EnterAppSegue" {
-            University.currentUniversity = University(name: "Indiana University", location: CLLocationCoordinate2D(latitude: 39.1691355, longitude: -86.5149053))
+    func selectUniversity(sender: AnyObject?) {
+        if let sendingView = sender?.view {
+            if sendingView === self.indianaUniversityLogo {
+                University.currentUniversity = University.universityForType(UniversityType.IndianaUniversity)
+            }
+            self.performSegueWithIdentifier(enterAppSegueIdentifier, sender: self)
         }
     }
     
+    private let enterAppSegueIdentifier = "EnterAppSegueAnimated"
+    private let searchPartyStoryboardIdentifier = "SearchPartiesController"
 }

@@ -10,10 +10,11 @@ import UIKit
 import MapKit
 import SwiftyJSON
 import SVProgressHUD
+import FBSDKCoreKit
 
 public let SADFACE_CHAR: Character = "\u{1F61E}"
 
-class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate {
+class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, LoginViewControllerDelegate, CreatePartyViewControllerDelegate {
     
     @IBOutlet var listView: UITableView?
     @IBOutlet var mapView: MKMapView?
@@ -71,6 +72,12 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         if segue.identifier == partyDetailSegueIdentifier {
             let partyDetailViewController = segue.destinationViewController as! PartyDetailViewController
             partyDetailViewController.party = self.selectedParty
+        } else if segue.identifier == loginSegueIdentifier {
+            let loginController = segue.destinationViewController as! LoginViewController
+            loginController.delegate = self
+        } else if segue.identifier == createPartySegueIdentifier {
+            let createPartyController = segue.destinationViewController as! CreatePartyViewController
+            createPartyController.delegate = self
         }
         super.prepareForSegue(segue, sender: sender)
     }
@@ -150,10 +157,48 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     
+    // MARK: - LoginViewControllerDelegate
+    
+    func loginDidSucceed(loginController: LoginViewController) {
+        println("login did succeed")
+        loginController.dismissViewControllerAnimated(true, completion: {() -> Void in {
+            self.performSegueWithIdentifier("CreatePartySegue", sender: self)
+            }})
+    }
+    
+    func loginDidFail(loginController: LoginViewController, error: NSError!) {
+        println("login did fail")
+        UIAlertView(title: "Login Error", message: "Couldn't log in through Facebook", delegate: nil, cancelButtonTitle: "Ok")
+        loginController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func loginWasCancelled(loginController: LoginViewController) {
+        println("login was cancelled")
+        loginController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    // MARK: - CreatePartyViewControllerDelegate
+    
+    func createPartyDidCancel(viewController: CreatePartyViewController) {
+        viewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
     // MARK: - Generic Selectors
     
     @IBAction func backBarItemClick(sender: AnyObject?) {
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func createPartyButtonClick(sender: AnyObject?) {
+        if FBSDKAccessToken.currentAccessToken() == nil {
+            // user is not logged in
+            self.performSegueWithIdentifier(loginSegueIdentifier, sender: self)
+        } else {
+            // user is already logged in
+            self.performSegueWithIdentifier(createPartySegueIdentifier, sender: self)
+        }
     }
     
     @IBAction func mapViewSegmentedControlClick(sender: AnyObject?) {
@@ -223,6 +268,8 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - Primitive Constants
     
     private let partyDetailSegueIdentifier = "PartyDetailSegue"
+    private let loginSegueIdentifier = "LoginSegue"
+    private let createPartySegueIdentifier = "CreatePartySegue"
 }
 
 
