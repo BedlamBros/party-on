@@ -35,7 +35,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         
         self.providedBoolLabel?.text = party.byob ? String(THUMBS_DOWN_EMOJI) : String(OK_EMOJI)
         self.party.maleCost == 0;
-        self.guysPayTextField?.text = self.party.maleCost == 0 ? String(self.party.maleCost) : "Nothing!"
+        self.guysPayTextField?.text = self.party.maleCost != 0 ? String(self.party.maleCost) : "Nothing!"
         self.girlsPayTextFiled?.text = self.party.femaleCost != 0 ? String(self.party.femaleCost) : "Nothing!"
     }
     
@@ -73,10 +73,15 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     // MARK: - Generic Selectors
     
     @IBAction func addressButtonClick(sender: AnyObject?) {
+        let latLongString = String(format: "http://maps.apple.com/?q=%f,%f", self.party.location.latitude, self.party.location.longitude)
+        UIApplication.sharedApplication().openURL(NSURL(string: latLongString)!)
+        
+        /* Use this if you want to open a MapView within the app instead of in Maps
+        
         let mapViewController = ModalMapViewController()
         let partyPoint = PartyAnnotation(party: self.party!)
         mapViewController.annotations = [partyPoint]
-        self.presentViewController(mapViewController, animated: true, completion: nil)
+        self.presentViewController(mapViewController, animated: true, completion: nil)*/
         
     }
     
