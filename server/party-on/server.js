@@ -53,6 +53,5 @@ if ((cluster.isMaster) &&
         var port = config.https && config.https.port ? config.https.port : config.http.port;
 	console.log(config.strategies.facebook.enabled);
         console.log('Mean app started on port ' + port + ' (' + process.env.NODE_ENV + ') cluster.worker.id:', workerId);
-	console.log(config.strategies);
     });
 }
