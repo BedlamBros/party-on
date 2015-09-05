@@ -12,6 +12,7 @@ import CoreLocation
 class UniversityPickerController: UIViewController {
     
     @IBOutlet weak var indianaUniversityLogo: UIImageView?
+    @IBOutlet weak var backgroundImageView: UIImageView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,12 +31,14 @@ class UniversityPickerController: UIViewController {
         let clickUniversityGestureRecognizer = UITapGestureRecognizer(target: self, action: "selectUniversity:")
         self.indianaUniversityLogo?.addGestureRecognizer(clickUniversityGestureRecognizer)
         
-        let viewFrame = self.view.frame
+        let viewFrame = self.backgroundImageView!.frame
         let titleFrameVertPercentage: CGFloat = 0.1
-        let titleLabel = UILabel(frame: CGRectMake(0.0, 0.0, viewFrame.width, viewFrame.height * titleFrameVertPercentage))
+        let titleFrameSideMargin: CGFloat = 0.05 * viewFrame.width
+        let titleLabel = UILabel(frame: CGRectMake(titleFrameSideMargin, UIApplication.sharedApplication().statusBarFrame.height, viewFrame.width - (2 * titleFrameSideMargin), viewFrame.height * titleFrameVertPercentage))
         titleLabel.text = "Pick your University"
-        self.view.addSubview(titleLabel)
-        
+        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.font = UIFont(name: "Courier-Bold", size: 20)
+        self.backgroundImageView!.addSubview(titleLabel)
         super.viewWillAppear(animated)
     }
     

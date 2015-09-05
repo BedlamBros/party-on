@@ -49,4 +49,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         // TODO: support logout
     }
+    
+    
+    // MARK: - Generic Selectors
+    
+    @IBAction func backButtonClick(sender: AnyObject?) {
+        self.delegate?.loginWasCancelled(self)
+    }
 }

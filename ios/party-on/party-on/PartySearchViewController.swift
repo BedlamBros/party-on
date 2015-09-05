@@ -35,9 +35,20 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         self.mapView?.delegate = self
         
         let tableRefreshControl = UIRefreshControl()
-        tableRefreshControl.backgroundColor = UIColor.purpleColor()
+        tableRefreshControl.layer.zPosition -= 1
+        
+        
+        let refereshImageView = UIImageView(image: UIImage(named: "culture-newspaper-illegal.jpg"))
+        
+        
+        tableRefreshControl.insertSubview(refereshImageView, atIndex: 0)
+        tableRefreshControl.addSubview(refereshImageView)
+        
         tableRefreshControl.addTarget(self, action: "requery", forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = tableRefreshControl
+        //self.listView?.backgroundView = refereshImageView
+        //self.listView?.backgroundColor = UIColor.whiteColor()
+        //self.listView?.addSubview(refereshImageView)
         self.listView?.addSubview(tableRefreshControl)
         
         let partyJsonArray = JSON(data: NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("parties", ofType: "json")!)!)["parties"].arrayValue
@@ -86,13 +97,18 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - UITableViewDelegate
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellReuseIdentifier = "PartySearchCell"
-        let cell: PartyTableViewCell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier, forIndexPath: indexPath) as! PartyTableViewCell
+        let isFillerCell = indexPath.row >= PartiesDataStore.sharedInstance.nearbyParties.count
+        let reuseIdentifier =  isFillerCell ?  fillerCellReuseIdentifier : partyCellReuseIdentifier
         
+        let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UITableViewCell
         
-        let party = PartiesDataStore.sharedInstance.nearbyParties[indexPath.row]
-        cell.nameLabel?.text = (party.colloquialName != nil) ? party.colloquialName : party.formattedAddress
-        
+        if !isFillerCell {
+            // is a party cell
+            if let partyCell = cell as? PartyTableViewCell {
+                let party = PartiesDataStore.sharedInstance.nearbyParties[indexPath.row]
+                partyCell.nameLabel?.text = party.colloquialName != nil ? party.colloquialName : party.formattedAddress
+            }
+        }
         return cell
     }
     
@@ -116,14 +132,17 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return PartiesDataStore.sharedInstance.nearbyParties.count
+        return max(PartiesDataStore.sharedInstance.nearbyParties.count, minimumCellsInListView)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return tableView.frame.height / CGFloat(minimumCellsInListView)
     }
     
     
     // MARK: - MKMapViewDelegate
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
-        let partyAnnotationReuseIdentifier = "PartyAnnotationView"
         var annotationView: MKAnnotationView
         
         
@@ -237,6 +256,8 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
             // lock UI elements that shouldn't be used during requery
             self.useMapViewSegmentedControl?.userInteractionEnabled = false
             
+            
+            
             PartiesDataStore.sharedInstance.requeryNearbyParties { (err, parties) -> Void in
                 var errorAlertMsg: String?
                 if err != nil {
@@ -265,11 +286,16 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
+    
     // MARK: - Primitive Constants
     
     private let partyDetailSegueIdentifier = "PartyDetailSegue"
     private let loginSegueIdentifier = "LoginSegue"
     private let createPartySegueIdentifier = "CreatePartySegue"
+    private let minimumCellsInListView = 11
+    private let partyCellReuseIdentifier = "PartySearchCell"
+    private let fillerCellReuseIdentifier = "FillerCell"
+    private let partyAnnotationReuseIdentifier = "PartyAnnotationView"
 }
 
 

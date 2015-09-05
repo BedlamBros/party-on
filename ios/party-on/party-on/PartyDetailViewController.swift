@@ -18,8 +18,15 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     @IBOutlet weak var addressButton: UIButton?
     @IBOutlet weak var textFriendButton: UIButton?
     @IBOutlet weak var providedBoolLabel: UILabel?
-    @IBOutlet weak var guysPayTextField: UITextField?
-    @IBOutlet weak var girlsPayTextFiled: UITextField?
+    @IBOutlet weak var guysPayLabel: UILabel?
+    @IBOutlet weak var girlsPayLabel: UILabel?
+    @IBOutlet weak var startsLabel: UILabel?
+    
+    // Optional Fields
+    @IBOutlet weak var endsLabel: UILabel?
+    @IBOutlet weak var endsLabelLabel: UILabel?
+    @IBOutlet weak var descriptionLabel: UILabel?
+    @IBOutlet weak var descriptionTextView: UITextView?
     
     private static var textMessageViewController: MFMessageComposeViewController?
     
@@ -33,10 +40,29 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             PartyDetailViewController.textMessageViewController = MFMessageComposeViewController()
         }
         
-        self.providedBoolLabel?.text = party.byob ? String(THUMBS_DOWN_EMOJI) : String(OK_EMOJI)
+        self.providedBoolLabel?.text = party.byob ? "BYO" : "PROVIDED"
         self.party.maleCost == 0;
-        self.guysPayTextField?.text = self.party.maleCost != 0 ? String(self.party.maleCost) : "Nothing!"
-        self.girlsPayTextFiled?.text = self.party.femaleCost != 0 ? String(self.party.femaleCost) : "Nothing!"
+        self.guysPayLabel?.text = self.party.maleCost != 0 ? "$" + String(self.party.maleCost) : "FREE"
+        self.girlsPayLabel?.text = self.party.femaleCost != 0 ? "$" + String(self.party.femaleCost) : "FREE"
+        
+        let timeFormatter = NSDateFormatter()
+        timeFormatter.timeZone = NSTimeZone.systemTimeZone()
+        timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        self.startsLabel?.text = timeFormatter.stringFromDate(self.party.startTime)
+        
+        if let endTime = self.party.endTime {
+            self.endsLabel?.text = timeFormatter.stringFromDate(endTime)
+        } else {
+            self.endsLabel?.hidden = true
+            self.endsLabelLabel?.hidden = true
+        }
+        
+        if let description = self.party.descrip {
+            self.descriptionTextView?.text = description
+        } else {
+            self.descriptionTextView?.hidden = true
+            self.descriptionLabel?.hidden = true
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

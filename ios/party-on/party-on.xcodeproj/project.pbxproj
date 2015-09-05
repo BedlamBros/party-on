@@ -11,6 +11,9 @@
 		500068C91B94C33E008E6BB7 /* PartySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500068C81B94C33E008E6BB7 /* PartySearchViewController.swift */; };
 		500068CB1B94D4CC008E6BB7 /* Party.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500068CA1B94D4CC008E6BB7 /* Party.swift */; };
 		5001C9AC1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001C9AB1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png */; };
+		503657F41B9A810200F7C70A /* culture-newspaper-illegal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503657F31B9A810200F7C70A /* culture-newspaper-illegal.jpg */; };
+		503657F81B9A831400F7C70A /* newspile-illegal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503657F71B9A831400F7C70A /* newspile-illegal.jpg */; };
+		503657FA1B9B96F600F7C70A /* crumpled_black_paper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503657F91B9B96F600F7C70A /* crumpled_black_paper.jpg */; };
 		5047658E1B98BFA900303DF0 /* ModalMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */; };
 		504765901B98DBB700303DF0 /* LicenseDocumentation.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5047658F1B98DBB700303DF0 /* LicenseDocumentation.txt */; };
 		504765921B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */; };
@@ -57,6 +60,9 @@
 		500068CE1B94D741008E6BB7 /* libPods-party-on-SwiftyJSON.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-party-on-SwiftyJSON.a"; path = "Pods/build/Debug-iphoneos/libPods-party-on-SwiftyJSON.a"; sourceTree = "<group>"; };
 		500068D01B94D7DA008E6BB7 /* libPods-party-on.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-party-on.a"; path = "Pods/build/Debug-iphoneos/libPods-party-on.a"; sourceTree = "<group>"; };
 		5001C9AB1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Placeholder_Icon.png; sourceTree = "<group>"; };
+		503657F31B9A810200F7C70A /* culture-newspaper-illegal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "culture-newspaper-illegal.jpg"; sourceTree = "<group>"; };
+		503657F71B9A831400F7C70A /* newspile-illegal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "newspile-illegal.jpg"; sourceTree = "<group>"; };
+		503657F91B9B96F600F7C70A /* crumpled_black_paper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crumpled_black_paper.jpg; sourceTree = "<group>"; };
 		5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalMapViewController.swift; sourceTree = "<group>"; };
 		5047658F1B98DBB700303DF0 /* LicenseDocumentation.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LicenseDocumentation.txt; sourceTree = "<group>"; };
 		504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Indiana_University_(Athletics)_logo.png"; sourceTree = "<group>"; };
@@ -176,6 +182,9 @@
 		50F4B5151B94507800748D02 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				503657F91B9B96F600F7C70A /* crumpled_black_paper.jpg */,
+				503657F71B9A831400F7C70A /* newspile-illegal.jpg */,
+				503657F31B9A810200F7C70A /* culture-newspaper-illegal.jpg */,
 				5001C9AB1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png */,
 				504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */,
 				50D3AA261B97D02000CBA394 /* disclosure_indicator.png */,
@@ -333,11 +342,14 @@
 				50F4B51D1B94507800748D02 /* Main.storyboard in Resources */,
 				50F4B5221B94507800748D02 /* LaunchScreen.xib in Resources */,
 				50D3AA271B97D02000CBA394 /* disclosure_indicator.png in Resources */,
+				503657FA1B9B96F600F7C70A /* crumpled_black_paper.jpg in Resources */,
 				509827421B959B6600154D4B /* parties.json in Resources */,
 				50F4B51F1B94507800748D02 /* Images.xcassets in Resources */,
 				504765921B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png in Resources */,
 				5001C9AC1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png in Resources */,
+				503657F41B9A810200F7C70A /* culture-newspaper-illegal.jpg in Resources */,
 				504765901B98DBB700303DF0 /* LicenseDocumentation.txt in Resources */,
+				503657F81B9A831400F7C70A /* newspile-illegal.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

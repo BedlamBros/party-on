@@ -11,8 +11,6 @@ import CoreLocation
 import SwiftyJSON
 
 class Party: NSObject, ServerModel {
-    private var privateEndTime: NSDate?
-    
     var oID: String!// required
     var formattedAddress: String!// required
     var location: CLLocationCoordinate2D!// required
@@ -24,17 +22,7 @@ class Party: NSObject, ServerModel {
     var colloquialName: String?// optional
     var descrip: String?// optional - 256 char max
     
-    var endTime: NSDate {
-        get {
-            if let endTime = privateEndTime {
-                return endTime
-            }
-            // default to 3 hours past party start if end time not explicitly specified
-            return startTime.dateByAddingTimeInterval(60 * 60 * 3)
-        } set(val) {
-            privateEndTime = val
-        }
-    }
+    var endTime: NSDate?
     
     override init() {
         super.init()
@@ -81,8 +69,7 @@ class Party: NSObject, ServerModel {
         self.byob = byob
         self.colloquialName = colloquialName
         self.descrip = description
-        
-        self.privateEndTime = endTime
+        self.endTime = endTime
         
     }
 }
