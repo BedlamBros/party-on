@@ -119,6 +119,13 @@ PartySchema.path('university').validate(function(university) {
   return !!university;
 }, 'University cannot be blank');
 
+PartySchema.methods.toJSON = function() {
+    var json = this.toObject();
+    json.startTime = json.startTime.getTime();
+    json.created = json.created.getTime();
+    return json
+}
+
 /**
  * Statics
  */
