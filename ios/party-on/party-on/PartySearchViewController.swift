@@ -24,6 +24,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     private weak var selectedParty: Party?
 
     private var requeryLock: NSLock = NSLock()
+    private var navigationBarButtonTextAttributes: [NSObject: AnyObject]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +41,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         
         let refereshImageView = UIImageView(image: UIImage(named: "culture-newspaper-illegal.jpg"))
         
-        
+        // Refresh Control
         tableRefreshControl.insertSubview(refereshImageView, atIndex: 0)
         tableRefreshControl.addSubview(refereshImageView)
         
@@ -53,6 +54,22 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         
         let partyJsonArray = JSON(data: NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("parties", ofType: "json")!)!)["parties"].arrayValue
         
+        // Modify navigatonBar appearance
+        var navigationBarTextAttrs: [NSObject: AnyObject] = [:]
+        if let largeCourier = UIFont(name: "Courier", size: 22) {
+            navigationBarTextAttrs[NSFontAttributeName] = largeCourier
+        }
+        self.navigationController?.navigationBar.titleTextAttributes = navigationBarTextAttrs
+        
+        var barButtonTextAttrs: [NSObject: AnyObject] = [:]
+        if let smallCourier = UIFont(name: "Courier", size: 12) {
+            barButtonTextAttrs[NSFontAttributeName] = smallCourier
+        }
+        // save these options for all other navigation buttons
+        self.navigationBarButtonTextAttributes = barButtonTextAttrs
+        self.navigationItem.leftBarButtonItem?.setTitleTextAttributes(barButtonTextAttrs, forState: UIControlState.Normal)
+        
+        // Start off with a requery of parties
         requery()
     }
     
@@ -83,6 +100,12 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         if segue.identifier == partyDetailSegueIdentifier {
             let partyDetailViewController = segue.destinationViewController as! PartyDetailViewController
             partyDetailViewController.party = self.selectedParty
+            
+            // Set up the NEXT viewController's backItem, which is a property of self here
+            let backItem = UIBarButtonItem(title: nil, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+            backItem.setTitleTextAttributes(navigationBarButtonTextAttributes, forState: UIControlState.Normal)
+            self.navigationItem.backBarButtonItem = backItem
+            
         } else if segue.identifier == loginSegueIdentifier {
             let loginController = segue.destinationViewController as! LoginViewController
             loginController.delegate = self

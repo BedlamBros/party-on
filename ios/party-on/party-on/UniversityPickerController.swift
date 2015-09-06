@@ -16,6 +16,7 @@ class UniversityPickerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let preferredUniversity = University.getStoredUniversityPreference() {
             // bypass this controller if university preference is already set
             University.currentUniversity = preferredUniversity
@@ -23,10 +24,6 @@ class UniversityPickerController: UIViewController {
                 self.navigationController?.pushViewController(searchPartiesController, animated: false)
             }
         }
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBar.hidden = true
         
         let clickUniversityGestureRecognizer = UITapGestureRecognizer(target: self, action: "selectUniversity:")
         self.indianaUniversityLogo?.addGestureRecognizer(clickUniversityGestureRecognizer)
@@ -39,6 +36,10 @@ class UniversityPickerController: UIViewController {
         titleLabel.textColor = UIColor.whiteColor()
         titleLabel.font = UIFont(name: "Courier-Bold", size: 20)
         self.backgroundImageView!.addSubview(titleLabel)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.hidden = true
         super.viewWillAppear(animated)
     }
     

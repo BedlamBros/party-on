@@ -169,102 +169,173 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="GUYS:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UeF-wN-AsR" userLabel="GuysPayLabelLabel">
-                                <rect key="frame" x="16" y="85" width="142" height="24"/>
+                                <rect key="frame" x="13" y="72" width="134" height="24"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="22"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="GIRLS:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GHo-2N-omO" userLabel="GirlsPayLabelLabel">
-                                <rect key="frame" x="16" y="128" width="142" height="24"/>
+                                <rect key="frame" x="13" y="115" width="134" height="24"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="22"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="BEVERAGES:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahY-C1-nNk" userLabel="BeveragesLabelLabel">
-                                <rect key="frame" x="16" y="174" width="142" height="24"/>
+                                <rect key="frame" x="13" y="161" width="134" height="24"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="22"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jgk-wm-ntI">
-                                <rect key="frame" x="16" y="525" width="131" height="35"/>
-                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="19"/>
-                                <state key="normal" title="Look at a map"/>
-                                <connections>
-                                    <action selector="addressButtonClick:" destination="NEN-Ex-lSU" eventType="touchUpInside" id="Kr9-to-KqW"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bp2-Em-F0p">
-                                <rect key="frame" x="173" y="525" width="131" height="35"/>
-                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="19"/>
-                                <state key="normal" title="Tell a friend"/>
-                                <connections>
-                                    <action selector="sendTextMessageButtonClick:" destination="NEN-Ex-lSU" eventType="touchUpInside" id="Mfk-E1-3QZ"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eCY-oH-6eg" userLabel="GuysPayLabel">
-                                <rect key="frame" x="184" y="85" width="120" height="24"/>
+                                <rect key="frame" x="160" y="72" width="134" height="24"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="24"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSY-eU-thQ" userLabel="GirlsPayLabel">
-                                <rect key="frame" x="184" y="128" width="120" height="24"/>
+                                <rect key="frame" x="160" y="115" width="134" height="24"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="24"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9CG-hP-LKG" userLabel="BeveragesLabel">
-                                <rect key="frame" x="184" y="174" width="120" height="24"/>
+                                <rect key="frame" x="160" y="160" width="134" height="24"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="24"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="DAY:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3KF-4f-doJ" userLabel="DayLabelLabel">
-                                <rect key="frame" x="16" y="219" width="142" height="24"/>
+                                <rect key="frame" x="13" y="206" width="134" height="24"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="22"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Today?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLg-Rq-16v" userLabel="DayLabel">
-                                <rect key="frame" x="184" y="219" width="120" height="24"/>
+                                <rect key="frame" x="160" y="206" width="134" height="24"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="24"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="STARTS:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GQa-oa-F4e" userLabel="StartsLabelLabel">
-                                <rect key="frame" x="16" y="265" width="142" height="24"/>
+                                <rect key="frame" x="13" y="252" width="134" height="24"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="22"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="The Word:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bN3-3s-fOu" userLabel="TheWordLabel">
+                                <rect key="frame" x="5" y="305" width="134" height="24"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="18"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B62-iB-gO5" userLabel="StartsLabel">
-                                <rect key="frame" x="184" y="265" width="120" height="24"/>
+                                <rect key="frame" x="160" y="252" width="134" height="24"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="24"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="ENDS:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O4z-Sc-DHK" userLabel="EndsLabelLabel">
-                                <rect key="frame" x="16" y="312" width="142" height="24"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Vo-m1-nvQ" userLabel="EndsLabel">
+                                <rect key="frame" x="160" y="306" width="134" height="24"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="24"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="NOTES:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imc-5b-gAU" userLabel="NotesLabelLabel">
+                                <rect key="frame" x="16" y="357" width="142" height="24"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="22"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Vo-m1-nvQ" userLabel="EndsLabel">
-                                <rect key="frame" x="184" y="312" width="120" height="24"/>
-                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="24"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0RD-FN-gyZ">
-                                <rect key="frame" x="40" y="389" width="240" height="128"/>
+                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0RD-FN-gyZ">
+                                <rect key="frame" x="40" y="389" width="240" height="39"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="NOTES:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imc-5b-gAU" userLabel="NotesLabelLabel">
-                                <rect key="frame" x="16" y="357" width="142" height="24"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yrh-ed-zIT" userLabel="LaunchButtonContainer">
+                                <rect key="frame" x="16" y="525" width="288" height="35"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jgk-wm-ntI">
+                                        <rect key="frame" x="0.0" y="0.0" width="132" height="35"/>
+                                        <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="19"/>
+                                        <state key="normal" title="Look at a map"/>
+                                        <connections>
+                                            <action selector="addressButtonClick:" destination="NEN-Ex-lSU" eventType="touchUpInside" id="Kr9-to-KqW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bp2-Em-F0p">
+                                        <rect key="frame" x="156" y="0.0" width="132" height="35"/>
+                                        <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="19"/>
+                                        <state key="normal" title="Tell a friend"/>
+                                        <connections>
+                                            <action selector="sendTextMessageButtonClick:" destination="NEN-Ex-lSU" eventType="touchUpInside" id="Mfk-E1-3QZ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="bp2-Em-F0p" firstAttribute="leading" secondItem="Jgk-wm-ntI" secondAttribute="trailing" constant="17" id="3CU-TO-bZj"/>
+                                    <constraint firstAttribute="trailing" secondItem="bp2-Em-F0p" secondAttribute="trailing" constant="5" id="gMe-RB-1ku"/>
+                                    <constraint firstItem="bp2-Em-F0p" firstAttribute="centerY" secondItem="Jgk-wm-ntI" secondAttribute="centerY" id="hZb-sL-RnA"/>
+                                    <constraint firstAttribute="height" constant="35" id="scb-gY-xkU"/>
+                                    <constraint firstAttribute="bottom" secondItem="bp2-Em-F0p" secondAttribute="bottom" constant="1" id="tNL-SB-K6A"/>
+                                    <constraint firstItem="Jgk-wm-ntI" firstAttribute="leading" secondItem="yrh-ed-zIT" secondAttribute="leading" constant="5" id="z6t-Dk-ChL"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ckr-2d-v18" userLabel="TheWordTableView">
+                                <rect key="frame" x="16" y="328" width="288" height="189"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TheWordReadCell" textLabel="UqR-r7-yRP" style="IBUITableViewCellStyleDefault" id="AAn-kn-2Ew">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AAn-kn-2Ew" id="daw-Tt-Get">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" id="UqR-r7-yRP" userLabel="Message">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Title">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="16" name="AmericanTypewriter"/>
+                                                                <font key="NSOriginalFont" size="16" name="CourierNewPSMT"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TheWordWriteCell" textLabel="rAh-Yb-kkh" style="IBUITableViewCellStyleDefault" id="pAo-7Q-FMV">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pAo-7Q-FMV" id="tsF-VK-Hou">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rAh-Yb-kkh">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Make a comment">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="16" name="Courier-BoldOblique"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="delegate" destination="NEN-Ex-lSU" id="A3h-pb-PWR"/>
+                                </connections>
+                            </tableView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="ENDS:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O4z-Sc-DHK" userLabel="EndsLabelLabel">
+                                <rect key="frame" x="13" y="290" width="134" height="24"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="22"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -273,24 +344,26 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="O4z-Sc-DHK" firstAttribute="top" secondItem="GQa-oa-F4e" secondAttribute="bottom" constant="16" id="2O4-mb-jGs"/>
-                            <constraint firstItem="bp2-Em-F0p" firstAttribute="leading" secondItem="Jgk-wm-ntI" secondAttribute="trailing" constant="26" id="3Kd-WG-Tfn"/>
                             <constraint firstItem="FSY-eU-thQ" firstAttribute="width" secondItem="eCY-oH-6eg" secondAttribute="width" id="4JK-Yu-VCm"/>
                             <constraint firstItem="GHo-2N-omO" firstAttribute="trailing" secondItem="UeF-wN-AsR" secondAttribute="trailing" id="4Jz-Ph-zUr"/>
-                            <constraint firstItem="jRe-Ni-9B5" firstAttribute="top" secondItem="Jgk-wm-ntI" secondAttribute="bottom" constant="8" id="73g-NZ-5Oi"/>
+                            <constraint firstAttribute="centerX" secondItem="yrh-ed-zIT" secondAttribute="centerX" id="6g9-ai-UU2"/>
+                            <constraint firstItem="yrh-ed-zIT" firstAttribute="top" secondItem="okz-cs-d9h" secondAttribute="bottom" constant="525" id="8GH-ru-7Rb"/>
+                            <constraint firstItem="ckr-2d-v18" firstAttribute="leading" secondItem="ZCn-jk-Jh7" secondAttribute="leadingMargin" id="92r-El-NcW"/>
                             <constraint firstItem="GQa-oa-F4e" firstAttribute="trailing" secondItem="O4z-Sc-DHK" secondAttribute="trailing" id="9Dl-a9-cvG"/>
                             <constraint firstItem="0RD-FN-gyZ" firstAttribute="leading" secondItem="ZCn-jk-Jh7" secondAttribute="leadingMargin" constant="24" id="CRr-g1-8gX"/>
                             <constraint firstItem="UeF-wN-AsR" firstAttribute="leading" secondItem="ZCn-jk-Jh7" secondAttribute="leadingMargin" constant="13" id="Cga-SD-PLD"/>
                             <constraint firstItem="eCY-oH-6eg" firstAttribute="trailing" secondItem="ZCn-jk-Jh7" secondAttribute="trailingMargin" constant="13" id="Ck9-eD-wm3"/>
-                            <constraint firstItem="Jgk-wm-ntI" firstAttribute="leading" secondItem="ZCn-jk-Jh7" secondAttribute="leadingMargin" constant="13" id="Edv-iC-k4i"/>
                             <constraint firstItem="GHo-2N-omO" firstAttribute="trailing" secondItem="ahY-C1-nNk" secondAttribute="trailing" id="Hln-VA-FNH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0RD-FN-gyZ" secondAttribute="trailing" constant="24" id="Huf-KR-R2c"/>
                             <constraint firstItem="GQa-oa-F4e" firstAttribute="top" secondItem="3KF-4f-doJ" secondAttribute="bottom" constant="22" id="IDj-Dy-zNY"/>
                             <constraint firstItem="FSY-eU-thQ" firstAttribute="leading" secondItem="eCY-oH-6eg" secondAttribute="leading" id="ITK-81-Okv"/>
+                            <constraint firstItem="ckr-2d-v18" firstAttribute="trailing" secondItem="ZCn-jk-Jh7" secondAttribute="trailingMargin" id="JHD-yx-VHJ"/>
                             <constraint firstItem="eCY-oH-6eg" firstAttribute="leading" secondItem="UeF-wN-AsR" secondAttribute="trailing" constant="26" id="JIK-SV-E4s"/>
-                            <constraint firstItem="Jgk-wm-ntI" firstAttribute="centerY" secondItem="bp2-Em-F0p" secondAttribute="centerY" id="K4c-g7-0Wl"/>
                             <constraint firstItem="GLg-Rq-16v" firstAttribute="width" secondItem="9CG-hP-LKG" secondAttribute="width" id="KTs-jo-5eQ"/>
                             <constraint firstItem="eCY-oH-6eg" firstAttribute="centerY" secondItem="UeF-wN-AsR" secondAttribute="centerY" id="KWA-hb-7Mr"/>
                             <constraint firstItem="GHo-2N-omO" firstAttribute="top" secondItem="UeF-wN-AsR" secondAttribute="bottom" constant="19" id="L6L-vV-ALJ"/>
+                            <constraint firstItem="bN3-3s-fOu" firstAttribute="top" secondItem="GQa-oa-F4e" secondAttribute="bottom" constant="29" id="Mpf-Gg-qXq"/>
+                            <constraint firstItem="bN3-3s-fOu" firstAttribute="leading" secondItem="ZCn-jk-Jh7" secondAttribute="leadingMargin" constant="5" id="MvX-9q-STU"/>
                             <constraint firstItem="ahY-C1-nNk" firstAttribute="top" secondItem="GHo-2N-omO" secondAttribute="bottom" constant="19" id="RBw-Ja-Ixh"/>
                             <constraint firstItem="GLg-Rq-16v" firstAttribute="width" secondItem="B62-iB-gO5" secondAttribute="width" id="RCj-gz-ys6"/>
                             <constraint firstItem="FSY-eU-thQ" firstAttribute="width" secondItem="9CG-hP-LKG" secondAttribute="width" id="SOq-BH-LWb"/>
@@ -304,13 +377,15 @@
                             <constraint firstItem="FSY-eU-thQ" firstAttribute="centerY" secondItem="GHo-2N-omO" secondAttribute="centerY" id="d7J-Wq-1g0"/>
                             <constraint firstItem="3KF-4f-doJ" firstAttribute="top" secondItem="ahY-C1-nNk" secondAttribute="bottom" constant="21" id="dPt-dA-tVz"/>
                             <constraint firstItem="O4z-Sc-DHK" firstAttribute="centerY" secondItem="6Vo-m1-nvQ" secondAttribute="centerY" id="gB3-Eh-urO"/>
-                            <constraint firstItem="Jgk-wm-ntI" firstAttribute="top" secondItem="0RD-FN-gyZ" secondAttribute="bottom" constant="32" id="i6W-qR-Xs5"/>
-                            <constraint firstItem="bp2-Em-F0p" firstAttribute="trailing" secondItem="ZCn-jk-Jh7" secondAttribute="trailingMargin" constant="13" id="jq7-qc-Vwm"/>
+                            <constraint firstItem="jRe-Ni-9B5" firstAttribute="top" secondItem="yrh-ed-zIT" secondAttribute="bottom" constant="1" id="gJY-K6-p2B"/>
+                            <constraint firstItem="ckr-2d-v18" firstAttribute="top" secondItem="bN3-3s-fOu" secondAttribute="bottom" constant="20" id="k5l-gI-x5m"/>
                             <constraint firstItem="3KF-4f-doJ" firstAttribute="centerY" secondItem="GLg-Rq-16v" secondAttribute="centerY" id="ko2-7L-aLd"/>
                             <constraint firstItem="GQa-oa-F4e" firstAttribute="centerY" secondItem="B62-iB-gO5" secondAttribute="centerY" id="m0U-K5-CDo"/>
                             <constraint firstItem="ahY-C1-nNk" firstAttribute="centerY" secondItem="9CG-hP-LKG" secondAttribute="centerY" id="nwG-Ig-Jve"/>
                             <constraint firstItem="3KF-4f-doJ" firstAttribute="trailing" secondItem="ahY-C1-nNk" secondAttribute="trailing" id="oQg-GM-DGq"/>
                             <constraint firstItem="GLg-Rq-16v" firstAttribute="leading" secondItem="B62-iB-gO5" secondAttribute="leading" id="qJ1-to-Rcd"/>
+                            <constraint firstItem="yrh-ed-zIT" firstAttribute="width" secondItem="ZCn-jk-Jh7" secondAttribute="width" id="tCf-pa-j23"/>
+                            <constraint firstItem="yrh-ed-zIT" firstAttribute="top" secondItem="ckr-2d-v18" secondAttribute="bottom" constant="8" id="xIT-QV-U5C"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xut-yi-2Yp"/>
@@ -325,6 +400,7 @@
                         <outlet property="providedBoolLabel" destination="9CG-hP-LKG" id="5uV-Wx-Wbc"/>
                         <outlet property="startsLabel" destination="B62-iB-gO5" id="xUI-5O-Qmy"/>
                         <outlet property="textFriendButton" destination="bp2-Em-F0p" id="HhE-cc-IbV"/>
+                        <outlet property="theWordTableView" destination="ckr-2d-v18" id="JRn-v2-paw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bew-xa-m7J" userLabel="First Responder" sceneMemberID="firstResponder"/>
