@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@drawable/toolbar_background"
+        android:id="@+id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_drawer"
+                android:layout_alignParentLeft="true"
+                android:onClick="onHamburgerClick" />
+
+            <com.facebook.login.widget.LoginButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/facebook_auth_bttn"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_add_party"
+                android:onClick="onAddPartyClick"
+                android:id="@+id/toolbar_ic_add_party"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/switch_height"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/primary_hard"
+        android:textColorHighlight="@color/secondary_hard"
+        android:textOff="@string/list_view_off_option"
+        android:textOn="@string/list_view_on_option"/>
+
+    <ListView
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ListPartyActivity"
+        android:divider="@color/accent"
+        android:dividerHeight="@dimen/party_list_divider_size"
+        android:id="@+id/android:list">
+
+    </ListView>
+
+</LinearLayout>

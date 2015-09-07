@@ -41,6 +41,17 @@ module.exports = {
     // at all. The cookie will expunge when the browser is closed.
     maxAge: null
   },
+  /**
+  * Relevant Facebook app secrets are stored here. These should never
+  * be visible in plaintext.
+  */
+  strategies: {
+    facebook: {
+      "clientID": "127159637632248", //is this the same as the app_id?
+      "clientSecret": "1020894c3f6aeeda2b5ab661ab03effb",
+      "callbackURL", ""
+    }
+  },
   public: {
     languages: [{
       locale: 'en',

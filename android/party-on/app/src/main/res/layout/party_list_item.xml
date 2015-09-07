@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:clickable="true">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/party_title_default"
+        android:textSize="@dimen/party_title_text_size"
+        android:textColor="@color/primary_hard"
+        android:id="@+id/party_title"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/party_title"
+        android:text="@string/party_desc_default"
+        android:textSize="@dimen/party_desc_text_size"
+        android:textColor="@color/secondary_hard"
+        android:id="@+id/party_desc"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/party_desc"
+        android:textSize="@dimen/party_title_text_size"
+        android:drawableStart="@drawable/ic_treasure_map"
+        android:drawableLeft="@drawable/ic_treasure_map"
+        android:textColor="@color/secondary_hard"
+        android:id="@+id/party_readable_loc"/>
+
+</RelativeLayout>
