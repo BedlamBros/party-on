@@ -123,6 +123,11 @@ PartySchema.methods.toJSON = function() {
     var json = this.toObject();
     json.startTime = json.startTime.getTime();
     json.created = json.created.getTime();
+
+    if (_.has(json, 'endTime')) {
+      json.endTime = json.endTime.getTime();
+    }
+
     return json
 }
 
