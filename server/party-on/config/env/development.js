@@ -11,7 +11,10 @@ module.exports = {
   mongoose: {
     debug: false
   },
-  hostname: 'http://localhost:3000',
+  http: {
+    port: 80
+  },
+  hostname: 'http://localhost:80',
   app: {
     name: 'MEAN - A Modern Stack - Development'
   },
@@ -21,10 +24,10 @@ module.exports = {
     },
     landingPage: '/',
     facebook: {
-      clientID: 'DEFAULT_APP_ID',
-      clientSecret: 'APP_SECRET',
-      callbackURL: 'http://localhost:3000/api/auth/facebook/callback',
-      enabled: false
+      clientID: '127159637632248',
+      clientSecret: '195b073dc2194ae6b6fc2c5b1d198fdf',
+      callbackURL: 'http://ec2-52-27-42-182.us-west-2.compute.amazonaws.com/api/auth/facebook/callback',
+      enabled: true
     },
     twitter: {
       clientID: 'DEFAULT_CONSUMER_KEY',
