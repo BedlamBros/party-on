@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
     Party = mongoose.model('Party'),
     config = require('meanio').loadConfig(),
+    geocoder = require('./geocoder.js'),
     _ = require('lodash');
 
 module.exports = function(Parties) {
@@ -32,6 +33,10 @@ module.exports = function(Parties) {
         create: function(req, res, next) {
             var party = new Party(req.body);
             party.user = req.user;
+	    function (res, callback){
+
+	    var mGeocode = geocoder.geocode(req.dirtyAddress);
+	    party.formattedAddress = mGeocode[0].formattedAddress;
             
             party.save(function(err) {
                 if (err) {
