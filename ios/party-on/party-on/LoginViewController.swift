@@ -30,7 +30,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
@@ -42,7 +41,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         } else if result.isCancelled {
             self.delegate?.loginWasCancelled(self)
         } else {
-            self.delegate?.loginDidSucceed(self)
+            findUserByFBToken(result.token.tokenString)
         }
     }
     
@@ -55,5 +54,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     @IBAction func backButtonClick(sender: AnyObject?) {
         self.delegate?.loginWasCancelled(self)
+    }
+    
+    func findUserByFBToken(fbToken: String) {
+        // TODO: Make a server call to log in
+
+        self.delegate?.loginDidSucceed(self)
     }
 }

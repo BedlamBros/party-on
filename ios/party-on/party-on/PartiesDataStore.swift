@@ -12,9 +12,10 @@ import SwiftyJSON
 import Synchronized
 
 typealias NearbyPartiesCallback = (err: NSError?, parties: [Party]?) -> Void
+typealias UpdatePartyCallback = (err: NSError?, party: Party?) -> Void
 
 // WARNING: - Exposing all API secrets here
-public let API_ROOT: String = "http://52.27.42.182/api"
+public let API_ROOT: String = "http://52.10.210.220/api"
 
 class PartiesDataStore: NSObject {
    
@@ -65,4 +66,58 @@ class PartiesDataStore: NSObject {
             })
         })
     }
+    
+    func POST(party: Party, callback: UpdatePartyCallback) {
+        return putOrPost(party, method: "POST", callback: callback)
+    }
+    
+    func PUT(party: Party, callback: UpdatePartyCallback) {
+        return putOrPost(party, method: "PUT", callback: callback)
+    }
+    
+    private func putOrPost(party: Party, method: String, callback: UpdatePartyCallback) {
+        prepareAuthHeaders()
+        //self.httpManager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let syncCallback: UpdatePartyCallback = { (err: NSError?, party: Party?) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                callback(err: err, party: party)
+            })
+        }
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            var url = API_ROOT + "/parties"
+            var parameters = party.toJSON().dictionaryObject
+            if parameters == nil {
+                return syncCallback(err: NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not create party JSON"]), party: nil)
+            }
+            
+            var success: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
+                let party = Party(json: JSON(response))
+                return syncCallback(err: nil, party: party)
+            }
+            var failure: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
+                let err = NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Server request failed"])
+                return syncCallback(err: err, party: nil)
+            }
+            
+            switch method {
+            case "POST":
+                self.httpManager.POST(url, parameters: parameters!, success: success, failure: failure)
+            case "PUT":
+                self.httpManager.PUT(url, parameters: parameters!, success: success, failure: failure)
+            default:
+                return syncCallback(err: NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Not a valid http method"]), party: nil)
+            }
+        })
+    }
+    
+    private func prepareAuthHeaders() {
+        if let fbToken = MainUser.sharedInstance?.fbToken {
+            self.httpManager.requestSerializer.setValue("Bearer " + fbToken, forHTTPHeaderField: "Authorization")
+        }
+    }
 }
+
+
+

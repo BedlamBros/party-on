@@ -14,7 +14,7 @@ import FBSDKCoreKit
 
 public let SADFACE_CHAR: Character = "\u{1F61E}"
 
-class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, LoginViewControllerDelegate, CreatePartyViewControllerDelegate {
+class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, LoginViewControllerDelegate, CreateEditPartyViewControllerDelegate {
     
     @IBOutlet var listView: UITableView?
     @IBOutlet var mapView: MKMapView?
@@ -110,7 +110,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
             let loginController = segue.destinationViewController as! LoginViewController
             loginController.delegate = self
         } else if segue.identifier == createPartySegueIdentifier {
-            let createPartyController = segue.destinationViewController as! CreatePartyViewController
+            let createPartyController = segue.destinationViewController as! CreateEditPartyViewController
             createPartyController.delegate = self
         }
         super.prepareForSegue(segue, sender: sender)
@@ -205,7 +205,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         println("login did succeed")
         loginController.dismissViewControllerAnimated(true, completion: {() -> Void in {
             self.performSegueWithIdentifier("CreatePartySegue", sender: self)
-            }})
+        }})
     }
     
     func loginDidFail(loginController: LoginViewController, error: NSError!) {
@@ -222,8 +222,24 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: - CreatePartyViewControllerDelegate
     
-    func createPartyDidCancel(viewController: CreatePartyViewController) {
+    func createEditPartyDidCancel(viewController: CreateEditPartyViewController) {
         viewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func createEditPartyDidSucceed(viewController: CreateEditPartyViewController, party: Party, method: CreateEditPartyActionType) {
+        viewController.dismissViewControllerAnimated(true, completion: { () -> Void in
+            
+            // react to success differently based on HTTP method
+            switch method {
+            case .POST:
+                self.selectedParty = party
+                self.performSegueWithIdentifier(self.partyDetailSegueIdentifier, sender: self)
+            case .PUT:
+                break
+            case .DELETE:
+                break
+            }
+        })
     }
     
     
@@ -239,7 +255,15 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
             self.performSegueWithIdentifier(loginSegueIdentifier, sender: self)
         } else {
             // user is already logged in
-            self.performSegueWithIdentifier(createPartySegueIdentifier, sender: self)
+            MainUser.loginWithFBToken({ (err) -> Void in
+                if err != nil {
+                    // FB logged in but failed on servers
+                    UIAlertView(title: "Uh-oh", message: "Failed to log in to our servers", delegate: nil, cancelButtonTitle: "Ok")
+                } else {
+                    // logged in and got our user data
+                    self.performSegueWithIdentifier(self.createPartySegueIdentifier, sender: self)
+                }
+            })
         }
     }
     

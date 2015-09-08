@@ -12,6 +12,7 @@ import SwiftyJSON
 class User: NSObject, ServerModel {
     
     var oID: String!
+    var fbToken: String?
     var username: String?
     
     override init() {
@@ -20,6 +21,8 @@ class User: NSObject, ServerModel {
     
     required init(json: JSON) {
         super.init()
+        self.oID = json["_id"].stringValue
+        self.username = json["username"].string
     }
     
     func toJSON() -> JSON {

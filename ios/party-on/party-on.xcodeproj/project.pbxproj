@@ -19,7 +19,7 @@
 		504765921B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */; };
 		50633AEF1B990444002A685E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50633AEE1B990444002A685E /* FBSDKCoreKit.framework */; };
 		50633AF11B990451002A685E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50633AF01B990451002A685E /* FBSDKLoginKit.framework */; };
-		50633AF31B992263002A685E /* CreatePartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50633AF21B992263002A685E /* CreatePartyViewController.swift */; };
+		50633AF31B992263002A685E /* CreateEditPartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50633AF21B992263002A685E /* CreateEditPartyViewController.swift */; };
 		509827421B959B6600154D4B /* parties.json in Resources */ = {isa = PBXBuildFile; fileRef = 509827411B959B6600154D4B /* parties.json */; };
 		50D3AA251B97C2BE00CBA394 /* PartyAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */; };
 		50D3AA271B97D02000CBA394 /* disclosure_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 50D3AA261B97D02000CBA394 /* disclosure_indicator.png */; };
@@ -68,7 +68,7 @@
 		504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Indiana_University_(Athletics)_logo.png"; sourceTree = "<group>"; };
 		50633AEE1B990444002A685E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		50633AF01B990451002A685E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		50633AF21B992263002A685E /* CreatePartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePartyViewController.swift; sourceTree = "<group>"; };
+		50633AF21B992263002A685E /* CreateEditPartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEditPartyViewController.swift; sourceTree = "<group>"; };
 		509827411B959B6600154D4B /* parties.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parties.json; sourceTree = "<group>"; };
 		50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyAnnotation.swift; sourceTree = "<group>"; };
 		50D3AA261B97D02000CBA394 /* disclosure_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = disclosure_indicator.png; path = ../../../../../Downloads/disclosure_indicator.png; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 			children = (
 				5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */,
 				50F4B5381B94BC8D00748D02 /* LoginViewController.swift */,
-				50633AF21B992263002A685E /* CreatePartyViewController.swift */,
+				50633AF21B992263002A685E /* CreateEditPartyViewController.swift */,
 			);
 			name = Modal;
 			sourceTree = "<group>";
@@ -427,7 +427,7 @@
 				50F4B5181B94507800748D02 /* AppDelegate.swift in Sources */,
 				50D3AA251B97C2BE00CBA394 /* PartyAnnotation.swift in Sources */,
 				50F4B5421B94BFF600748D02 /* University.swift in Sources */,
-				50633AF31B992263002A685E /* CreatePartyViewController.swift in Sources */,
+				50633AF31B992263002A685E /* CreateEditPartyViewController.swift in Sources */,
 				50D3AA2C1B98214B00CBA394 /* SVProgressHUD+BlockUI.swift in Sources */,
 				50DE45751B950A990075CBF9 /* UniversityPickerController.swift in Sources */,
 				500068C91B94C33E008E6BB7 /* PartySearchViewController.swift in Sources */,
