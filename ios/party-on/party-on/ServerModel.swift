@@ -12,4 +12,5 @@ import SwiftyJSON
 protocol ServerModel {
     var oID: String! { get set }
     init(json: JSON)
+    func toJSON() -> JSON
 }

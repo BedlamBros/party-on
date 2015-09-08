@@ -51,6 +51,15 @@ class University: NSObject, ServerModel {
         self.location = location
     }
     
+    func toJSON() -> JSON {
+        return JSON([
+            "_id": oID,
+            "name": name,
+            "latitude": location.latitude,
+            "longitude": location.longitude
+        ])
+    }
+    
     class func universityForType(type: UniversityType) -> University {
         return self.universitiesDB[type]!
     }

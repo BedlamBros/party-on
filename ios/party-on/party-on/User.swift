@@ -21,4 +21,11 @@ class User: NSObject, ServerModel {
     required init(json: JSON) {
         super.init()
     }
+    
+    func toJSON() -> JSON {
+        return JSON([
+            "_id": oID,
+            "username": username
+        ])
+    }
 }

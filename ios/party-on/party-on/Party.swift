@@ -70,6 +70,29 @@ class Party: NSObject, ServerModel {
         self.colloquialName = colloquialName
         self.descrip = description
         self.endTime = endTime
+    }
+    
+    func toJSON() -> JSON {
+        var json = JSON([
+            "_id": oID,
+            "formattedAddress": formattedAddress,
+            "latitude": location.latitude,
+            "longitude": location.longitude,
+            "startTime": startTime.timeIntervalSince1970,
+            "maleCost": maleCost,
+            "femaleCost": femaleCost,
+            "byob": byob,
+        ])
+        if let colloquial = colloquialName {
+            json["colloquialName"] = JSON(colloquial)
+        }
+        if let description = descrip {
+            json["description"] = JSON(description)
+        }
+        if let end = endTime {
+            json["endTime"] = JSON(end.timeIntervalSince1970)
+        }
         
+        return json
     }
 }
