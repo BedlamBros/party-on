@@ -10,10 +10,11 @@ import UIKit
 import MapKit
 import SwiftyJSON
 import SVProgressHUD
+import FBSDKCoreKit
 
 public let SADFACE_CHAR: Character = "\u{1F61E}"
 
-class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate {
+class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, LoginViewControllerDelegate, CreateEditPartyViewControllerDelegate {
     
     @IBOutlet var listView: UITableView?
     @IBOutlet var mapView: MKMapView?
@@ -23,6 +24,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     private weak var selectedParty: Party?
 
     private var requeryLock: NSLock = NSLock()
+    private var navigationBarButtonTextAttributes: [NSObject: AnyObject]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,13 +36,40 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         self.mapView?.delegate = self
         
         let tableRefreshControl = UIRefreshControl()
-        tableRefreshControl.backgroundColor = UIColor.purpleColor()
+        tableRefreshControl.layer.zPosition -= 1
+        
+        
+        let refereshImageView = UIImageView(image: UIImage(named: "culture-newspaper-illegal.jpg"))
+        
+        // Refresh Control
+        tableRefreshControl.insertSubview(refereshImageView, atIndex: 0)
+        tableRefreshControl.addSubview(refereshImageView)
+        
         tableRefreshControl.addTarget(self, action: "requery", forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = tableRefreshControl
+        //self.listView?.backgroundView = refereshImageView
+        //self.listView?.backgroundColor = UIColor.whiteColor()
+        //self.listView?.addSubview(refereshImageView)
         self.listView?.addSubview(tableRefreshControl)
         
         let partyJsonArray = JSON(data: NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("parties", ofType: "json")!)!)["parties"].arrayValue
         
+        // Modify navigatonBar appearance
+        var navigationBarTextAttrs: [NSObject: AnyObject] = [:]
+        if let largeCourier = UIFont(name: "Courier", size: 22) {
+            navigationBarTextAttrs[NSFontAttributeName] = largeCourier
+        }
+        self.navigationController?.navigationBar.titleTextAttributes = navigationBarTextAttrs
+        
+        var barButtonTextAttrs: [NSObject: AnyObject] = [:]
+        if let smallCourier = UIFont(name: "Courier", size: 12) {
+            barButtonTextAttrs[NSFontAttributeName] = smallCourier
+        }
+        // save these options for all other navigation buttons
+        self.navigationBarButtonTextAttributes = barButtonTextAttrs
+        self.navigationItem.leftBarButtonItem?.setTitleTextAttributes(barButtonTextAttrs, forState: UIControlState.Normal)
+        
+        // Start off with a requery of parties
         requery()
     }
     
@@ -71,6 +100,18 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         if segue.identifier == partyDetailSegueIdentifier {
             let partyDetailViewController = segue.destinationViewController as! PartyDetailViewController
             partyDetailViewController.party = self.selectedParty
+            
+            // Set up the NEXT viewController's backItem, which is a property of self here
+            let backItem = UIBarButtonItem(title: nil, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+            backItem.setTitleTextAttributes(navigationBarButtonTextAttributes, forState: UIControlState.Normal)
+            self.navigationItem.backBarButtonItem = backItem
+            
+        } else if segue.identifier == loginSegueIdentifier {
+            let loginController = segue.destinationViewController as! LoginViewController
+            loginController.delegate = self
+        } else if segue.identifier == createPartySegueIdentifier {
+            let createPartyController = segue.destinationViewController as! CreateEditPartyViewController
+            createPartyController.delegate = self
         }
         super.prepareForSegue(segue, sender: sender)
     }
@@ -79,13 +120,18 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - UITableViewDelegate
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellReuseIdentifier = "PartySearchCell"
-        let cell: PartyTableViewCell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier, forIndexPath: indexPath) as! PartyTableViewCell
+        let isFillerCell = indexPath.row >= PartiesDataStore.sharedInstance.nearbyParties.count
+        let reuseIdentifier =  isFillerCell ?  fillerCellReuseIdentifier : partyCellReuseIdentifier
         
+        let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UITableViewCell
         
-        let party = PartiesDataStore.sharedInstance.nearbyParties[indexPath.row]
-        cell.nameLabel?.text = (party.colloquialName != nil) ? party.colloquialName : party.formattedAddress
-        
+        if !isFillerCell {
+            // is a party cell
+            if let partyCell = cell as? PartyTableViewCell {
+                let party = PartiesDataStore.sharedInstance.nearbyParties[indexPath.row]
+                partyCell.nameLabel?.text = party.colloquialName != nil ? party.colloquialName : party.formattedAddress
+            }
+        }
         return cell
     }
     
@@ -109,14 +155,17 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return PartiesDataStore.sharedInstance.nearbyParties.count
+        return max(PartiesDataStore.sharedInstance.nearbyParties.count, minimumCellsInListView)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return tableView.frame.height / CGFloat(minimumCellsInListView)
     }
     
     
     // MARK: - MKMapViewDelegate
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
-        let partyAnnotationReuseIdentifier = "PartyAnnotationView"
         var annotationView: MKAnnotationView
         
         
@@ -150,10 +199,72 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     
+    // MARK: - LoginViewControllerDelegate
+    
+    func loginDidSucceed(loginController: LoginViewController) {
+        println("login did succeed")
+        loginController.dismissViewControllerAnimated(true, completion: {() -> Void in {
+            self.performSegueWithIdentifier("CreatePartySegue", sender: self)
+        }})
+    }
+    
+    func loginDidFail(loginController: LoginViewController, error: NSError!) {
+        println("login did fail")
+        UIAlertView(title: "Login Error", message: "Couldn't log in through Facebook", delegate: nil, cancelButtonTitle: "Ok")
+        loginController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func loginWasCancelled(loginController: LoginViewController) {
+        println("login was cancelled")
+        loginController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    // MARK: - CreatePartyViewControllerDelegate
+    
+    func createEditPartyDidCancel(viewController: CreateEditPartyViewController) {
+        viewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func createEditPartyDidSucceed(viewController: CreateEditPartyViewController, party: Party, method: CreateEditPartyActionType) {
+        viewController.dismissViewControllerAnimated(true, completion: { () -> Void in
+            
+            // react to success differently based on HTTP method
+            switch method {
+            case .POST:
+                self.selectedParty = party
+                self.performSegueWithIdentifier(self.partyDetailSegueIdentifier, sender: self)
+            case .PUT:
+                break
+            case .DELETE:
+                break
+            }
+        })
+    }
+    
+    
     // MARK: - Generic Selectors
     
     @IBAction func backBarItemClick(sender: AnyObject?) {
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func createPartyButtonClick(sender: AnyObject?) {
+        if FBSDKAccessToken.currentAccessToken() == nil {
+            // user is not logged in
+            self.performSegueWithIdentifier(loginSegueIdentifier, sender: self)
+        } else {
+            // user is already logged in
+            MainUser.loginWithFBToken({ (err) -> Void in
+                if err != nil {
+                    // FB logged in but failed on servers
+                    UIAlertView(title: "Uh-oh", message: "Failed to log in to our servers", delegate: nil, cancelButtonTitle: "Ok")
+                } else {
+                    // logged in and got our user data
+                    self.performSegueWithIdentifier(self.createPartySegueIdentifier, sender: self)
+                }
+            })
+        }
     }
     
     @IBAction func mapViewSegmentedControlClick(sender: AnyObject?) {
@@ -192,6 +303,8 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
             // lock UI elements that shouldn't be used during requery
             self.useMapViewSegmentedControl?.userInteractionEnabled = false
             
+            
+            
             PartiesDataStore.sharedInstance.requeryNearbyParties { (err, parties) -> Void in
                 var errorAlertMsg: String?
                 if err != nil {
@@ -220,9 +333,16 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
+    
     // MARK: - Primitive Constants
     
     private let partyDetailSegueIdentifier = "PartyDetailSegue"
+    private let loginSegueIdentifier = "LoginSegue"
+    private let createPartySegueIdentifier = "CreatePartySegue"
+    private let minimumCellsInListView = 11
+    private let partyCellReuseIdentifier = "PartySearchCell"
+    private let fillerCellReuseIdentifier = "FillerCell"
+    private let partyAnnotationReuseIdentifier = "PartyAnnotationView"
 }
 
 

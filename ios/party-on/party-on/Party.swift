@@ -11,8 +11,6 @@ import CoreLocation
 import SwiftyJSON
 
 class Party: NSObject, ServerModel {
-    private var privateEndTime: NSDate?
-    
     var oID: String!// required
     var formattedAddress: String!// required
     var location: CLLocationCoordinate2D!// required
@@ -24,17 +22,7 @@ class Party: NSObject, ServerModel {
     var colloquialName: String?// optional
     var descrip: String?// optional - 256 char max
     
-    var endTime: NSDate {
-        get {
-            if let endTime = privateEndTime {
-                return endTime
-            }
-            // default to 3 hours past party start if end time not explicitly specified
-            return startTime.dateByAddingTimeInterval(60 * 60 * 3)
-        } set(val) {
-            privateEndTime = val
-        }
-    }
+    var endTime: NSDate?
     
     override init() {
         super.init()
@@ -53,6 +41,8 @@ class Party: NSObject, ServerModel {
         self.femaleCost = json["femaleCost"].number!.unsignedLongValue
         self.byob = json["byob"].boolValue
         
+        self.startTime = NSDate(timeIntervalSince1970: json["startTime"].number!.doubleValue / 1000)
+        
         // optional properties
         if let colloquialName = json["colloquialName"].string {
             self.colloquialName = colloquialName
@@ -61,17 +51,11 @@ class Party: NSObject, ServerModel {
             self.descrip = description
         }
         
-        // MongoDB dates
-        let mongoDateFormatter = NSDateFormatter()
-        mongoDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        
-        self.startTime = mongoDateFormatter.dateFromString(json["startTime"].stringValue)
-        if let endTimeDateString = json["endTime"].string {
-            privateEndTime = mongoDateFormatter.dateFromString(endTimeDateString)
-        }
-        
-        
         super.init()
+        
+        if let endTime = json["endTime"].number {
+            self.endTime = NSDate(timeIntervalSince1970: json["endTime"].number!.doubleValue / 1000)
+        }
     }
     
     convenience init(oID: String, formattedAddress: String, location: CLLocationCoordinate2D, startTime: NSDate, endTime: NSDate?, maleCost: UInt, femaleCost: UInt, byob: Bool, colloquialName: String?, description: String?) {
@@ -85,8 +69,30 @@ class Party: NSObject, ServerModel {
         self.byob = byob
         self.colloquialName = colloquialName
         self.descrip = description
+        self.endTime = endTime
+    }
+    
+    func toJSON() -> JSON {
+        var json = JSON([
+            "_id": oID,
+            "formattedAddress": formattedAddress,
+            "latitude": location.latitude,
+            "longitude": location.longitude,
+            "startTime": startTime.timeIntervalSince1970,
+            "maleCost": maleCost,
+            "femaleCost": femaleCost,
+            "byob": byob,
+        ])
+        if let colloquial = colloquialName {
+            json["colloquialName"] = JSON(colloquial)
+        }
+        if let description = descrip {
+            json["description"] = JSON(description)
+        }
+        if let end = endTime {
+            json["endTime"] = JSON(end.timeIntervalSince1970)
+        }
         
-        self.privateEndTime = endTime
-        
+        return json
     }
 }

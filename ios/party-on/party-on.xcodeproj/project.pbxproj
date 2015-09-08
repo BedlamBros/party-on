@@ -10,6 +10,16 @@
 		39B826AE5271AE14C3C6018B /* Pods_party_on.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A663BBB54B3D7CC419B2244 /* Pods_party_on.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		500068C91B94C33E008E6BB7 /* PartySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500068C81B94C33E008E6BB7 /* PartySearchViewController.swift */; };
 		500068CB1B94D4CC008E6BB7 /* Party.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500068CA1B94D4CC008E6BB7 /* Party.swift */; };
+		5001C9AC1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001C9AB1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png */; };
+		503657F41B9A810200F7C70A /* culture-newspaper-illegal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503657F31B9A810200F7C70A /* culture-newspaper-illegal.jpg */; };
+		503657F81B9A831400F7C70A /* newspile-illegal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503657F71B9A831400F7C70A /* newspile-illegal.jpg */; };
+		503657FA1B9B96F600F7C70A /* crumpled_black_paper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503657F91B9B96F600F7C70A /* crumpled_black_paper.jpg */; };
+		5047658E1B98BFA900303DF0 /* ModalMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */; };
+		504765901B98DBB700303DF0 /* LicenseDocumentation.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5047658F1B98DBB700303DF0 /* LicenseDocumentation.txt */; };
+		504765921B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */; };
+		50633AEF1B990444002A685E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50633AEE1B990444002A685E /* FBSDKCoreKit.framework */; };
+		50633AF11B990451002A685E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50633AF01B990451002A685E /* FBSDKLoginKit.framework */; };
+		50633AF31B992263002A685E /* CreateEditPartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50633AF21B992263002A685E /* CreateEditPartyViewController.swift */; };
 		509827421B959B6600154D4B /* parties.json in Resources */ = {isa = PBXBuildFile; fileRef = 509827411B959B6600154D4B /* parties.json */; };
 		50D3AA251B97C2BE00CBA394 /* PartyAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */; };
 		50D3AA271B97D02000CBA394 /* disclosure_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 50D3AA261B97D02000CBA394 /* disclosure_indicator.png */; };
@@ -49,6 +59,16 @@
 		500068CC1B94D6C7008E6BB7 /* libPods-party-on-SwiftyJSON.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-party-on-SwiftyJSON.a"; path = "Pods/build/Debug-iphoneos/libPods-party-on-SwiftyJSON.a"; sourceTree = "<group>"; };
 		500068CE1B94D741008E6BB7 /* libPods-party-on-SwiftyJSON.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-party-on-SwiftyJSON.a"; path = "Pods/build/Debug-iphoneos/libPods-party-on-SwiftyJSON.a"; sourceTree = "<group>"; };
 		500068D01B94D7DA008E6BB7 /* libPods-party-on.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-party-on.a"; path = "Pods/build/Debug-iphoneos/libPods-party-on.a"; sourceTree = "<group>"; };
+		5001C9AB1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Placeholder_Icon.png; sourceTree = "<group>"; };
+		503657F31B9A810200F7C70A /* culture-newspaper-illegal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "culture-newspaper-illegal.jpg"; sourceTree = "<group>"; };
+		503657F71B9A831400F7C70A /* newspile-illegal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "newspile-illegal.jpg"; sourceTree = "<group>"; };
+		503657F91B9B96F600F7C70A /* crumpled_black_paper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crumpled_black_paper.jpg; sourceTree = "<group>"; };
+		5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalMapViewController.swift; sourceTree = "<group>"; };
+		5047658F1B98DBB700303DF0 /* LicenseDocumentation.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LicenseDocumentation.txt; sourceTree = "<group>"; };
+		504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Indiana_University_(Athletics)_logo.png"; sourceTree = "<group>"; };
+		50633AEE1B990444002A685E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		50633AF01B990451002A685E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		50633AF21B992263002A685E /* CreateEditPartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEditPartyViewController.swift; sourceTree = "<group>"; };
 		509827411B959B6600154D4B /* parties.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parties.json; sourceTree = "<group>"; };
 		50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyAnnotation.swift; sourceTree = "<group>"; };
 		50D3AA261B97D02000CBA394 /* disclosure_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = disclosure_indicator.png; path = ../../../../../Downloads/disclosure_indicator.png; sourceTree = "<group>"; };
@@ -79,6 +99,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				39B826AE5271AE14C3C6018B /* Pods_party_on.framework in Frameworks */,
+				50633AEF1B990444002A685E /* FBSDKCoreKit.framework in Frameworks */,
+				50633AF11B990451002A685E /* FBSDKLoginKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +114,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50633AEA1B98F9A5002A685E /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */,
+				50F4B5381B94BC8D00748D02 /* LoginViewController.swift */,
+				50633AF21B992263002A685E /* CreateEditPartyViewController.swift */,
+			);
+			name = Modal;
+			sourceTree = "<group>";
+		};
+		50633AED1B99042B002A685E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				50633AF01B990451002A685E /* FBSDKLoginKit.framework */,
+				50633AEE1B990444002A685E /* FBSDKCoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		50DE456D1B94DB5C0075CBF9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +166,7 @@
 		50F4B5141B94507800748D02 /* party-on */ = {
 			isa = PBXGroup;
 			children = (
+				50633AED1B99042B002A685E /* Frameworks */,
 				50DE456D1B94DB5C0075CBF9 /* Views */,
 				50F4B53A1B94BD1500748D02 /* models */,
 				50F4B5371B94BC6500748D02 /* Controllers */,
@@ -140,9 +182,15 @@
 		50F4B5151B94507800748D02 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				503657F91B9B96F600F7C70A /* crumpled_black_paper.jpg */,
+				503657F71B9A831400F7C70A /* newspile-illegal.jpg */,
+				503657F31B9A810200F7C70A /* culture-newspaper-illegal.jpg */,
+				5001C9AB1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png */,
+				504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */,
 				50D3AA261B97D02000CBA394 /* disclosure_indicator.png */,
 				50F4B5161B94507800748D02 /* Info.plist */,
 				509827411B959B6600154D4B /* parties.json */,
+				5047658F1B98DBB700303DF0 /* LicenseDocumentation.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -167,7 +215,7 @@
 		50F4B5371B94BC6500748D02 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				50F4B5381B94BC8D00748D02 /* LoginViewController.swift */,
+				50633AEA1B98F9A5002A685E /* Modal */,
 				500068C81B94C33E008E6BB7 /* PartySearchViewController.swift */,
 				50DE45701B94E0D40075CBF9 /* PartyDetailViewController.swift */,
 				50DE45741B950A990075CBF9 /* UniversityPickerController.swift */,
@@ -294,8 +342,14 @@
 				50F4B51D1B94507800748D02 /* Main.storyboard in Resources */,
 				50F4B5221B94507800748D02 /* LaunchScreen.xib in Resources */,
 				50D3AA271B97D02000CBA394 /* disclosure_indicator.png in Resources */,
+				503657FA1B9B96F600F7C70A /* crumpled_black_paper.jpg in Resources */,
 				509827421B959B6600154D4B /* parties.json in Resources */,
 				50F4B51F1B94507800748D02 /* Images.xcassets in Resources */,
+				504765921B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png in Resources */,
+				5001C9AC1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png in Resources */,
+				503657F41B9A810200F7C70A /* culture-newspaper-illegal.jpg in Resources */,
+				504765901B98DBB700303DF0 /* LicenseDocumentation.txt in Resources */,
+				503657F81B9A831400F7C70A /* newspile-illegal.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,12 +420,14 @@
 				50F4B53C1B94BD3C00748D02 /* User.swift in Sources */,
 				50F4B5401B94BEC000748D02 /* ServerModel.swift in Sources */,
 				50DE45711B94E0D40075CBF9 /* PartyDetailViewController.swift in Sources */,
+				5047658E1B98BFA900303DF0 /* ModalMapViewController.swift in Sources */,
 				50DE456F1B94DB6E0075CBF9 /* PartyTableViewCell.swift in Sources */,
 				50D3AA291B97FDAE00CBA394 /* PartiesDataStore.swift in Sources */,
 				50F4B5391B94BC8D00748D02 /* LoginViewController.swift in Sources */,
 				50F4B5181B94507800748D02 /* AppDelegate.swift in Sources */,
 				50D3AA251B97C2BE00CBA394 /* PartyAnnotation.swift in Sources */,
 				50F4B5421B94BFF600748D02 /* University.swift in Sources */,
+				50633AF31B992263002A685E /* CreateEditPartyViewController.swift in Sources */,
 				50D3AA2C1B98214B00CBA394 /* SVProgressHUD+BlockUI.swift in Sources */,
 				50DE45751B950A990075CBF9 /* UniversityPickerController.swift in Sources */,
 				500068C91B94C33E008E6BB7 /* PartySearchViewController.swift in Sources */,
@@ -498,7 +554,12 @@
 			baseConfigurationReference = 42F5FF059F6F370261E2C720 /* Pods-party-on.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/party-on",
+				);
 				INFOPLIST_FILE = "party-on/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -513,7 +574,12 @@
 			baseConfigurationReference = 2FBF0600EE99D576624B5A3A /* Pods-party-on.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/party-on",
+				);
 				INFOPLIST_FILE = "party-on/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

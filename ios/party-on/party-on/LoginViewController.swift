@@ -7,27 +7,58 @@
 //
 
 import UIKit
+import SVProgressHUD
+import FBSDKLoginKit
 
-class LoginViewController: UIViewController {
+protocol LoginViewControllerDelegate: class {
+    func loginDidSucceed(loginController: LoginViewController)
+    func loginDidFail(loginController: LoginViewController, error: NSError!)
+    func loginWasCancelled(loginController: LoginViewController)
+}
+
+class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
+    
+    @IBOutlet weak var fbLoginButton: FBSDKLoginButton?
+    
+    weak var delegate: LoginViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        fbLoginButton!.readPermissions = ["public_profile"]
+        fbLoginButton?.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        super.prepareForSegue(segue, sender: sender)
+    // MARK: - FBSDKLoginButtonDelegate
+    
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        if error != nil {
+            self.delegate?.loginDidFail(self, error: error)
+        } else if result.isCancelled {
+            self.delegate?.loginWasCancelled(self)
+        } else {
+            findUserByFBToken(result.token.tokenString)
+        }
     }
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        // TODO: support logout
+    }
+    
+    
+    // MARK: - Generic Selectors
+    
+    @IBAction func backButtonClick(sender: AnyObject?) {
+        self.delegate?.loginWasCancelled(self)
+    }
+    
+    func findUserByFBToken(fbToken: String) {
+        // TODO: Make a server call to log in
 
-
+        self.delegate?.loginDidSucceed(self)
+    }
 }

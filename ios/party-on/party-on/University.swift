@@ -10,9 +10,28 @@ import Foundation
 import CoreLocation
 import SwiftyJSON
 
+enum UniversityType : String {
+    case IndianaUniversity = "Indiana University"
+}
+
 class University: NSObject, ServerModel {
     
-    static var currentUniversity: University! = nil
+    private static var privateCurrentUniversity: University!
+    static var currentUniversity: University! {
+        get {
+            return privateCurrentUniversity
+        } set(val) {
+            // Remember the user's university preference
+            let preferences = NSUserDefaults.standardUserDefaults()
+            preferences.setObject(val.name, forKey: universityPreferencesKey)
+            preferences.synchronize()
+            
+            privateCurrentUniversity = val
+        }
+    }
+    private static var universitiesDB = [UniversityType.IndianaUniversity: University(name: UniversityType.IndianaUniversity.rawValue, location: CLLocationCoordinate2D(latitude: 39.1691355, longitude: -86.5149053))]
+    
+    
     
     var oID: String!
     var name: String!
@@ -32,4 +51,32 @@ class University: NSObject, ServerModel {
         self.location = location
     }
     
+    func toJSON() -> JSON {
+        return JSON([
+            "_id": oID,
+            "name": name,
+            "latitude": location.latitude,
+            "longitude": location.longitude
+        ])
+    }
+    
+    class func universityForType(type: UniversityType) -> University {
+        return self.universitiesDB[type]!
+    }
+    
+    // returns the user's preferred university if one exists
+    class func getStoredUniversityPreference() -> University? {
+        var retVal: University?
+        var x = NSUserDefaults.standardUserDefaults().stringForKey(universityPreferencesKey)
+        if let storedUniversityString = NSUserDefaults.standardUserDefaults().stringForKey(universityPreferencesKey) {
+            if let storedUniversityType = UniversityType(rawValue: storedUniversityString) {
+                if let university = universitiesDB[storedUniversityType] {
+                    retVal = university
+                }
+            }
+        }
+        return retVal
+    }
+    
+    private static let universityPreferencesKey = "CurrentUniversity"
 }

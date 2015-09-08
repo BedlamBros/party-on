@@ -13,6 +13,15 @@ class PartyAnnotation: MKPointAnnotation {
     
     var party: Party?
     
+    override init() {
+        super.init()
+    }
+    
+    convenience init(party: Party) {
+        self.init()
+        self.party = party
+    }
+    
     override var title: String! {
         get {
             if super.title != nil {
