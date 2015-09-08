@@ -33,10 +33,16 @@ module.exports = function(Parties) {
         create: function(req, res, next) {
             var party = new Party(req.body);
             party.user = req.user;
-	    function (res, callback){
 
-	    var mGeocode = geocoder.geocode(req.dirtyAddress);
-	    party.formattedAddress = mGeocode[0].formattedAddress;
+	    //now using a callback pattern
+	    geocoder.geocode(party.formattedAddress + " Bloomington, IN", function(err, res){
+console.log(res);
+	      party.formattedAddress = res[0].formattedAddress;
+	      if (err){
+		console.log("CAUGHT ERROR WITHIN PARTIES NODE_GEOCODER");
+		console.log(err);
+	      }
+	    });
             
             party.save(function(err) {
                 if (err) {

@@ -77,6 +77,10 @@ var PartySchema = new Schema({
     type: String,
     required: true,
     enum: supportedUniversities
+  },
+  words: {
+    type: [String],
+    required: false,
   }
 });
 
@@ -124,6 +128,7 @@ PartySchema.methods.toJSON = function() {
     json.startTime = json.startTime.getTime();
     json.created = json.created.getTime();
 
+    //return response in UTC timestamp
     if (_.has(json, 'endTime')) {
       json.endTime = json.endTime.getTime();
     }

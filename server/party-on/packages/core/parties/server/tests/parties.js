@@ -140,6 +140,35 @@ describe('Create and save user', function() {
             done();
           });
         });
+      
+      it('should be able to use geocoder for formattedAddres', function(done){
+	this.timeout(3000);
+
+	crudParty = new Party(_.omit(party.toJSON(), '_id'));
+        crudParty.startTime.setHours(party.startTime.getHours() + 4);
+
+        var requestConfig = {
+          uri: config.hostname + '/api/parties',
+          auth: {
+            bearer: loginToken
+          },
+          method: 'POST',
+          json: crudParty.toJSON()
+          };
+
+	request(requestConfig, function(err, resp, body) {
+            expect(err).to.be(null);
+            expect(resp.statusCode).to.be(200);
+            expect(body.formattedAddress).to.be
+            .equal('629 South Woodlawn Avenue, Bloomington, IN 47401, USA');
+
+            crudParty = new Party(body);
+            done();
+          });
+
+
+	done();
+      });
 
       it('should be able to GET a party', function(done) {
         this.timeout(10000);
