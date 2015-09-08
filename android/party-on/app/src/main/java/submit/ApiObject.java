@@ -1,6 +1,6 @@
 package submit;
 
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
 
 /**
  * Created by John on 9/2/2015.
@@ -11,5 +11,5 @@ public interface ApiObject {
 
     String toJson();
 
-    Object fromJson(JSONObject json);
+    Object fromJson(JsonObject json);
 }

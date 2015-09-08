@@ -11,5 +11,5 @@ import models.Party;
  */
 public interface PartyListLoadable {
 
-    ArrayList<Party> getPartyList();
+    //ArrayList<Party> getPartyList();
 }

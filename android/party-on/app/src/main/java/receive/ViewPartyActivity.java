@@ -2,11 +2,13 @@ package receive;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.util.Log;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import net.john.partyon.R;
@@ -31,18 +33,28 @@ public class ViewPartyActivity extends Activity {
     private TextView mTv_gendered_prices;
     private CheckBox mCb_byob;
 
+    private ListView mWordLv;
+
     public void onCreate(Bundle saved_instance){
         super.onCreate(saved_instance);
         setContentView(R.layout.activity_fullscreen_party_list_item);
 
         //set views by R.id
-        mTv_title = (TextView) findViewById(R.id.fullscreen_party_item_title);
+        //mTv_title = (TextView) findViewById(R.id.fullscreen_party_item_title);
         mTv_readable_loc = (TextView) findViewById(R.id.fullscreen_party_item_readable_loc);
         mTv_desc = (TextView) findViewById(R.id.fullscreen_party_item_desc);
         mTv_starts_at = (TextView) findViewById(R.id.fullscreen_party_item_starts_at);
         mTv_ends_at = (TextView) findViewById(R.id.fullscreen_party_item_ends_at);
         mTv_gendered_prices = (TextView) findViewById(R.id.fullscreen_party_item_gendered_prices);
         mCb_byob = (CheckBox) findViewById(R.id.fullscreen_party_item_byob);
+
+        mWordLv = (ListView) findViewById(R.id.the_word_cont);
+
+        //set the Typeface
+        Typeface mPg99Typeface = Typeface.createFromAsset(getAssets(),
+                getResources().getString(R.string.typeface_stylish));
+        mTv_readable_loc.setTypeface(mPg99Typeface);
+
 
         try {
             getPartyFromExtra();
@@ -67,7 +79,7 @@ public class ViewPartyActivity extends Activity {
 
     private void fillViewFromParty(){
         //all of these fields are required by the model and therefore will be shown
-        mTv_title.setText(mParty.getTitle());
+        //mTv_title.setText(mParty.getTitle());
         mTv_readable_loc.setText(getResources().getString(R.string.submit_form_loc_title) + mParty.getformatted_address());
         mTv_desc.setText(getResources().getString(R.string.submit_form_desc_title) + mParty.getDesc());
         Date mDate_starts_at = new Date(mParty.getStart_time());

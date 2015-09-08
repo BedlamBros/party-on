@@ -11,7 +11,7 @@ import submit.ApiObject;
  * This is the object that will be serialized and sent to the server when a deletion request
  * is made.
  */
-public class DeletionRequest implements ApiObject {
+public class DeletionRequest {
     private boolean mDesc_included = false;
     private boolean mImg_included = false;
     private Image mImage;

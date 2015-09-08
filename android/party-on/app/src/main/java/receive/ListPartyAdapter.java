@@ -2,6 +2,7 @@ package receive;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -57,13 +58,19 @@ public class ListPartyAdapter extends ArrayAdapter<Party> {
             convert_view = LayoutInflater.from(mContext)
                     .inflate(R.layout.party_list_item, parent, false);
         }
-        TextView mTv_title = (TextView) convert_view.findViewById(R.id.party_title);
-        mTv_title.setText(mParty_list.get(position).getTitle());
-        TextView mTv_desc = (TextView) convert_view.findViewById(R.id.party_desc);
-        mTv_desc.setText(mParty_list.get(position).getDesc());
+       // TextView mTv_title = (TextView) convert_view.findViewById(R.id.party_title);
+        //mTv_title.setText(mParty_list.get(position).getTitle());
+        //TextView mTv_desc = (TextView) convert_view.findViewById(R.id.party_desc);
+        //mTv_desc.setText(mParty_list.get(position).getDesc());
         TextView mTv_readable_loc = (TextView) convert_view.findViewById(R.id.party_readable_loc);
         mTv_readable_loc.setText(mParty_list.get(position).getformatted_address());
-        convert_view.setOnClickListener(mPartyItemClickListener);
+        //convert_view.setOnClickListener(mPartyItemClickListener);
+
+        //set the typeface
+        Typeface font = Typeface.createFromAsset(mContext.getAssets(),
+                mContext.getResources().getString(R.string.typeface_stylish));
+        mTv_readable_loc.setTypeface(font);
+
         return convert_view;
     }
 
@@ -77,7 +84,7 @@ public class ListPartyAdapter extends ArrayAdapter<Party> {
             //TODO jesus fuck, change this soon
             for (int i = 0; i < mParty_list.size(); i++){
                 ViewGroup parent = (ViewGroup) view.getParent();
-                if (parent.getChildAt(i).getId() == id){
+                if (parent.getChildAt(i).getId() == id && party_found == false){
                     party = mParty_list.get(i);
                     party_found = true;
                     Log.d("receive", "party clicked " + party.toString());

@@ -2,6 +2,7 @@ package submit;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -10,28 +11,35 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.gson.JsonObject;
+
 import net.john.partyon.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import models.Party;
 
 /**
  * Created by John on 9/2/2015.
  */
 public class SubmitPartyActivity extends Activity {
     // these vals are packaged in the json
-    private String mTitle;
+    //private String mTitle;
     private String mDesc;
     private float mLat;
     private float mLon;
 
+    private ApiObjectSubmitter mApiObjectSubmitter;
     private long ms_end_offset;
+
+    private Party apiParty;
 
     //helpful for iterating through required views
     private final int REQUIRED_ETS = 2;
     private final int REQUIRED_TPS = 1;
 
-    private EditText mTitle_et;
+    private EditText mColloq_name_et;
     private EditText mDesc_et;
     private EditText mAddress_et;
     private TimePicker mTimePicker_start;
@@ -48,7 +56,7 @@ public class SubmitPartyActivity extends Activity {
         setContentView(R.layout.activity_submit_party);
 
         //get all relevant views from the layout
-        mTitle_et = (EditText) findViewById(R.id.submit_form_edit_title);
+        mColloq_name_et = (EditText) findViewById(R.id.submit_form_edit_title);
         mDesc_et = (EditText) findViewById(R.id.submit_form_edit_desc);
         mAddress_et = (EditText) findViewById(R.id.submit_form_edit_loc);
         mTimePicker_start = (TimePicker) findViewById(R.id.submit_form_edit_starts_at);
@@ -58,11 +66,11 @@ public class SubmitPartyActivity extends Activity {
         mSubmit_button = (Button) findViewById(R.id.submit_button);
 
         //add a listener to the textview
-        mTitle_et.setOnEditorActionListener(mEditorListener);
+        mColloq_name_et.setOnEditorActionListener(mEditorListener);
         mDesc_et.setOnEditorActionListener(mEditorListener);
 
         //enumerate required views
-        required_views[0] = mTitle_et;
+        required_views[0] = mColloq_name_et;
         required_views[1] = mDesc_et;
         required_views[2] = mTimePicker_start;
 
@@ -89,7 +97,11 @@ public class SubmitPartyActivity extends Activity {
     }
 
     public void onSubmitButtonClick(View view){
-
+        Log.d("submit", "submit button clicked");
+        mApiObjectSubmitter = new ApiObjectSubmitter();
+        Party mParty = new Party(mColloq_name_et.getText().toString(), mDesc_et.getText().toString(), "420 N Jefferson");
+        String jsonObject = mParty.toJson();
+        mApiObjectSubmitter.execute(jsonObject);
     }
 
     public void onGetLocationClick(View view){

@@ -1,4 +1,5 @@
 'use strict';
+var geocoder = require('./geocoder.js');
 
 /**
  * Module dependencies.
@@ -32,6 +33,7 @@ module.exports = function(Parties) {
         create: function(req, res, next) {
             var party = new Party(req.body);
             party.user = req.user;
+            console.log(party);
             
             party.save(function(err) {
                 if (err) {

@@ -2,10 +2,13 @@ package models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
-import org.json.JSONObject;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -66,7 +69,7 @@ public class Party  implements Parcelable, ApiObject{
         //flag_list.add(Flag.GREEN);
     }
 
-    public Party fromJson(JSONObject json){
+    public Party fromJson(JsonObject json){
         return new PartyFactory().create(json);
     }
 
@@ -210,8 +213,11 @@ public class Party  implements Parcelable, ApiObject{
     }
 
     public String toJson(){
-        Gson mGson = new Gson();
-        return mGson.toJson(this.toString());
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("formattedAddress", formatted_address);
+        jsonObject.addProperty("user", "55ee1c874db6aa021458cf1f");
+        jsonObject.addProperty("university", "Indiana University");
+        return jsonObject.toString();
     }
 
     /*
@@ -250,9 +256,14 @@ public class Party  implements Parcelable, ApiObject{
     }
 
     public static class PartyFactory{
-        protected Party create(JSONObject json){
+
+        @Nullable
+        public static Party create(JsonObject json){
             //TODO create party from json
-            return null;
+            //String title = json.get("_id").getAsString();
+            String desc = "downloaded from api";
+            String formattedAddress = json.get("formattedAddress").getAsString();
+            return new Party("apiParty", desc, formattedAddress);
         }
 
         protected Party create(Parcel in){
