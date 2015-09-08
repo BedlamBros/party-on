@@ -89,6 +89,9 @@ module.exports = function(MeanUser, app, auth, database, passport) {
         .get(passport.authenticate('facebook', {
           failureRedirect: '/auth/login',
         }), users.authCallback);
+
+      app.route('/api/auth/facebook/getorcreate')
+	.post(users.verifyFBToken, users.getOrCreateFB);
   }
 /*
   if(config.strategies.github.enabled)

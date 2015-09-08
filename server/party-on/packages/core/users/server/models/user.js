@@ -39,6 +39,30 @@ var escapeProperty = function(value) {
 };
 
 /**
+ * Facebook Login info sub-schema
+ */
+
+var FBLoginSchema = new Schema({
+  userId: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  accessToken: {
+    type: String,
+    required: true
+  }
+});
+
+FBLoginSchema.path('userId').validate(function(userId) {
+  return !!userId;
+});
+
+FBLoginSchema.path('accessToken').validate(function(accessToken) {
+  return !!accessToken;
+});
+
+/**
  * User Schema
  */
 
@@ -78,7 +102,10 @@ var UserSchema = new Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   profile: {},
-  facebook: {},
+  facebook: {
+    type: Schema.ObjectId,
+    ref: 'FBLogin'
+  },
   twitter: {},
   github: {},
   google: {},
@@ -179,4 +206,5 @@ UserSchema.methods = {
   }
 };
 
+mongoose.model('FBLogin', FBLoginSchema);
 mongoose.model('User', UserSchema);

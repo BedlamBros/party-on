@@ -5,11 +5,13 @@
  */
 var mongoose = require('mongoose'),
   User = mongoose.model('User'),
+  FBLogin = mongoose.model('FBLogin'),
   async = require('async'),
   config = require('meanio').loadConfig(),
   crypto = require('crypto'),
   nodemailer = require('nodemailer'),
   templates = require('../template'),
+  request   = require('request'),
   _ = require('lodash'),
   jwt = require('jsonwebtoken'); //https://npmjs.org/package/node-jsonwebtoken
 
@@ -201,10 +203,111 @@ module.exports = function(MeanUser) {
             });
         },
 
+	/**
+	 * Ensure that a purported FB user accessToken actually belongs to the user and is active
+	 */
+	verifyFBToken: function(req, res, next) {
+	async.waterfall([
+	  function(cb) {
+	    /*
+	     * Expect req to be of form {"user_id": USER_ID, "access_token": ACCESS_TOKEN}
+	     * where user_id is the app-scoped userId and access_token is the purported
+	     * access token owned by the user
+	     */
+	    if (!req.body.user_id || !req.body.access_token) {
+	      // request did not have necessary parameters
+	      return cb(new Error('request must specify user_id and access_token'));
+	    }
+	    //var fbEndpoint = 'https://graph.facebook.com/oauth/access_token';
+	    var fbVerifyEndpoint = 'https://graph.facebook.com/debug_token';
+	    request({url: fbVerifyEndpoint, qs: {
+	      //client_id: config.strategies.facebook.clientID,
+	      //client_secret: config.strategies.facebook.clientSecret,
+	      //grant_type: 'client_credentials'
+	      access_token: config.strategies.facebook.clientID + '|' + config.strategies.facebook.clientSecret,
+	      input_token: req.body.access_token
+	    }}, function(err, resp, body) {
+	      if (err) return cb(err);
+	      if (resp.statusCode != 200) {
+		return cb(new Error('Could not validate authenticity of token from facebook'));
+	      }
+	      return cb(null, JSON.parse(body));
+	    });
+	  },
+	  function(debugTokenResponse, cb) {
+	    debugTokenResponse = debugTokenResponse.data;
+	    if (!debugTokenResponse.is_valid || req.body.user_id != debugTokenResponse.user_id) {
+	      return cb(new Error('Token is not considered valid for this user'));
+	    }
+	    // facebook says this token is good for this user
+	    cb();
+	  }
+	],
+          function(err, result) {
+	    if (err) return res.status(401).send(err.toString());
+	    return next();
+	  });
+	},
+	/**
+	 * Attempt to get a User by their facebook login info. If user doesn't exist or their access_token expired, update them in the database. NOTE: Assumes req.body.user_id and req.body.access_token are values from facebook that are KNOWN TO BE VALID
+	 */
+	getOrCreateFB: function(req, res) {
+	    async.waterfall([
+	      function(cb) {
+		if (!req.body.user_id || !req.body.access_token) {
+		  return cb(new Error('facebook user_id and access_token must be present in request body'));
+		}
+		FBLogin.findOne({
+		  userId: req.body.user_id
+		})
+		.exec(function(err, fbLogin) {
+		  if (err) return cb(err);
+		  if (!fbLogin) return cb(null, null);
+		  User.findOne({
+		    'facebook': fbLogin._id
+		  })
+		  .populate('facebook')
+		  .exec(cb);
+		});
+	      },
+	      function(user, cb) {
+		if (!user) {
+		  console.log('creating a new user from facebook data');
+		  // user does not exist for this user_id
+		  var newFBLogin = new FBLogin({
+		      userId: req.body.user_id,
+		      accessToken: req.body.access_token
+		  });
+		  newFBLogin.save(function(err, fbLogin) {
+		    if (err) return cb(err);
+		    var newUser = new User({
+		      name: 'Name NotImplemented',
+		      username: 'facebook-' + req.body.user_id,
+		      provider: 'facebook',
+		      facebook: fbLogin
+		    });
+		    return newUser.save(cb);
+		  });
+		} else {
+		  // user already exists
+		  if (user.facebook && user.facebook.access_token == req.body.access_token) {
+		    // user access token matches current facebook access_token
+		    return cb(null, user);
+		  } else {
+		    // user exists, but access_token has changed
+		    user.facebook.accessToken = req.body.access_token;
+		    return user.save(cb);
+		  }
+		}
+	      }
+	    ], function(err, result) {
+	      if (err) return res.status(500).send(err.toString());
+	      return res.json(result);
+	    });
+	},
         /**
          * Resets the password
          */
-
         resetpassword: function(req, res, next) {
             User.findOne({
                 resetPasswordToken: req.params.token,
