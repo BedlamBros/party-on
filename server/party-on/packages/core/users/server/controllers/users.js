@@ -272,8 +272,6 @@ module.exports = function(MeanUser) {
 	      },
 	      function(user, cb) {
 		if (!user) {
-		  console.log('creating a new user from facebook data');
-		  console.log(req.body);
 		  // user does not exist for this user_id
 		  var newFBLogin = new FBLogin({
 		      userId: req.body.user_id,

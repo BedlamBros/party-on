@@ -480,5 +480,29 @@ describe('<Unit Test>', function() {
 	});
       });
     });
+
+    it('should authenticate when using facebook bearer token header', function(done) {
+      var fbTestUser = config.testUsers.facebook;
+      var authTestEndpoint = config.hostname + '/api/auth/test/requireslogin';
+      // make a test request to see if Bearer login will work
+      request({
+	uri: authTestEndpoint,
+	method: 'POST',
+	headers: {
+	  // headers necessary for Bearer login
+	  'Authorization': 'Bearer ' + fbTestUser.accessToken,
+	  'Passport-Auth-Strategy': 'Facebook'
+	}
+      }, function(err, resp, body) {
+	expect(err).to.be(null);
+	expect(resp.statusCode).to.be(200);
+	// parse out the body from string? data here
+	body = JSON.parse(body);
+	expect(body.facebook.userId)
+	  .to.be.equal(fbTestUser.userId);
+	done();
+      });
+    });
+
   });
 });

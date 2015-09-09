@@ -16,6 +16,13 @@ module.exports = {
   app: {
     name: 'MEAN - A Modern Stack - Test'
   },
+  testUsers: {
+    // permanent test users that should not be deleted
+    facebook: {
+      userId: '135895850095335',
+      accessToken: 'CAABzpqkH5PgBAGTPOu8OJ5GfOXE728RJWmtUbKIDReoBOXLdFZAkURiSO77aFRN2usmM8L7dwjBwo9jDWwGZAodPZAxZAqnG5iwnUALMT5uuCFGfvcWDIwKle4AEZBS3uTDeGc78doMs16xQSziVZCOonOMzqhbNf8hRtdpG1ZBKRO9wdk0X28NsV4kAhZBvIvUoI99GuST4agZDZD'
+    }
+  },
   strategies: {
     local: {
       enabled: true

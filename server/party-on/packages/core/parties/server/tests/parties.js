@@ -133,8 +133,8 @@ describe('Create and save user', function() {
           request(requestConfig, function(err, resp, body) {
             expect(err).to.be(null);
             expect(resp.statusCode).to.be(200);
-            expect(body.formattedAddress).to.be
-            .equal(requestConfig.json.formattedAddress);
+            expect(body.startTime).to.be
+            .equal(requestConfig.json.startTime);
 
             crudParty = new Party(body);
             done();
@@ -165,9 +165,6 @@ describe('Create and save user', function() {
             crudParty = new Party(body);
             done();
           });
-
-
-	done();
       });
 
       it('should be able to GET a party', function(done) {

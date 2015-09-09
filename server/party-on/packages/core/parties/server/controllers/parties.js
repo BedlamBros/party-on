@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+    async = require('async'),
     Party = mongoose.model('Party'),
     config = require('meanio').loadConfig(),
     geocoder = require('./geocoder.js'),
@@ -31,36 +32,26 @@ module.exports = function(Parties) {
          * Create a party
          */
         create: function(req, res, next) {
-            var party = new Party(req.body);
-            party.user = req.user;
-
-	    //now using a callback pattern
-	    geocoder.geocode(party.formattedAddress + " Bloomington, IN", function(err, res){
-console.log(res);
-	      party.formattedAddress = res[0].formattedAddress;
-	      if (err){
-		console.log("CAUGHT ERROR WITHIN PARTIES NODE_GEOCODER");
+	  var party = new Party(req.body);
+	  party.user = req.user;
+	  
+	  // now using a callback pattern
+	  async.waterfall([function(cb) {
+	      geocoder.geocode(party.formattedAddress + " Bloomington, IN", cb);
+	    },
+	    function(geocodeResponse, cb) {
+	      party.formattedAddress = geocodeResponse[0].formattedAddress;
+	      party.save(cb);
+	    }], 
+	    function(err, savedParty) {
+	      if (err) {
 		console.log(err);
+		return res.status(500).json({
+		  error: 'Cannot save the party'
+		});
 	      }
+	      return res.json(party);
 	    });
-            
-            party.save(function(err) {
-                if (err) {
-                    res.status(500).json({
-                        error: 'Cannot save the party'
-                    });
-                }
-
-                /*Party.events.publish({
-                    action: 'created',
-                    user: {
-                        name: req.user.name
-                    },
-                    url: config.hostname + '/parties/' + parties._id,
-                    name: party.title
-                });*/
-                res.json(party);
-            })
         },
         /**
          * Update a party
