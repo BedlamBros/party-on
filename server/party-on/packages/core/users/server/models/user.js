@@ -132,6 +132,15 @@ UserSchema.pre('save', function(next) {
   next();
 });
 
+UserSchema.pre('remove', function(next) {
+  if (!!this.facebook) {
+    mongoose.model('FBLogin').remove({
+      _id: this.facebook
+    }).exec();
+  }
+  next();
+});
+
 /**
  * Methods
  */

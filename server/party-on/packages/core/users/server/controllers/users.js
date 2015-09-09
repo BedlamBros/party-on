@@ -273,6 +273,7 @@ module.exports = function(MeanUser) {
 	      function(user, cb) {
 		if (!user) {
 		  console.log('creating a new user from facebook data');
+		  console.log(req.body);
 		  // user does not exist for this user_id
 		  var newFBLogin = new FBLogin({
 		      userId: req.body.user_id,
@@ -282,6 +283,7 @@ module.exports = function(MeanUser) {
 		    if (err) return cb(err);
 		    var newUser = new User({
 		      name: 'Name NotImplemented',
+		      email: 'facebook-' + req.body.user_id + '@fuckoff.com',
 		      username: 'facebook-' + req.body.user_id,
 		      provider: 'facebook',
 		      facebook: fbLogin
@@ -301,6 +303,7 @@ module.exports = function(MeanUser) {
 		}
 	      }
 	    ], function(err, result) {
+	      if (err) console.log(err);
 	      if (err) return res.status(500).send(err.toString());
 	      return res.json(result);
 	    });
