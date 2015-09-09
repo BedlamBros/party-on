@@ -12,6 +12,10 @@ public class LoadApiPartyListTest extends ActivityInstrumentationTestCase2<ListP
     ListPartyActivity mListPartyActivity;
     ListPartyAdapter mListPartyAdapter;
 
+    public LoadApiPartyListTest(){
+        super(ListPartyActivity.class);
+    }
+
     public LoadApiPartyListTest(Class<ListPartyActivity> clazz){
         super(clazz);
     }
@@ -25,6 +29,10 @@ public class LoadApiPartyListTest extends ActivityInstrumentationTestCase2<ListP
     @Override
     public void runTest(){
         //check if the first item in the partyAdapter is null
+        assertNotNull(mListPartyAdapter.getItem(0));
+    }
+
+    public void testTrue(){
         assertNotNull(mListPartyAdapter.getItem(0));
     }
 }

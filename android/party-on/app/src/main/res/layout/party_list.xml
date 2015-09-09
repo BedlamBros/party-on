@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:id="@+id/facebook_auth_bttn"/>
+                android:id="@+id/facebook_login_bttn"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -50,7 +50,8 @@
         android:textColor="@color/primary_hard"
         android:textColorHighlight="@color/secondary_hard"
         android:textOff="@string/list_view_off_option"
-        android:textOn="@string/list_view_on_option"/>
+        android:textOn="@string/list_view_on_option"
+        android:id="@+id/party_list_view_switch"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
@@ -58,17 +59,24 @@
         android:background="@color/white"
         android:id="@+id/swipe_refresh_layout">
 
-        <ListView
-            android:orientation="vertical"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ListPartyActivity"
-            android:divider="@color/accent"
-            android:dividerHeight="@dimen/party_list_divider_size"
-            android:clickable="true"
-            android:id="@+id/android:list">
+            android:id="@+id/cont">
 
-        </ListView>
+            <ListView
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".ListPartyActivity"
+                android:divider="@color/accent"
+                android:dividerHeight="@dimen/party_list_divider_size"
+                android:clickable="true"
+                android:id="@+id/android:list">
+
+            </ListView>
+
+        </LinearLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

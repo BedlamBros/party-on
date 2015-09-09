@@ -44,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/submit_form_activity_title"
                 android:layout_toRightOf="@id/submit_form_title"
+                android:layout_weight="1"
                 android:textColor="@color/black"
                 android:maxLength="@integer/title_char_limit"
                 android:singleLine="true"
@@ -76,6 +77,7 @@
         android:textColor="@color/black"
         android:hint="@string/party_desc_default"
         android:maxLength="@integer/desc_char_limit"
+        android:layout_weight="1"
         android:imeOptions="actionNext"
         android:id="@+id/submit_form_edit_desc"/>
 
@@ -102,6 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/submit_form_edit_title"
+                android:layout_weight="1"
                 android:textColor="@color/black"
                 android:hint="@string/party_loc_default"
                 android:imeOptions="actionSearch"
