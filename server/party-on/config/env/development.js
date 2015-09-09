@@ -16,7 +16,7 @@ module.exports = {
   },
   hostname: 'http://localhost:80',
   app: {
-    name: 'MEAN - A Modern Stack - Development'
+    name: 'The Docket - Get to the party faster, safer, and easier'
   },
   strategies: {
     local: {
@@ -26,7 +26,7 @@ module.exports = {
     facebook: {
       clientID: '127159637632248',
       clientSecret: '195b073dc2194ae6b6fc2c5b1d198fdf',
-      callbackURL: 'http://ec2-52-27-42-182.us-west-2.compute.amazonaws.com/api/auth/facebook/callback',
+      callbackURL: 'http://ec2-52-10-210-220.us-west-2.compute.amazonaws.com/api/auth/facebook/callback',
       enabled: true
     },
     twitter: {
