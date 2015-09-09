@@ -36,6 +36,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     // MARK: - FBSDKLoginButtonDelegate
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        //println("Downloaded access token for userId \(result.token.userID) with value \(result.token.tokenString)")
         if error != nil {
             self.delegate?.loginDidFail(self, error: error)
         } else if result.isCancelled {
@@ -57,8 +58,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     func findUserByFBToken(fbToken: String) {
-        // TODO: Make a server call to log in
-
-        self.delegate?.loginDidSucceed(self)
+        MainUser.loginWithFBToken { (err) -> Void in
+            if err == nil {
+                self.delegate?.loginDidSucceed(self)
+            } else {
+                println("findUserByFBToken error \(err)")
+                self.delegate?.loginDidFail(self, error: err)
+            }
+        }
     }
 }

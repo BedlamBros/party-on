@@ -258,7 +258,8 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
             MainUser.loginWithFBToken({ (err) -> Void in
                 if err != nil {
                     // FB logged in but failed on servers
-                    UIAlertView(title: "Uh-oh", message: "Failed to log in to our servers", delegate: nil, cancelButtonTitle: "Ok")
+                    println("failed to log in to server because \(err)")
+                    UIAlertView(title: "Uh-oh", message: "Failed to log in to our servers", delegate: nil, cancelButtonTitle: "Ok").show()
                 } else {
                     // logged in and got our user data
                     self.performSegueWithIdentifier(self.createPartySegueIdentifier, sender: self)

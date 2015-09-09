@@ -13,6 +13,7 @@ class User: NSObject, ServerModel {
     
     var oID: String!
     var fbToken: String?
+    var fbUserId: String?
     var username: String?
     
     override init() {
@@ -23,12 +24,30 @@ class User: NSObject, ServerModel {
         super.init()
         self.oID = json["_id"].stringValue
         self.username = json["username"].string
+        if let fbJson = json["facebook"].dictionary {
+            self.fbToken = fbJson["accessToken"]?.string
+            self.fbUserId = fbJson["userId"]?.string
+        }
     }
     
     func toJSON() -> JSON {
-        return JSON([
+        var json = JSON([
             "_id": oID,
-            "username": username
+            "username": username,
+        ])
+        if let fb = facebookJSON() {
+            json["facebook"] = fb
+        }
+        return json
+    }
+    
+    func facebookJSON() -> JSON? {
+        if fbToken == nil || fbUserId == nil {
+            return nil
+        }
+        return JSON([
+            "user_id": fbUserId!,
+            "access_token": fbToken!
         ])
     }
 }
