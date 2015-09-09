@@ -8,6 +8,8 @@
 
 import UIKit
 import SwiftyJSON
+import AFNetworking
+import FBSDKCoreKit
 
 typealias MainUserLoginCallback = (err: NSError?) -> Void
 
@@ -15,19 +17,38 @@ typealias MainUserLoginCallback = (err: NSError?) -> Void
 class MainUser: User {
     
     static var sharedInstance: MainUser? = nil
+    private static let httpManager = AFHTTPRequestOperationManager()
     
     class func loginWithFBToken(callback: MainUserLoginCallback) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             
-            let dummyUserJson = JSON([
-                "_id": "55e7c1ea764a112d788dbd1d",
-                "username": "16f89c748b126841"
-            ])
-            MainUser.sharedInstance = MainUser(json: dummyUserJson)
-            //MainUser.sharedInstance?.fbToken =
+            let syncCallback: MainUserLoginCallback = { (err: NSError?) -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    let user = self.sharedInstance
+                    return callback(err: err)
+                })
+            }
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                return callback(err: nil)
+            MainUser.sharedInstance = MainUser()
+            if let fbAccessToken = FBSDKAccessToken.currentAccessToken() {
+                self.sharedInstance?.fbUserId = fbAccessToken.userID
+                self.sharedInstance?.fbToken = fbAccessToken.tokenString
+            }
+            let endpoint = API_ROOT + "/auth/facebook/getorcreate"
+            var params: NSDictionary? = nil
+            if let fbJson = self.sharedInstance?.facebookJSON()?.dictionaryObject {
+                params = fbJson
+            }
+            
+            self.httpManager.POST(endpoint, parameters: params, success: { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
+                // success
+                self.sharedInstance = MainUser(json: JSON(response))
+                return syncCallback(err: nil)
+                }, failure: { (operation: AFHTTPRequestOperation, err: NSError) -> Void in
+                // failure
+                    
+                let reqBody = JSON(operation.request.HTTPBody!)
+                return syncCallback(err: err)
             })
         })
     }
