@@ -160,7 +160,7 @@ describe('Create and save user', function() {
             expect(err).to.be(null);
             expect(resp.statusCode).to.be(200);
             expect(body.formattedAddress).to.be
-            .equal('629 South Woodlawn Avenue, Bloomington, IN 47401, USA');
+            .equal('629 South Woodlawn Avenue');
 
             crudParty = new Party(body);
             done();

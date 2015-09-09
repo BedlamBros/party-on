@@ -40,7 +40,10 @@ module.exports = function(Parties) {
 	      geocoder.geocode(party.formattedAddress + " Bloomington, IN", cb);
 	    },
 	    function(geocodeResponse, cb) {
-	      party.formattedAddress = geocodeResponse[0].formattedAddress;
+	      party.formattedAddress = geocodeResponse[0].streetNumber 
+		+ " " + geocodeResponse[0].streetName;
+	      party.latitude = geocodeResponse[0].latitude;
+	      party.longitude = geocodeResponse[0].longitude;
 	      party.save(cb);
 	    }], 
 	    function(err, savedParty) {
