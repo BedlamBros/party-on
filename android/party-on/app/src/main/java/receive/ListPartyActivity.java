@@ -1,5 +1,6 @@
 package receive;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListActivity;
@@ -8,15 +9,24 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Switch;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -37,20 +47,32 @@ import java.util.ArrayList;
 
 import models.Party;
 import submit.ApiObject;
+import submit.FacebookLoginCallback;
 import submit.SubmitPartyActivity;
+import ui.MapViewFragment;
 import util.VibrateClickResponseListener;
 
 /**
  * Created by John on 8/31/2015.
  */
-public class ListPartyActivity extends ListActivity {
+public class ListPartyActivity extends ListActivity implements CompoundButton.OnCheckedChangeListener{
     final String DUMMY_FILENAME = "dummy.json";
 
-    //get views and viewgrous here
+    //get views and viewgroups here
     private ListView list;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ArrayList<Party> mParty_list;
     private ListPartyAdapter mListPartyAdapter;
+
+    //declare the fragment container
+    private LinearLayout fragmentContainer;
+
+    private Switch mPartyListToggleSwitch;
+    private MapFragment mMapFragment;
+
+    //migrate this to the toolbar when ready
+    private LoginButton mLoginButton;
+    private CallbackManager callbackManager;
 
     //handles the vibrating response on the ic_add_party button
     VibrateClickResponseListener mVibrate_response_listener;
@@ -60,15 +82,29 @@ public class ListPartyActivity extends ListActivity {
         super.onCreate(saved_instance);
 
         //initialize the Facebook sdk to get the login button
-        FacebookSdk.sdkInitialize(this);
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
+        //set content view only after initializing facebook sdk
         setContentView(R.layout.party_list);
+
+        //set the switch view
+        mPartyListToggleSwitch = (Switch) findViewById(R.id.party_list_view_switch);
+
+        //set the fragment container
+        fragmentContainer = (LinearLayout) findViewById(R.id.cont);
+
+        //get facebook login button and set callback manager
+        mLoginButton = (LoginButton) findViewById(R.id.facebook_login_bttn);
+        callbackManager = CallbackManager.Factory.create();
+        FacebookCallback<LoginResult> mFacebookLoginCallback = new FacebookLoginCallback(this);
+        mLoginButton.registerCallback(callbackManager, mFacebookLoginCallback);
 
         //TODO use a FragmentManager transaction to load the toolbar
 
         list = (ListView) findViewById(android.R.id.list);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
+        //instantiate the party list before passing it to adapter
         mParty_list = new ArrayList<Party>();
         mListPartyAdapter = new ListPartyAdapter(getApplicationContext(), mParty_list);
         //list.setAdapter(mListPartyAdapter);
@@ -84,7 +120,7 @@ public class ListPartyActivity extends ListActivity {
             }
 
             @Override
-            public String toString(){
+            public String toString() {
                 return "this is overriding the onItemClickListener's behavior";
             }
         });
@@ -103,7 +139,35 @@ public class ListPartyActivity extends ListActivity {
         //instantiate the response listener now while not doing anything
         mVibrate_response_listener = new VibrateClickResponseListener(this);
 
+        mPartyListToggleSwitch.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                if (mPartyListToggleSwitch.isChecked()) {
+                    mSwipeRefreshLayout.removeView(list);
+                    Log.d("map", "should load the map view now");
+                    mMapFragment = MapFragment.newInstance();
+                    Log.d("map", "map fragment to string: " + mMapFragment.toString());
+                    FragmentTransaction fragmentTransaction =
+                            getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.cont, mMapFragment);
+                    fragmentTransaction.commit();
+                    fragmentContainer.removeView(list);
+                    int contChildren = fragmentContainer.getChildCount();
+                    Log.d("map", "Frag container has " + contChildren + " children");
+                    //Log.d("map", "first child is " + fragmentContainer.getChildAt(0).getClass().getSimpleName());
+                } else {
+                    FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
+                    fragTrans.remove(mMapFragment);
+                    fragTrans.commit();
+                    fragmentContainer.addView(list);
+                }
+            }
+        });
+
         refreshPartyList();
+    }
+
+    public void onCheckedChanged(CompoundButton butt, boolean isChecked){
+
     }
 
     @Override
@@ -123,16 +187,22 @@ public class ListPartyActivity extends ListActivity {
         mListPartyAdapter.notifyDataSetChanged();
         final AsyncLoadJson mApiObjectLoader = new AsyncLoadJson(){
            public void onResponseReceived(ArrayList<Party> apiObject){
+               //hacky way to fail gracefully
+               if (apiObject == null) return;
                Log.d("receive", "response received on UI thread");
                mParty_list = apiObject;
                list.setAdapter(new ListPartyAdapter(getApplicationContext(), mParty_list));
            }
 
             public void onPostExecute(ArrayList<Party> partyArrayList){
-                this.onResponseReceived(partyArrayList);
-                mSwipeRefreshLayout.setRefreshing(false);
-                Log.d("receive", "partylist size " + mParty_list.size());
-                Log.d("receive", "list adapter can see " + mListPartyAdapter.getCount());
+                if (partyArrayList.size() > 0){
+                    this.onResponseReceived(partyArrayList);
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    Log.d("receive", "partylist size " + mParty_list.size());
+                    Log.d("receive", "list adapter can see " + mListPartyAdapter.getCount());
+                } else {
+                    Log.wtf("receive", "server returned empty party list");
+                }
             }
         };
         mApiObjectLoader.execute();

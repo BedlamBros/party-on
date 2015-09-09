@@ -99,14 +99,15 @@
             android:layout_toRightOf="@id/fullscreen_party_item_byob_label"
             android:id="@+id/fullscreen_party_item_byob"/>
 
+        <ListView
+            android:layout_width="@dimen/view_party_the_word_width"
+            android:layout_height="@dimen/view_party_the_word_height"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/the_word_cont">
+
+        </ListView>
+
     </RelativeLayout>
-
-    <ListView
-        android:layout_width="@dimen/view_party_the_word_width"
-        android:layout_height="@dimen/view_party_the_word_height"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/the_word_cont">
-
-    </ListView>
 
 </ScrollView>

@@ -31,7 +31,7 @@ public class ListPartyAdapter extends ArrayAdapter<Party> {
         super(context, 0, party_list);
         this.mParty_list = new ArrayList<Party>(party_list);
         this.mContext = context;
-        Log.d("receive", "listpartyadapter instantiated succesffuly with party_list of " + party_list.size());
+        //Log.d("receive", "listpartyadapter instantiated succesffuly with party_list of " + party_list.size());
     }
 
     @Override
@@ -58,13 +58,8 @@ public class ListPartyAdapter extends ArrayAdapter<Party> {
             convert_view = LayoutInflater.from(mContext)
                     .inflate(R.layout.party_list_item, parent, false);
         }
-       // TextView mTv_title = (TextView) convert_view.findViewById(R.id.party_title);
-        //mTv_title.setText(mParty_list.get(position).getTitle());
-        //TextView mTv_desc = (TextView) convert_view.findViewById(R.id.party_desc);
-        //mTv_desc.setText(mParty_list.get(position).getDesc());
         TextView mTv_readable_loc = (TextView) convert_view.findViewById(R.id.party_readable_loc);
         mTv_readable_loc.setText(mParty_list.get(position).getformatted_address());
-        //convert_view.setOnClickListener(mPartyItemClickListener);
 
         //set the typeface
         Typeface font = Typeface.createFromAsset(mContext.getAssets(),
@@ -73,32 +68,4 @@ public class ListPartyAdapter extends ArrayAdapter<Party> {
 
         return convert_view;
     }
-
-    //should this not be hardcoded i.e. specified in the xml?
-    private View.OnClickListener mPartyItemClickListener = new View.OnClickListener(){
-        @Override
-        public void onClick(View view) {
-            int id = view.getId();
-            Party party;
-            boolean party_found = false;
-            //TODO jesus fuck, change this soon
-            for (int i = 0; i < mParty_list.size(); i++){
-                ViewGroup parent = (ViewGroup) view.getParent();
-                if (parent.getChildAt(i).getId() == id && party_found == false){
-                    party = mParty_list.get(i);
-                    party_found = true;
-                    Log.d("receive", "party clicked " + party.toString());
-                    //now start the PartyFullscreenActivity
-                    Intent mIntent = new Intent(mContext, ViewPartyActivity.class);
-                    Log.d("party_detail", "ListPartyAdapter setting party_extra: " + party.toString());
-                    mIntent.putExtra(mContext.getResources().getString(R.string.party_extra_name), party);
-                    mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(mIntent);
-                }
-            }
-            if (!party_found){
-                //throw new PartyNotFoundException("mPartyClickListener");
-            }
-        }
-    };
 }
