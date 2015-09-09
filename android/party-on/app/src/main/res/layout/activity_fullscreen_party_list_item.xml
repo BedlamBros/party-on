@@ -7,6 +7,7 @@
     <RelativeLayout
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent" android:layout_height="match_parent">
 
         <TextView
@@ -18,8 +19,9 @@
             android:text="@string/party_title_default"
             android:textStyle="bold"
             android:textColor="@color/primary_hard"
-            android:id="@+id/fullscreen_party_item_title" />
+            android:id="@+id/fullscreen_party_item_readable_loc" />
 
+        <!--
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -43,6 +45,7 @@
                 android:src="@drawable/ic_define_location"/>
 
         </RelativeLayout>
+        -->
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,7 +53,7 @@
             android:textSize="@dimen/party_desc_text_size"
             android:text="@string/party_desc_default"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/fullscreen_party_item_layout_readable_loc"
+            android:layout_below="@id/fullscreen_party_item_readable_loc"
             android:id="@+id/fullscreen_party_item_desc"/>
 
         <TextView
@@ -97,5 +100,13 @@
             android:id="@+id/fullscreen_party_item_byob"/>
 
     </RelativeLayout>
+
+    <ListView
+        android:layout_width="@dimen/view_party_the_word_width"
+        android:layout_height="@dimen/view_party_the_word_height"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/the_word_cont">
+
+    </ListView>
 
 </ScrollView>
