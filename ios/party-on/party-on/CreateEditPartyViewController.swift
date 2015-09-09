@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import SVProgressHUD
 
 enum CreateEditPartyActionType {
     case POST
@@ -111,7 +112,9 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
         
         let party = Party(oID: "", formattedAddress: formattedAddress!, location: CLLocationCoordinate2DMake(0, 0), startTime: startTime!, endTime: nil, maleCost: NSNumber(integer: guysPay!).unsignedLongValue, femaleCost: NSNumber(integer: girlsPay!).unsignedLongValue, byob: byob!, colloquialName: nil, description: nil)
         
+        SVProgressHUD.showAndBlockInteraction(self.view)
         PartiesDataStore.sharedInstance.POST(party, callback: { (err, party) -> Void in
+            SVProgressHUD.dismissAndUnblockInteraction(self.view)
             if err == nil && party != nil {
                 // success
                 self.delegate?.createEditPartyDidSucceed(self, party: party!, method: self.method)

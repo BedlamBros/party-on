@@ -78,10 +78,11 @@ class Party: NSObject, ServerModel {
             "formattedAddress": formattedAddress,
             "latitude": location.latitude,
             "longitude": location.longitude,
-            "startTime": startTime.timeIntervalSince1970,
+            "startTime": startTime.timeIntervalSince1970 * 1000,
             "maleCost": maleCost,
             "femaleCost": femaleCost,
             "byob": byob,
+            "university": University.currentUniversity.name
         ])
         if let colloquial = colloquialName {
             json["colloquialName"] = JSON(colloquial)
@@ -90,7 +91,7 @@ class Party: NSObject, ServerModel {
             json["description"] = JSON(description)
         }
         if let end = endTime {
-            json["endTime"] = JSON(end.timeIntervalSince1970)
+            json["endTime"] = JSON(end.timeIntervalSince1970 * 1000)
         }
         
         return json

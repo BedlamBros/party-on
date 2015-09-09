@@ -391,6 +391,7 @@
                     <navigationItem key="navigationItem" id="xut-yi-2Yp"/>
                     <connections>
                         <outlet property="addressButton" destination="Jgk-wm-ntI" id="UeK-tZ-CsN"/>
+                        <outlet property="dayLabel" destination="GLg-Rq-16v" id="6Wh-T4-xSb"/>
                         <outlet property="descriptionLabel" destination="imc-5b-gAU" id="2ga-5y-gCT"/>
                         <outlet property="descriptionTextView" destination="0RD-FN-gyZ" id="dcl-pq-RPj"/>
                         <outlet property="endsLabel" destination="6Vo-m1-nvQ" id="ITP-iy-sAJ"/>
