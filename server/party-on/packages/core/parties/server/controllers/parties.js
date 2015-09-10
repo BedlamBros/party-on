@@ -34,7 +34,6 @@ module.exports = function(Parties) {
         create: function(req, res, next) {
 	  var party = new Party(req.body);
 	  party.user = req.user;
-	  
 	  // now using a callback pattern
 	  async.waterfall([function(cb) {
 	      geocoder.geocode(party.formattedAddress + " Bloomington, IN", cb);
