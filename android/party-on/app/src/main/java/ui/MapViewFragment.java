@@ -13,14 +13,21 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import net.john.partyon.R;
+
+import java.util.ArrayList;
+
+import models.Party;
 
 /**
  * Created by John on 9/3/2015.
  */
 public class MapViewFragment extends FragmentActivity implements OnMapReadyCallback {
     private static View view;
+    private ArrayList<Party> partyList;
 
     @Override
     public void onCreate(Bundle savedInstance){
