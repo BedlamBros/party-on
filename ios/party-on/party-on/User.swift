@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class User: NSObject, ServerModel {
     
-    var oID: String!
+    var oID: String?
     var fbToken: String?
     var fbUserId: String?
     var username: String?
@@ -31,12 +31,15 @@ class User: NSObject, ServerModel {
     }
     
     func toJSON() -> JSON {
-        var json = JSON([
-            "_id": oID,
-            "username": username,
-        ])
+        var json = JSON([])
+        if let uname = self.username {
+            json["username"] = JSON(uname)
+        }
         if let fb = facebookJSON() {
             json["facebook"] = fb
+        }
+        if let oid = self.oID {
+            json["_id"] = JSON(oid)
         }
         return json
     }

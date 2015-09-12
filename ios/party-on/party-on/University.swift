@@ -33,7 +33,7 @@ class University: NSObject, ServerModel {
     
     
     
-    var oID: String!
+    var oID: String?
     var name: String!
     var location: CLLocationCoordinate2D = CLLocationCoordinate2DMake(0, 0)
     
@@ -52,12 +52,15 @@ class University: NSObject, ServerModel {
     }
     
     func toJSON() -> JSON {
-        return JSON([
-            "_id": oID,
+        var json = JSON([
             "name": name,
             "latitude": location.latitude,
             "longitude": location.longitude
         ])
+        if let oid = self.oID {
+            json["_id"] = JSON(oid)
+        }
+        return json
     }
     
     class func universityForType(type: UniversityType) -> University {

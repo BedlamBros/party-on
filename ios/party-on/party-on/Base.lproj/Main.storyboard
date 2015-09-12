@@ -253,7 +253,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yrh-ed-zIT" userLabel="LaunchButtonContainer">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yrh-ed-zIT" userLabel="LaunchButtonContainer">
                                 <rect key="frame" x="16" y="525" width="288" height="35"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jgk-wm-ntI">
@@ -286,19 +286,31 @@
                                 <rect key="frame" x="16" y="328" width="288" height="189"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TheWordReadCell" textLabel="UqR-r7-yRP" style="IBUITableViewCellStyleDefault" id="AAn-kn-2Ew">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TheWordReadCell" id="AAn-kn-2Ew" customClass="TheWordTableViewCell" customModule="party_on" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AAn-kn-2Ew" id="daw-Tt-Get">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" id="UqR-r7-yRP" userLabel="Message">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tps-U6-RDo">
+                                                    <rect key="frame" x="238" y="31" width="42" height="12"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Time">
+                                                            <attributes>
+                                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="10" name="AmericanTypewriter"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="tvh-BJ-13o">
+                                                    <rect key="frame" x="8" y="11" width="280" height="21"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Title">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" size="16" name="AmericanTypewriter"/>
-                                                                <font key="NSOriginalFont" size="16" name="CourierNewPSMT"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
                                                             </attributes>
                                                         </fragment>
@@ -306,7 +318,19 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="tvh-BJ-13o" firstAttribute="leading" secondItem="daw-Tt-Get" secondAttribute="leadingMargin" id="7MD-Yc-Kyn"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="tps-U6-RDo" secondAttribute="bottom" constant="-7" id="7wp-NM-5gS"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="tvh-BJ-13o" secondAttribute="trailing" id="8hY-gt-hmq"/>
+                                                <constraint firstItem="tps-U6-RDo" firstAttribute="trailing" secondItem="daw-Tt-Get" secondAttribute="trailingMargin" constant="6" id="I1b-SK-pTE"/>
+                                                <constraint firstItem="tvh-BJ-13o" firstAttribute="top" secondItem="daw-Tt-Get" secondAttribute="topMargin" id="Maq-Vi-Ju0"/>
+                                                <constraint firstItem="tps-U6-RDo" firstAttribute="top" secondItem="tvh-BJ-13o" secondAttribute="bottom" id="nM7-hW-h27"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="bodyLabel" destination="tvh-BJ-13o" id="aHu-3A-jak"/>
+                                            <outlet property="dateLabel" destination="tps-U6-RDo" id="uS2-gd-0Fq"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TheWordWriteCell" textLabel="rAh-Yb-kkh" style="IBUITableViewCellStyleDefault" id="pAo-7Q-FMV">
                                         <autoresizingMask key="autoresizingMask"/>
