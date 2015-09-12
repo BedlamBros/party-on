@@ -25,6 +25,9 @@ class UniversityPickerController: UIViewController {
             }
         }
         
+        self.backgroundImageView?.contentMode = UIViewContentMode.ScaleToFill
+        self.indianaUniversityLogo?.contentMode = UIViewContentMode.Center
+        
         let clickUniversityGestureRecognizer = UITapGestureRecognizer(target: self, action: "selectUniversity:")
         self.indianaUniversityLogo?.addGestureRecognizer(clickUniversityGestureRecognizer)
         
