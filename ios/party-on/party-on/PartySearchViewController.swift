@@ -227,6 +227,8 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func createEditPartyDidSucceed(viewController: CreateEditPartyViewController, party: Party, method: CreateEditPartyActionType) {
+        // reflect new party in the list
+        self.listView?.reloadData()
         viewController.dismissViewControllerAnimated(true, completion: { () -> Void in
             
             // react to success differently based on HTTP method

@@ -94,6 +94,12 @@ class PartiesDataStore: NSObject {
             
             var success: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
                 let party = Party(json: JSON(response))
+                if operation.request.HTTPMethod == "POST" {
+                    // Add party to list if it was posted
+                    synchronized(self.nearbyParties, { () -> Void in
+                        self.nearbyParties.insert(party, atIndex: 0)
+                    })
+                }
                 return syncCallback(err: nil, party: party)
             }
             var failure: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
@@ -103,6 +109,7 @@ class PartiesDataStore: NSObject {
             
             switch method {
             case "POST":
+                parameters?.removeValueForKey("_id")
                 self.httpManager.POST(url, parameters: parameters!, success: success, failure: failure)
             case "PUT":
                 self.httpManager.PUT(url, parameters: parameters!, success: success, failure: failure)
@@ -115,6 +122,7 @@ class PartiesDataStore: NSObject {
     private func prepareAuthHeaders() {
         if let fbToken = MainUser.sharedInstance?.fbToken {
             self.httpManager.requestSerializer.setValue("Bearer " + fbToken, forHTTPHeaderField: "Authorization")
+            self.httpManager.requestSerializer.setValue("facebook", forHTTPHeaderField: "Passport-Auth-Strategy")
         }
     }
 }

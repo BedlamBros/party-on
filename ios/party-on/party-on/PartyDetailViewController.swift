@@ -22,6 +22,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     @IBOutlet weak var girlsPayLabel: UILabel?
     @IBOutlet weak var startsLabel: UILabel?
     @IBOutlet weak var theWordTableView: UITableView?
+    @IBOutlet weak var dayLabel: UILabel?
     
     // Optional Fields
     @IBOutlet weak var endsLabel: UILabel?
@@ -32,6 +33,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     private static var textMessageViewController: MFMessageComposeViewController?
     
     var party: Party!
+    private var wordTimeLabelHeight: CGFloat?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +66,18 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         timeFormatter.timeZone = NSTimeZone.systemTimeZone()
         timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
         self.startsLabel?.text = timeFormatter.stringFromDate(self.party.startTime)
+        
+        let now = NSDate(timeIntervalSinceNow: 0)
+        let calendar = timeFormatter.calendar
+        let desiredDateComponents = NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute
+        let startDateComponents = calendar.component(desiredDateComponents, fromDate: self.party.startTime)
+        let nowComponents = calendar.component(desiredDateComponents, fromDate: now)
+        
+        if now.timeIntervalSince1970 < party.startTime.timeIntervalSince1970 {
+            // party is in the future
+        } else {
+            // party is in the past
+        }
         
         //if let endTime = self.party.endTime {
         if false {
@@ -119,7 +133,12 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == 0 {
             // Send button
-            println("sending message")
+            if let alertTextField = alertView.textFieldAtIndex(0) {
+                if count(alertTextField.text) > 0 {
+                    let newWord = TheWordMessage(oID: "", body: alertTextField.text, created: NSDate(timeIntervalSinceNow: 0))
+                    println("sending msg: \(newWord.body)")
+                }
+            }
         } else {
             // Cancel button
             alertView.dismissWithClickedButtonIndex(buttonIndex, animated: true)
@@ -160,16 +179,25 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     // MARK: - UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyMessages.count + 1
+        return self.party.theWord.count + 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell
         
-        if let message = commentForRowAtIndexPath(indexPath, tableView: tableView) {
-            cell = tableView.dequeueReusableCellWithIdentifier(theWordReadCellReuseIdentifier, forIndexPath: indexPath) as! UITableViewCell
-            cell.textLabel?.text = message
-
+        if let message = theWordForRowAtIndexPath(indexPath, tableView: tableView) {
+            let wordCell: TheWordTableViewCell = tableView.dequeueReusableCellWithIdentifier(theWordReadCellReuseIdentifier, forIndexPath: indexPath) as! TheWordTableViewCell
+            wordCell.bodyLabel?.text = message.body
+            
+            let timeFormatter = NSDateFormatter()
+            timeFormatter.dateFormat = "h:mm a"
+            wordCell.dateLabel?.text = timeFormatter.stringFromDate(self.party.startTime)
+            
+            if let wordCellTimeHeight = wordCell.dateLabel?.frame.height {
+                self.wordTimeLabelHeight = wordCellTimeHeight
+            }
+            
+            cell = wordCell
         } else {
             // last row in the table
             cell = tableView.dequeueReusableCellWithIdentifier(theWordWriteCellReuseIdentifier, forIndexPath: indexPath) as! UITableViewCell
@@ -182,24 +210,36 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var text: String
-        if let message = commentForRowAtIndexPath(indexPath, tableView: tableView) {
-            text = message
+        if let message = theWordForRowAtIndexPath(indexPath, tableView: tableView) {
+            text = message.body
         } else {
             // last row in table
             text = ""
         }
         
         let width = tableView.frame.width
-        let font = UIFont.systemFontOfSize(16)
+        
+        var font: UIFont
+        if let f = UIFont(name: "American Typewriter", size: 16) {
+            font = f
+        } else {
+            font = UIFont.systemFontOfSize(16)
+        }
         
         let attributedString = NSAttributedString(string: text, attributes: [NSFontAttributeName: font])
         let boundingRect = attributedString.boundingRectWithSize(CGSizeMake(width, CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
 
-        return max(boundingRect.height, minTheWordCellHeight)
+        var timeLabelHeight: CGFloat
+        if let h = wordTimeLabelHeight {
+            timeLabelHeight = h
+        } else {
+            timeLabelHeight = minTheWordDateLabelHeight
+        };let x = tableView.frame; let y = self.view.frame;
+        return max(ceil(boundingRect.height) + timeLabelHeight, minTheWordCellHeight)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if commentForRowAtIndexPath(indexPath, tableView: tableView) == nil {
+        if theWordForRowAtIndexPath(indexPath, tableView: tableView) == nil {
             // Dealing with the create comment cell
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             launchSendMessageDialog()
@@ -209,12 +249,12 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     
     // MARK: Helpers
     
-    func commentForRowAtIndexPath(indexPath: NSIndexPath, tableView: UITableView) -> String? {
+    func theWordForRowAtIndexPath(indexPath: NSIndexPath, tableView: UITableView) -> TheWordMessage? {
         if indexPath.row == tableView.dataSource!.tableView(tableView, numberOfRowsInSection: indexPath.row) - 1 {
             // last row in table
             return nil
         } else {
-            return dummyMessages[indexPath.row]
+            return self.party.theWord[indexPath.row]
         }
     }
     
@@ -231,13 +271,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     private let theWordReadCellReuseIdentifier = "TheWordReadCell"
     private let theWordWriteCellReuseIdentifier = "TheWordWriteCell"
     private let minTheWordCellHeight: CGFloat = 44
-    
-    private let dummyMessages = [
-        "Nothing yet",
-        "Heating up",
-        "They ran out of alcohol alksfjsad nweorinqw inweroqwnr oiwenriowrn niowernqower oiwenroqew",
-        "Great keg just got here"
-    ]
+    private let minTheWordDateLabelHeight: CGFloat = 12
 }
 
 

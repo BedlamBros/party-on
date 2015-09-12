@@ -28,6 +28,8 @@
 		50DE456F1B94DB6E0075CBF9 /* PartyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE456E1B94DB6E0075CBF9 /* PartyTableViewCell.swift */; };
 		50DE45711B94E0D40075CBF9 /* PartyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE45701B94E0D40075CBF9 /* PartyDetailViewController.swift */; };
 		50DE45751B950A990075CBF9 /* UniversityPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE45741B950A990075CBF9 /* UniversityPickerController.swift */; };
+		50F00DC61BA0D4A3008B7CD3 /* TheWordMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F00DC51BA0D4A3008B7CD3 /* TheWordMessage.swift */; };
+		50F00DC81BA24A8C008B7CD3 /* TheWordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F00DC71BA24A8C008B7CD3 /* TheWordTableViewCell.swift */; };
 		50F4B5181B94507800748D02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B5171B94507800748D02 /* AppDelegate.swift */; };
 		50F4B51D1B94507800748D02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50F4B51B1B94507800748D02 /* Main.storyboard */; };
 		50F4B51F1B94507800748D02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50F4B51E1B94507800748D02 /* Images.xcassets */; };
@@ -77,6 +79,8 @@
 		50DE456E1B94DB6E0075CBF9 /* PartyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyTableViewCell.swift; sourceTree = "<group>"; };
 		50DE45701B94E0D40075CBF9 /* PartyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyDetailViewController.swift; sourceTree = "<group>"; };
 		50DE45741B950A990075CBF9 /* UniversityPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversityPickerController.swift; sourceTree = "<group>"; };
+		50F00DC51BA0D4A3008B7CD3 /* TheWordMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheWordMessage.swift; sourceTree = "<group>"; };
+		50F00DC71BA24A8C008B7CD3 /* TheWordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheWordTableViewCell.swift; sourceTree = "<group>"; };
 		50F4B5121B94507800748D02 /* party-on.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "party-on.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50F4B5161B94507800748D02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50F4B5171B94507800748D02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 				50DE456E1B94DB6E0075CBF9 /* PartyTableViewCell.swift */,
 				50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */,
 				50D3AA2B1B98214B00CBA394 /* SVProgressHUD+BlockUI.swift */,
+				50F00DC71BA24A8C008B7CD3 /* TheWordTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -232,6 +237,7 @@
 				500068CA1B94D4CC008E6BB7 /* Party.swift */,
 				50F4B53D1B94BD4F00748D02 /* MainUser.swift */,
 				50D3AA281B97FDAE00CBA394 /* PartiesDataStore.swift */,
+				50F00DC51BA0D4A3008B7CD3 /* TheWordMessage.swift */,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -418,9 +424,11 @@
 				50F4B53E1B94BD4F00748D02 /* MainUser.swift in Sources */,
 				500068CB1B94D4CC008E6BB7 /* Party.swift in Sources */,
 				50F4B53C1B94BD3C00748D02 /* User.swift in Sources */,
+				50F00DC81BA24A8C008B7CD3 /* TheWordTableViewCell.swift in Sources */,
 				50F4B5401B94BEC000748D02 /* ServerModel.swift in Sources */,
 				50DE45711B94E0D40075CBF9 /* PartyDetailViewController.swift in Sources */,
 				5047658E1B98BFA900303DF0 /* ModalMapViewController.swift in Sources */,
+				50F00DC61BA0D4A3008B7CD3 /* TheWordMessage.swift in Sources */,
 				50DE456F1B94DB6E0075CBF9 /* PartyTableViewCell.swift in Sources */,
 				50D3AA291B97FDAE00CBA394 /* PartiesDataStore.swift in Sources */,
 				50F4B5391B94BC8D00748D02 /* LoginViewController.swift in Sources */,

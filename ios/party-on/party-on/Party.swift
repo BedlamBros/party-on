@@ -11,13 +11,14 @@ import CoreLocation
 import SwiftyJSON
 
 class Party: NSObject, ServerModel {
-    var oID: String!// required
+    var oID: String?// required
     var formattedAddress: String!// required
     var location: CLLocationCoordinate2D!// required
     var maleCost: UInt = 0// required - default 0
     var femaleCost: UInt = 0// required - default 0
     var startTime: NSDate!// required
     var byob: Bool = true// required default true
+    var theWord: [TheWordMessage] = []// required
     
     var colloquialName: String?// optional
     var descrip: String?// optional - 256 char max
@@ -56,6 +57,17 @@ class Party: NSObject, ServerModel {
         if let endTime = json["endTime"].number {
             self.endTime = NSDate(timeIntervalSince1970: json["endTime"].number!.doubleValue / 1000)
         }
+        
+        let dummyMessages = [
+            "Nothing yet",
+            "Heating up",
+            "They ran out of alcohol alks jsad nweo rinqw inwe roqm wnr oi wenrio wrn n iow ernqo wer oiw enro qew",
+            "Great keg just got here"
+        ]
+        for (idx, message) in enumerate(dummyMessages) {
+            let msgCount = count(message)
+            self.theWord.append(TheWordMessage(oID: "", body: message, created: NSDate(timeIntervalSinceNow: NSTimeInterval(60 * 60 * (idx - msgCount - msgCount)))))
+        }
     }
     
     convenience init(oID: String, formattedAddress: String, location: CLLocationCoordinate2D, startTime: NSDate, endTime: NSDate?, maleCost: UInt, femaleCost: UInt, byob: Bool, colloquialName: String?, description: String?) {
@@ -74,15 +86,18 @@ class Party: NSObject, ServerModel {
     
     func toJSON() -> JSON {
         var json = JSON([
-            "_id": oID,
             "formattedAddress": formattedAddress,
             "latitude": location.latitude,
             "longitude": location.longitude,
-            "startTime": startTime.timeIntervalSince1970,
+            "startTime": startTime.timeIntervalSince1970 * 1000,
             "maleCost": maleCost,
             "femaleCost": femaleCost,
             "byob": byob,
+            "university": University.currentUniversity.name
         ])
+        if let oid = self.oID {
+            json["_id"] = JSON(oid)
+        }
         if let colloquial = colloquialName {
             json["colloquialName"] = JSON(colloquial)
         }
@@ -90,7 +105,7 @@ class Party: NSObject, ServerModel {
             json["description"] = JSON(description)
         }
         if let end = endTime {
-            json["endTime"] = JSON(end.timeIntervalSince1970)
+            json["endTime"] = JSON(end.timeIntervalSince1970 * 1000)
         }
         
         return json
