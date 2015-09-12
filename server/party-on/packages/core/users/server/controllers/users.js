@@ -295,8 +295,11 @@ module.exports = function(MeanUser) {
 		    return cb(null, user);
 		  } else {
 		    // user exists, but access_token has changed
+		    console.log('user exists, but access_token changed');
 		    user.facebook.accessToken = req.body.access_token;
-		    return user.save(cb);
+		    return user.facebook.save(function(err, fblogin) {
+		      return cb(err, user);
+		    });
 		  }
 		}
 	      }
