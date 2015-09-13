@@ -34,6 +34,8 @@ module.exports = function(Parties, app, auth) {
     .delete(auth.isMongoId, auth.requiresLogin, hasAuthorization, parties.destroy);
   app.route('/api/parties/university/:universityName')
     .get(parties.listCurrent);
+  app.route('/api/parties/:partyId/word')
+    .put(parties.addAWord);
 
   app.param('partyId', parties.party);
 };

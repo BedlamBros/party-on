@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
     async = require('async'),
     Party = mongoose.model('Party'),
+    Word  = mongoose.model('Word'),
     config = require('meanio').loadConfig(),
     geocoder = require('./geocoder.js'),
     _ = require('lodash');
@@ -136,6 +137,17 @@ module.exports = function(Parties) {
                 error: err.toString()
               });
             });
-        }
+        },
+	/**
+	 * Add a Word to a Party
+	 */
+	addAWord: function(req, res) {
+	  var word = new Word(req.body);
+	  req.party.theWord.push(word);
+	  req.party.save(function(err, saved) {
+	    if (err) return res.status(500).send(err.toString());
+	    return res.json(saved);
+	  });
+	}
     };
 };

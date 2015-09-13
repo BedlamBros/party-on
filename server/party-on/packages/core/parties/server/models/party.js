@@ -10,6 +10,24 @@ var mongoose = require('mongoose'),
 var supportedUniversities = ['Indiana University'];
 
 /**
+ * Word Schema
+ */
+var WordSchema = new Schema({
+  created: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
+  body: {
+    type: String,
+    minlength: 1,
+    maxlength: 140,
+    required: true
+  } 
+});
+
+
+/**
  * Party Schema
  */
 var PartySchema = new Schema({
@@ -78,10 +96,10 @@ var PartySchema = new Schema({
     required: true,
     enum: supportedUniversities
   },
-  words: {
-    type: [String],
-    required: false,
-  }
+  theWord: {
+    type: [WordSchema],
+    required: false
+  },
 });
 
 /**
@@ -133,8 +151,13 @@ PartySchema.methods.toJSON = function() {
       json.endTime = json.endTime.getTime();
     }
 
-    return json
-}
+    // apply transform to sub documents
+    for (var idx in json.theWord) {
+      var word = json.theWord[idx];
+      word.created = word.created.getTime();
+    }
+    return json;
+};
 
 /**
  * Statics
@@ -178,4 +201,5 @@ PartySchema.statics.currentForUniversity = function(universityName, cb) {
   return promise;
 };
 
+mongoose.model('Word', WordSchema);
 mongoose.model('Party', PartySchema);

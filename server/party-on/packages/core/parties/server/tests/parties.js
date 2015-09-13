@@ -22,7 +22,7 @@ var user, party, loginToken;
 /**
  * Test Suites
  */
-describe('Create and save user', function() {
+describe('Create and save party', function() {
   describe('Model Party:', function() {
 
     beforeEach(function(done) {
@@ -333,6 +333,35 @@ describe('Create and save user', function() {
             });
             done();
         });
+      });
+    });
+  });
+
+  describe('theWord', function() {
+
+    it('should be able to post a word', function(done) {
+      this.timeout(10000);
+      Party.findOne(function(err, party) {
+
+	var msg = 'Message number ' + Math.random();
+	var oldMsgCount = party.theWord.length;
+	var wordEndpoint = config.hostname + '/api/parties/' + party._id + '/word';
+	request({
+	  method: 'PUT',
+	  uri: wordEndpoint,
+	  json: {
+	    body: msg
+	  }
+	}, function(err, resp, body) {
+	  expect(err).to.be(null);
+	  expect(resp.statusCode).to.be(200);
+	  var newParty = new Party(body);
+	  expect(newParty.theWord.length)
+	    .to.be(oldMsgCount + 1);
+	  expect(newParty.theWord[newParty.theWord.length-1].body)
+	    .to.be.equal(msg);
+	  done();
+	});
       });
     });
   });
