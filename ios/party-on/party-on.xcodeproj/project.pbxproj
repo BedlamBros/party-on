@@ -574,6 +574,7 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8d57247b-0a12-4df3-b580-8faa1b47590d";
 			};
 			name = Debug;
 		};
@@ -594,6 +595,7 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8d57247b-0a12-4df3-b580-8faa1b47590d";
 			};
 			name = Release;
 		};
