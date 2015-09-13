@@ -34,12 +34,15 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     
     var party: Party!
     private var wordTimeLabelHeight: CGFloat?
+    private var refreshPartyTimer: NSTimer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.theWordTableView?.dataSource = self
         self.theWordTableView?.delegate = self
         scrollToTheWordBottom(false)
+        
+        scheduleRefreshParty()
         
         // Navigation Item
         self.navigationItem.title = party.formattedAddress
@@ -100,8 +103,18 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.hidden = false
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+            appDelegate.partyDetailControllerInFocus = self
+        }
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.descheduleRefreshParty()
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+            appDelegate.partyDetailControllerInFocus = nil
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -183,6 +196,40 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             self.presentViewController(textController, animated: true, completion: nil)
         } else {
             UIAlertView(title: "Can't send message", message: "Looks like your phone isn't configured to send text messages", delegate: nil, cancelButtonTitle: "Ok").show()
+        }
+    }
+    
+    /* schedule a timer to periodically refresh the party */
+    func scheduleRefreshParty() {
+        if self.refreshPartyTimer == nil {
+            println("scheduling refresh party")
+            self.refreshPartyTimer = NSTimer.scheduledTimerWithTimeInterval(refreshPartyTimeInterval, target: self, selector: "refreshParty", userInfo: nil, repeats: true)
+            self.refreshPartyTimer?.fire()
+        }
+    }
+    
+    /* kill the timer that is refreshing the party */
+    func descheduleRefreshParty() {
+        println("descheduling refresh party")
+        self.refreshPartyTimer?.invalidate()
+        self.refreshPartyTimer = nil
+    }
+    
+    /* Refresh the data for this party and its entry in the PartiesDataStore */
+    func refreshParty() {
+        println("refresh party")
+        if let myPartyId = self.party.oID {
+            PartiesDataStore.sharedInstance.getParty(myPartyId, callback: { (err, party) -> Void in
+                if err == nil {
+                    if party!.theWord.count != self.party.theWord.count {
+                        // new messages have come in, refresh TheWord
+                        println("the word changed in length")
+                        self.theWordTableView?.reloadData()
+                        self.scrollToTheWordBottom(true)
+                    }
+                    self.party = party
+                }
+            })
         }
     }
     
@@ -291,6 +338,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     private let theWordWriteCellReuseIdentifier = "TheWordWriteCell"
     private let minTheWordCellHeight: CGFloat = 44
     private let minTheWordDateLabelHeight: CGFloat = 12
+    private let refreshPartyTimeInterval: NSTimeInterval = 5
 }
 
 

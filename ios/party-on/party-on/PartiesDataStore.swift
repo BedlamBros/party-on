@@ -67,6 +67,27 @@ class PartiesDataStore: NSObject {
         })
     }
     
+    func getParty(oID: String, callback: UpdatePartyCallback) {
+        let syncCallback: UpdatePartyCallback = { (err: NSError?, party: Party?) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                callback(err: err, party: party)
+            })
+        }
+        
+        let endpoint = API_ROOT + "/parties/" + oID
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            
+            self.httpManager.GET(endpoint, parameters: nil, success: { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
+                let party = Party(json: JSON(response))
+                self.updateSingleParty(party)
+                return syncCallback(err: nil, party: party)
+                }, failure: { (operation: AFHTTPRequestOperation, err: NSError) -> Void in
+                    return syncCallback(err: err, party: nil)
+            })
+        })
+    }
+    
     func POST(party: Party, callback: UpdatePartyCallback) {
         return putOrPost(party, method: "POST", callback: callback)
     }
@@ -90,19 +111,8 @@ class PartiesDataStore: NSObject {
                 self.httpManager.PUT(url, parameters: params, success: { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
                     let updatedParty = Party(json: JSON(response))
                     
-                    // update the party within the PartiesDataStore
-                    let didUpdateParty = synchronized(self.nearbyParties, { () -> Bool in
-                        for (idx, party) in enumerate(self.nearbyParties) {
-                            if party.oID != nil && party.oID == updatedParty.oID {
-                                // found the old party, update it
-                                self.nearbyParties[idx] = updatedParty
-                                return true
-                            }
-                        }
-                        // couldn't find the old party in .nearbyParties
-                        return false
-                    })
-                    if didUpdateParty {
+
+                    if self.updateSingleParty(updatedParty) {
                         return syncCallback(err: nil, party: updatedParty)
                     } else {
                         return syncCallback(err: NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not send word for party not stored locally"]), party: nil)
@@ -168,7 +178,20 @@ class PartiesDataStore: NSObject {
             self.httpManager.requestSerializer.setValue("facebook", forHTTPHeaderField: "Passport-Auth-Strategy")
         }
     }
+    
+    private func updateSingleParty(updatedParty: Party) -> Bool {
+        // update the party within the PartiesDataStore
+        return synchronized(self.nearbyParties, { () -> Bool in
+            for (idx, party) in enumerate(self.nearbyParties) {
+                if party.oID != nil && party.oID == updatedParty.oID {
+                    // found the old party, update it
+                    println("PartiesDataStore is replacing party \(updatedParty.oID)")
+                    self.nearbyParties[idx] = updatedParty
+                    return true
+                }
+            }
+            // couldn't find the old party in .nearbyParties
+            return false
+        })
+    }
 }
-
-
-
