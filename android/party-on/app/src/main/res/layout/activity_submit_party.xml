@@ -145,6 +145,8 @@
 
         </LinearLayout>
 
+        <!--
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -170,6 +172,8 @@
                 android:id="@+id/submit_form_edit_ends_at"/>
 
         </LinearLayout>
+
+        -->
 
     </RelativeLayout>
 

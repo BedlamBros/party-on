@@ -25,8 +25,16 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -44,7 +52,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
+import exceptions.PartyNotFoundException;
 import models.Party;
 import submit.ApiObject;
 import submit.FacebookLoginCallback;
@@ -143,21 +153,49 @@ public class ListPartyActivity extends ListActivity implements CompoundButton.On
             public void onClick(View v){
                 if (mPartyListToggleSwitch.isChecked()) {
                     mSwipeRefreshLayout.removeView(list);
-                    Log.d("map", "should load the map view now");
                     mMapFragment = MapFragment.newInstance();
-                    Log.d("map", "map fragment to string: " + mMapFragment.toString());
+
+                    //insert map, then remove list
                     FragmentTransaction fragmentTransaction =
                             getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.cont, mMapFragment);
                     fragmentTransaction.commit();
                     fragmentContainer.removeView(list);
-                    int contChildren = fragmentContainer.getChildCount();
-                    Log.d("map", "Frag container has " + contChildren + " children");
-                    //Log.d("map", "first child is " + fragmentContainer.getChildAt(0).getClass().getSimpleName());
+                    mSwipeRefreshLayout.setEnabled(false);
+                    mMapFragment.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(GoogleMap map) {
+                            final GoogleMap mMap = map;
+                            final int PIXELS_OFFSET = 10;
+                            map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                                @Override
+                                public void onCameraChange(CameraPosition cameraPosition) {
+                                    List<LatLng> coordsList = new ArrayList<LatLng>();
+                                    for (int i = 0; i < mParty_list.size(); i++) {
+                                        MarkerOptions m = new MarkerOptions()
+                                                .position(new LatLng(mParty_list.get(i).getlatitude(), mParty_list.get(i).getLon()))
+                                                .title(mParty_list.get(i).getDesc());
+                                        mMap.addMarker(m);
+                                        coordsList.add(new LatLng(mParty_list.get(i).getlatitude(),
+                                                mParty_list.get(i).getLon()));
+                                    }
+                                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                                    for (int i = 0; i < mParty_list.size(); i++) {
+                                        builder.include(coordsList.get(i));
+                                    }
+                                    LatLngBounds bounds = builder.build();
+                                    CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds, PIXELS_OFFSET);
+                                    mMap.animateCamera(update);
+                                }
+                            });
+                        }
+                    });
                 } else {
+                    //remove map, then add list
                     FragmentTransaction fragTrans = getFragmentManager().beginTransaction();
                     fragTrans.remove(mMapFragment);
                     fragTrans.commit();
+                    mSwipeRefreshLayout.setEnabled(true);
                     fragmentContainer.addView(list);
                 }
             }
@@ -189,12 +227,17 @@ public class ListPartyActivity extends ListActivity implements CompoundButton.On
            public void onResponseReceived(ArrayList<Party> apiObject){
                //hacky way to fail gracefully
                if (apiObject == null) return;
-               Log.d("receive", "response received on UI thread");
+               if (apiObject.size() == 0) return;
+               //Log.d("receive", "response received on UI thread");
                mParty_list = apiObject;
                list.setAdapter(new ListPartyAdapter(getApplicationContext(), mParty_list));
+               for (int i = 0; i < mParty_list.size(); i++){
+                   Log.d("receive", mParty_list.get(i).toString());
+               }
            }
 
             public void onPostExecute(ArrayList<Party> partyArrayList){
+                if (partyArrayList == null) return;
                 if (partyArrayList.size() > 0){
                     this.onResponseReceived(partyArrayList);
                     mSwipeRefreshLayout.setRefreshing(false);

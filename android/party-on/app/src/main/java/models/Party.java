@@ -21,8 +21,8 @@ public class Party  implements Parcelable, ApiObject{
     private String oId;
     private String title;
     private String desc; //256 char limit
-    private float lat;
-    private float lon;
+    private float latitude;
+    private float longitude;
     private String formatted_address;
     //private ArrayList<Flag> flag_list;
     private int male_cost;
@@ -37,7 +37,7 @@ public class Party  implements Parcelable, ApiObject{
 
     //only one constructor exists. All instnatiation calls are made to
     //party factory
-    public Party(String OId, String title, String desc, float lat, float lon,
+    public Party(String OId, String title, String desc, float latitudeitude, float lon,
                  String formatted_address, int male_cost, int female_cost,
                  String colloq_name, boolean byob, University uni,
                  long created_at, long start_time, long expires_at, long ends_at){
@@ -46,8 +46,8 @@ public class Party  implements Parcelable, ApiObject{
         this.male_cost = male_cost; //optional default 0
         this.title = title; //required, on listview
         this.desc = desc; //optional
-        this.lat = lat; //auto
-        this.lon = lon; //auto
+        this.latitude = latitude; //auto
+        this.longitude = lon; //auto
         this.formatted_address = formatted_address; //auto, on listview
         this.colloq_name = colloq_name; //optional, on listview
         this.uni = uni; //required default user's preference
@@ -56,6 +56,19 @@ public class Party  implements Parcelable, ApiObject{
         this.created_at = created_at; //auto
         this.expires_at = expires_at; //auto default start_time + 6 hours
         this.ends_at = ends_at;
+    }
+
+    //partially complete constructor for wireframing
+    public Party(String title, String desc, String formatted_address, float latitudeitude, float longitude){
+        this.title = title;
+        this.desc = desc;
+        this.formatted_address = formatted_address;
+        this.created_at = System.currentTimeMillis();
+        this.expires_at = System.currentTimeMillis() + (1000 * 60 * 60);
+        this.latitude = latitudeitude;
+        this.longitude = longitude;
+        //this.flag_list = new ArrayList<Flag>();
+        //flag_list.add(Flag.GREEN);
     }
 
     //partially complete constructor for wireframing
@@ -78,8 +91,8 @@ public class Party  implements Parcelable, ApiObject{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Party party = (Party) o;
-        if (Float.compare(party.lat, lat) != 0) return false;
-        if (Float.compare(party.lon, lon) != 0) return false;
+        if (Float.compare(party.latitude, latitude) != 0) return false;
+        if (Float.compare(party.longitude, longitude) != 0) return false;
         if (male_cost != party.male_cost) return false;
         if (female_cost != party.female_cost) return false;
         if (byob != party.byob) return false;
@@ -101,8 +114,8 @@ public class Party  implements Parcelable, ApiObject{
         int result = oId != null ? oId.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (desc != null ? desc.hashCode() : 0);
-        result = 31 * result + (lat != +0.0f ? Float.floatToIntBits(lat) : 0);
-        result = 31 * result + (lon != +0.0f ? Float.floatToIntBits(lon) : 0);
+        result = 31 * result + (latitude != +0.0f ? Float.floatToIntBits(latitude) : 0);
+        result = 31 * result + (longitude != +0.0f ? Float.floatToIntBits(longitude) : 0);
         result = 31 * result + (formatted_address != null ? formatted_address.hashCode() : 0);
         result = 31 * result + male_cost;
         result = 31 * result + female_cost;
@@ -119,8 +132,8 @@ public class Party  implements Parcelable, ApiObject{
         oId = in.readString();
         title = in.readString();
         desc = in.readString();
-        lat = in.readFloat();
-        lon = in.readFloat();
+        latitude = in.readFloat();
+        longitude = in.readFloat();
         formatted_address = in.readString();
         male_cost = in.readInt();
         female_cost = in.readInt();
@@ -144,8 +157,8 @@ public class Party  implements Parcelable, ApiObject{
         dest.writeString(oId);
         dest.writeString(title);
         dest.writeString(desc);
-        dest.writeFloat(lat);
-        dest.writeFloat(lon);
+        dest.writeFloat(latitude);
+        dest.writeFloat(longitude);
         dest.writeString(formatted_address);
         dest.writeInt(male_cost);
         dest.writeInt(female_cost);
@@ -179,12 +192,12 @@ public class Party  implements Parcelable, ApiObject{
         return desc;
     }
 
-    public float getLat() {
-        return lat;
+    public float getlatitude() {
+        return latitude;
     }
 
     public float getLon() {
-        return lon;
+        return longitude;
     }
 
     public String getformatted_address() {
@@ -197,8 +210,8 @@ public class Party  implements Parcelable, ApiObject{
                 "oId='" + oId + '\'' +
                 ", title='" + title + '\'' +
                 ", desc='" + desc + '\'' +
-                ", lat=" + lat +
-                ", lon=" + lon +
+                ", latitude=" + latitude +
+                ", lon=" + longitude +
                 ", formatted_address='" + formatted_address + '\'' +
                 ", male_cost=" + male_cost +
                 ", female_cost=" + female_cost +
@@ -256,13 +269,21 @@ public class Party  implements Parcelable, ApiObject{
     }
 
     public static class PartyFactory{
+        final int UTC_MS_CONVERSION = 1000;
 
         @Nullable
         public static Party create(JsonObject json){
             //TODO create party from json
             //String title = json.get("_id").getAsString();
+            String user = json.get("user").getAsString();
             String desc = "downloaded from api";
             String formattedAddress = json.get("formattedAddress").getAsString();
+            float latitude = json.get("latitude").getAsFloat();
+            float longitude = json.get("longitude").getAsFloat();
+            boolean byob = json.get("byob").getAsBoolean();
+            if (latitude != 0f && longitude != 0f){
+                return new Party("apiParty", desc, formattedAddress, latitude, longitude);
+            }
             return new Party("apiParty", desc, formattedAddress);
         }
 
@@ -270,18 +291,18 @@ public class Party  implements Parcelable, ApiObject{
             String oId = in.readString();
             String title = in.readString();
             String desc = in.readString();
-            float lat = in.readFloat();
-            float lon = in.readFloat();
+            float latitude = in.readFloat();
+            float longitude = in.readFloat();
             String formatted_address = in.readString();
             int male_cost = in.readInt();
             int female_cost = in.readInt();
             String colloq_name = in.readString();
             boolean byob = in.readByte() != 0x00;
             University uni = (University) in.readValue(University.class.getClassLoader());
-            long starts_at = in.readLong();
+            long starts_at = in.readLong(); //need to * 1000 for dates
             long created_at = in.readLong();
             long expires_at = in.readLong();
-            return new Party(oId, title, desc, lat, lon, formatted_address, male_cost, female_cost,
+            return new Party(oId, title, desc, latitude, longitude, formatted_address, male_cost, female_cost,
                                 colloq_name, byob, uni, created_at, starts_at, expires_at, 0);
         }
     }

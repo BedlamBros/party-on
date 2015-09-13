@@ -22,6 +22,7 @@ import models.Party;
 
 /**
  * Created by John on 9/2/2015.
+ * References to the end time have been commented out for clarity.
  */
 public class SubmitPartyActivity extends Activity {
     // these vals are packaged in the json
@@ -60,7 +61,7 @@ public class SubmitPartyActivity extends Activity {
         mDesc_et = (EditText) findViewById(R.id.submit_form_edit_desc);
         mAddress_et = (EditText) findViewById(R.id.submit_form_edit_loc);
         mTimePicker_start = (TimePicker) findViewById(R.id.submit_form_edit_starts_at);
-        mTimePicker_end = (TimePicker) findViewById(R.id.submit_form_edit_ends_at);
+       // mTimePicker_end = (TimePicker) findViewById(R.id.submit_form_edit_ends_at);
 
         //get the submit button
         mSubmit_button = (Button) findViewById(R.id.submit_button);
@@ -128,6 +129,6 @@ public class SubmitPartyActivity extends Activity {
 
     private void setTimePickerOffsets(){
         Date mSimple_curr_date = new Date(System.currentTimeMillis() + ms_end_offset);
-        mTimePicker_end.setCurrentHour(mSimple_curr_date.getHours());
+        //mTimePicker_end.setCurrentHour(mSimple_curr_date.getHours());
     }
 }

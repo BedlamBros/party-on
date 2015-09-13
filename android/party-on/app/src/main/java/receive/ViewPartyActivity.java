@@ -42,9 +42,9 @@ public class ViewPartyActivity extends Activity {
         //set views by R.id
         //mTv_title = (TextView) findViewById(R.id.fullscreen_party_item_title);
         mTv_readable_loc = (TextView) findViewById(R.id.fullscreen_party_item_readable_loc);
-        mTv_desc = (TextView) findViewById(R.id.fullscreen_party_item_desc);
+        //mTv_desc = (TextView) findViewById(R.id.fullscreen_party_item_desc);
         mTv_starts_at = (TextView) findViewById(R.id.fullscreen_party_item_starts_at);
-        mTv_ends_at = (TextView) findViewById(R.id.fullscreen_party_item_ends_at);
+        //mTv_ends_at = (TextView) findViewById(R.id.fullscreen_party_item_ends_at);
         mTv_gendered_prices = (TextView) findViewById(R.id.fullscreen_party_item_gendered_prices);
         mCb_byob = (CheckBox) findViewById(R.id.fullscreen_party_item_byob);
 
@@ -53,8 +53,11 @@ public class ViewPartyActivity extends Activity {
         //set the Typeface
         Typeface mPg99Typeface = Typeface.createFromAsset(getAssets(),
                 getResources().getString(R.string.typeface_stylish));
+        //TODO make this programmatic after testing
         mTv_readable_loc.setTypeface(mPg99Typeface);
-
+        mTv_starts_at.setTypeface(mPg99Typeface);
+        //mTv_ends_at.setTypeface(mPg99Typeface);
+        mTv_gendered_prices.setTypeface(mPg99Typeface);
 
         try {
             getPartyFromExtra();
@@ -81,11 +84,11 @@ public class ViewPartyActivity extends Activity {
         //all of these fields are required by the model and therefore will be shown
         //mTv_title.setText(mParty.getTitle());
         mTv_readable_loc.setText(getResources().getString(R.string.submit_form_loc_title) + mParty.getformatted_address());
-        mTv_desc.setText(getResources().getString(R.string.submit_form_desc_title) + mParty.getDesc());
+        //mTv_desc.setText(getResources().getString(R.string.submit_form_desc_title) + mParty.getDesc());
         Date mDate_starts_at = new Date(mParty.getStart_time());
         mTv_starts_at.setText(getResources().getString(R.string.submit_form_starts_at_title) + mDate_starts_at.toString());
         Date mDate_ends_at = new Date(mParty.getEnds_at());
-        mTv_ends_at.setText(getResources().getString(R.string.submit_form_ends_at_title) + mDate_ends_at.toString());
+        //mTv_ends_at.setText(getResources().getString(R.string.submit_form_ends_at_title) + mDate_ends_at.toString());
         mTv_gendered_prices.setText(getResources().getString(R.string.submit_form_male_price_title)
             + "$" +  mParty.getMale_cost() + "/" + getResources().getString(R.string.submit_form_female_price_title)
             + "$" + mParty.getFemale_cost());

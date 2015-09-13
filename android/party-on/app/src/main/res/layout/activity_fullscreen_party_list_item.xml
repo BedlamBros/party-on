@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <RelativeLayout
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="center_horizontal"
-        android:layout_width="match_parent" android:layout_height="match_parent">
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,7 +53,7 @@
                 android:src="@drawable/ic_define_location"/>
 
         </RelativeLayout>
-        -->
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,14 +64,18 @@
             android:layout_below="@id/fullscreen_party_item_readable_loc"
             android:id="@+id/fullscreen_party_item_desc"/>
 
+            -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/party_desc_text_size"
             android:text="@string/party_desc_default"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/fullscreen_party_item_desc"
+            android:layout_below="@id/fullscreen_party_item_readable_loc"
             android:id="@+id/fullscreen_party_item_starts_at"/>
+
+        <!--
 
         <TextView
             android:layout_width="wrap_content"
@@ -74,11 +86,13 @@
             android:layout_below="@id/fullscreen_party_item_starts_at"
             android:id="@+id/fullscreen_party_item_ends_at"/>
 
+            -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/party_desc_text_size"
-            android:layout_below="@id/fullscreen_party_item_ends_at"
+            android:layout_below="@id/fullscreen_party_item_starts_at"
             android:id="@+id/fullscreen_party_item_gendered_prices"/>
 
         <TextView
@@ -99,15 +113,17 @@
             android:layout_toRightOf="@id/fullscreen_party_item_byob_label"
             android:id="@+id/fullscreen_party_item_byob"/>
 
-        <ListView
-            android:layout_width="@dimen/view_party_the_word_width"
-            android:layout_height="@dimen/view_party_the_word_height"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/the_word_cont">
-
-        </ListView>
-
     </RelativeLayout>
+
+    <ListView
+        android:layout_width="@dimen/view_party_the_word_width"
+        android:layout_height="@dimen/view_party_the_word_height"
+        android:background="@drawable/the_word_background"
+        android:layout_weight="2"
+        android:id="@+id/the_word_cont">
+
+    </ListView>
+
+    </LinearLayout>
 
 </ScrollView>
