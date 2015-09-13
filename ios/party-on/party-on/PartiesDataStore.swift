@@ -75,6 +75,49 @@ class PartiesDataStore: NSObject {
         return putOrPost(party, method: "PUT", callback: callback)
     }
     
+    func sendword(word: TheWordMessage, party: Party, callback: UpdatePartyCallback) {
+        if let partyid = party.oID {
+            let url = API_ROOT + "/parties/" + partyid + "/word"
+            let params = word.toJSON().dictionaryObject
+            
+            let syncCallback: UpdatePartyCallback = { (err: NSError?, party: Party?) -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    callback(err: err, party: party)
+                })
+            }
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+                self.httpManager.PUT(url, parameters: params, success: { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
+                    let updatedParty = Party(json: JSON(response))
+                    
+                    // update the party within the PartiesDataStore
+                    let didUpdateParty = synchronized(self.nearbyParties, { () -> Bool in
+                        for (idx, party) in enumerate(self.nearbyParties) {
+                            if party.oID != nil && party.oID == updatedParty.oID {
+                                // found the old party, update it
+                                self.nearbyParties[idx] = updatedParty
+                                return true
+                            }
+                        }
+                        // couldn't find the old party in .nearbyParties
+                        return false
+                    })
+                    if didUpdateParty {
+                        return syncCallback(err: nil, party: updatedParty)
+                    } else {
+                        return syncCallback(err: NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not send word for party not stored locally"]), party: nil)
+                    }
+                    }, failure: { (operation: AFHTTPRequestOperation, err: NSError) -> Void in
+                    return syncCallback(err: err, party: nil)
+                })
+            })
+            
+        } else {
+            let err = NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Cannot send word for blank Party oID"])
+            return callback(err: err, party: nil)
+        }
+    }
+    
     private func putOrPost(party: Party, method: String, callback: UpdatePartyCallback) {
         prepareAuthHeaders()
         //self.httpManager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")

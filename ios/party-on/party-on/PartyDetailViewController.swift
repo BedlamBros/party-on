@@ -39,6 +39,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         super.viewDidLoad()
         self.theWordTableView?.dataSource = self
         self.theWordTableView?.delegate = self
+        scrollToTheWordBottom(false)
         
         // Navigation Item
         self.navigationItem.title = party.formattedAddress
@@ -135,8 +136,18 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             // Send button
             if let alertTextField = alertView.textFieldAtIndex(0) {
                 if count(alertTextField.text) > 0 {
-                    let newWord = TheWordMessage(oID: "", body: alertTextField.text, created: NSDate(timeIntervalSinceNow: 0))
-                    println("sending msg: \(newWord.body)")
+                    let newWord = TheWordMessage(oID: nil, body: alertTextField.text, created: NSDate(timeIntervalSinceNow: 0))
+                    PartiesDataStore.sharedInstance.sendword(newWord, party: self.party, callback: { (err, party) -> Void in
+                        if err == nil {
+                            // reload TheWord locally
+                            self.party = party
+                            println("\(self.party!.theWord.count) msgs in party word")
+                            self.theWordTableView?.reloadData()
+                            self.scrollToTheWordBottom(true)
+                        } else {
+                            UIAlertView(title: "Uh-oh", message: "Had trouble sending message", delegate: nil, cancelButtonTitle: "Ok").show()
+                        }
+                    })
                 }
             }
         } else {
@@ -191,7 +202,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             
             let timeFormatter = NSDateFormatter()
             timeFormatter.dateFormat = "h:mm a"
-            wordCell.dateLabel?.text = timeFormatter.stringFromDate(self.party.startTime)
+            wordCell.dateLabel?.text = timeFormatter.stringFromDate(self.party.theWord[indexPath.row].created)
             
             if let wordCellTimeHeight = wordCell.dateLabel?.frame.height {
                 self.wordTimeLabelHeight = wordCellTimeHeight
@@ -249,7 +260,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     
     // MARK: Helpers
     
-    func theWordForRowAtIndexPath(indexPath: NSIndexPath, tableView: UITableView) -> TheWordMessage? {
+    private func theWordForRowAtIndexPath(indexPath: NSIndexPath, tableView: UITableView) -> TheWordMessage? {
         if indexPath.row == tableView.dataSource!.tableView(tableView, numberOfRowsInSection: indexPath.row) - 1 {
             // last row in table
             return nil
@@ -258,11 +269,19 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         }
     }
     
-    func launchSendMessageDialog() {
+    private func launchSendMessageDialog() {
         // launch an alert view for sending a message
         let dialog = UIAlertView(title: "Spread the word", message: "What's going on at this party?", delegate: self, cancelButtonTitle: "Send", otherButtonTitles: "Nevermind")
         dialog.alertViewStyle = UIAlertViewStyle.PlainTextInput
         dialog.show()
+    }
+    
+    private func scrollToTheWordBottom(animated: Bool) {
+        if let theWordTableView = self.theWordTableView {
+            let bottomSection = theWordTableView.numberOfSections() - 1
+            let bottomCell = theWordTableView.numberOfRowsInSection(bottomSection) - 1
+            theWordTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: bottomCell, inSection: bottomSection), atScrollPosition: UITableViewScrollPosition.Bottom, animated: animated)
+        }
     }
     
     
