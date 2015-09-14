@@ -3,126 +3,141 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:gravity="center_horizontal"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/view_party_title_text_size"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/party_title_default"
-            android:textStyle="bold"
-            android:textColor="@color/primary_hard"
-            android:id="@+id/fullscreen_party_item_readable_loc" />
-
-        <!--
         <RelativeLayout
-            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/fullscreen_party_item_title"
-            android:id="@+id/fullscreen_party_item_layout_readable_loc">
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/view_party_title_text_size"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/party_title_default"
+                android:textStyle="bold"
+                android:textColor="@color/primary_hard"
+                android:id="@+id/fullscreen_party_item_readable_loc" />
+
+            <!--
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fullscreen_party_item_title"
+                android:id="@+id/fullscreen_party_item_layout_readable_loc">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/party_desc_text_size"
+                    android:text="@string/party_loc_default"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@color/secondary_hard"
+                    android:gravity="center_vertical"
+                    android:id="@+id/fullscreen_party_item_readable_loc" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_define_location"/>
+
+            </RelativeLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/party_desc_text_size"
-                android:text="@string/party_loc_default"
+                android:text="@string/party_desc_default"
                 android:layout_alignParentLeft="true"
-                android:textColor="@color/secondary_hard"
-                android:gravity="center_vertical"
-                android:id="@+id/fullscreen_party_item_readable_loc" />
+                android:layout_below="@id/fullscreen_party_item_readable_loc"
+                android:id="@+id/fullscreen_party_item_desc"/>
 
-            <ImageView
+                -->
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_define_location"/>
+                android:textSize="@dimen/party_desc_text_size"
+                android:text="@string/party_desc_default"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/fullscreen_party_item_readable_loc"
+                android:id="@+id/fullscreen_party_item_starts_at"/>
+
+            <!--
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/party_desc_text_size"
+                android:text="@string/party_desc_default"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/fullscreen_party_item_starts_at"
+                android:id="@+id/fullscreen_party_item_ends_at"/>
+
+                -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/party_desc_text_size"
+                android:layout_below="@id/fullscreen_party_item_starts_at"
+                android:id="@+id/fullscreen_party_item_gendered_prices"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/party_desc_text_size"
+                android:layout_centerVertical="true"
+                android:layout_below="@id/fullscreen_party_item_gendered_prices"
+                android:layout_alignParentLeft="true"
+                android:text="@string/submit_form_byob_title"
+                android:id="@+id/fullscreen_party_item_byob_label"/>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:enabled="false"
+                android:layout_below="@id/fullscreen_party_item_gendered_prices"
+                android:layout_toRightOf="@id/fullscreen_party_item_byob_label"
+                android:id="@+id/fullscreen_party_item_byob"/>
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:orientation="vertical"
+            android:background="@drawable/the_word_background">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/party_desc_text_size"
-            android:text="@string/party_desc_default"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/fullscreen_party_item_readable_loc"
-            android:id="@+id/fullscreen_party_item_desc"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/party_desc_text_size"
+                android:textStyle="italic"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/the_word_title"
+                android:id="@+id/the_word_title"/>
 
-            -->
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/the_word_cont">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/party_desc_text_size"
-            android:text="@string/party_desc_default"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/fullscreen_party_item_readable_loc"
-            android:id="@+id/fullscreen_party_item_starts_at"/>
+            </ListView>
 
-        <!--
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/party_desc_text_size"
-            android:text="@string/party_desc_default"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/fullscreen_party_item_starts_at"
-            android:id="@+id/fullscreen_party_item_ends_at"/>
-
-            -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/party_desc_text_size"
-            android:layout_below="@id/fullscreen_party_item_starts_at"
-            android:id="@+id/fullscreen_party_item_gendered_prices"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/party_desc_text_size"
-            android:layout_centerVertical="true"
-            android:layout_below="@id/fullscreen_party_item_gendered_prices"
-            android:layout_alignParentLeft="true"
-            android:text="@string/submit_form_byob_title"
-            android:id="@+id/fullscreen_party_item_byob_label"/>
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            android:layout_below="@id/fullscreen_party_item_gendered_prices"
-            android:layout_toRightOf="@id/fullscreen_party_item_byob_label"
-            android:id="@+id/fullscreen_party_item_byob"/>
-
-    </RelativeLayout>
-
-    <ListView
-        android:layout_width="@dimen/view_party_the_word_width"
-        android:layout_height="@dimen/view_party_the_word_height"
-        android:background="@drawable/the_word_background"
-        android:layout_weight="2"
-        android:id="@+id/the_word_cont">
-
-    </ListView>
+        </LinearLayout>
 
     </LinearLayout>
 

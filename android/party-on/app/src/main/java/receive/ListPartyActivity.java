@@ -1,15 +1,13 @@
 package receive;
 
-import android.app.Fragment;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListActivity;
-import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +20,6 @@ import android.widget.Switch;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.maps.CameraUpdate;
@@ -30,7 +27,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -54,12 +50,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import exceptions.PartyNotFoundException;
 import models.Party;
-import submit.ApiObject;
+import prefs.UniPrefFragment;
 import submit.FacebookLoginCallback;
 import submit.SubmitPartyActivity;
-import ui.MapViewFragment;
 import util.VibrateClickResponseListener;
 
 /**
@@ -91,8 +85,17 @@ public class ListPartyActivity extends ListActivity implements CompoundButton.On
     public void onCreate(Bundle saved_instance){
         super.onCreate(saved_instance);
 
-        //initialize the Facebook sdk to get the login button
-        FacebookSdk.sdkInitialize(getApplicationContext());
+        AlertDialog.Builder eulaDialog = new AlertDialog.Builder(this, R.style.dialog);
+        eulaDialog.setTitle(R.string.eula_title)
+            .setNegativeButton("decline", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                    }
+
+                    //initialize the Facebook sdk to get the login button
+                    FacebookSdk.sdkInitialize(getApplicationContext());
 
         //set content view only after initializing facebook sdk
         setContentView(R.layout.party_list);
@@ -166,7 +169,7 @@ public class ListPartyActivity extends ListActivity implements CompoundButton.On
                         @Override
                         public void onMapReady(GoogleMap map) {
                             final GoogleMap mMap = map;
-                            final int PIXELS_OFFSET = 10;
+                            final int PIXELS_OFFSET = 75;
                             map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                                 @Override
                                 public void onCameraChange(CameraPosition cameraPosition) {
@@ -174,7 +177,7 @@ public class ListPartyActivity extends ListActivity implements CompoundButton.On
                                     for (int i = 0; i < mParty_list.size(); i++) {
                                         MarkerOptions m = new MarkerOptions()
                                                 .position(new LatLng(mParty_list.get(i).getlatitude(), mParty_list.get(i).getLon()))
-                                                .title(mParty_list.get(i).getDesc());
+                                                .title(mParty_list.get(i).getColloq_name());
                                         mMap.addMarker(m);
                                         coordsList.add(new LatLng(mParty_list.get(i).getlatitude(),
                                                 mParty_list.get(i).getLon()));
@@ -321,7 +324,14 @@ public class ListPartyActivity extends ListActivity implements CompoundButton.On
     }
 
     public void onHamburgerClick(View view){
-        //TODO start the preference fragment here
+        Log.d("prefs", "burg button clicked");
+        UniPrefFragment uniPref = new UniPrefFragment();
+        FragmentManager fragManager = getFragmentManager();
+        uniPref.show(fragManager, "uni prefs");
+        /*
+        UniPrefFragment uniPrefBuilder = new UniPrefFragment(this);
+        uniPrefBuilder.create();
+        */
     }
 
     public ListPartyAdapter getListAdapter(){

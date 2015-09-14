@@ -15,6 +15,7 @@ import java.util.Iterator;
 
 import models.Party;
 import models.University;
+import models.Word;
 
 /**
  * Created by John on 8/31/2015.
@@ -46,7 +47,7 @@ public class DummyReader implements PartyListLoadable{
                 party_list.add(new Party("000001", title, desc, 170.006f, 80.004f,
                         "123 N Jefferson st.", 5, 0, "The House", true, uni, System.currentTimeMillis(),
                         (System.currentTimeMillis() + (1000 * 60 * 60)), (System.currentTimeMillis() + (1000 * 60 * 60)),
-                        (System.currentTimeMillis() + (1000 * 60 * 60))));
+                        (System.currentTimeMillis() + (1000 * 60 * 60)), new ArrayList<Word>()));
             }
         } catch (JSONException ex) {
             ex.printStackTrace();

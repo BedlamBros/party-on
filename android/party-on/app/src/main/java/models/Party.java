@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONException;
@@ -34,13 +35,14 @@ public class Party  implements Parcelable, ApiObject{
     private long created_at; //UNIX timestamps
     private long expires_at;
     private long ends_at;
+    private ArrayList<Word> theWord;
 
     //only one constructor exists. All instnatiation calls are made to
     //party factory
     public Party(String OId, String title, String desc, float latitudeitude, float lon,
                  String formatted_address, int male_cost, int female_cost,
                  String colloq_name, boolean byob, University uni,
-                 long created_at, long start_time, long expires_at, long ends_at){
+                 long created_at, long start_time, long expires_at, long ends_at, ArrayList<Word> theWord){
         this.oId = OId; //auto
         this.female_cost = female_cost; //optional default 0
         this.male_cost = male_cost; //optional default 0
@@ -56,10 +58,11 @@ public class Party  implements Parcelable, ApiObject{
         this.created_at = created_at; //auto
         this.expires_at = expires_at; //auto default start_time + 6 hours
         this.ends_at = ends_at;
+        this.theWord = theWord;
     }
 
     //partially complete constructor for wireframing
-    public Party(String title, String desc, String formatted_address, float latitudeitude, float longitude){
+    public Party(String title, String desc, String formatted_address, float latitudeitude, float longitude, ArrayList<Word> theWord){
         this.title = title;
         this.desc = desc;
         this.formatted_address = formatted_address;
@@ -67,17 +70,22 @@ public class Party  implements Parcelable, ApiObject{
         this.expires_at = System.currentTimeMillis() + (1000 * 60 * 60);
         this.latitude = latitudeitude;
         this.longitude = longitude;
-        //this.flag_list = new ArrayList<Flag>();
-        //flag_list.add(Flag.GREEN);
+        this.theWord = theWord;
+    }
+
+    public String getColloq_name() {
+        return colloq_name;
     }
 
     //partially complete constructor for wireframing
-    public Party(String title, String desc, String formatted_address){
+    public Party(String title, String desc, String formatted_address, ArrayList<Word> theWord){
         this.title = title;
+
         this.desc = desc;
         this.formatted_address = formatted_address;
         this.created_at = System.currentTimeMillis();
         this.expires_at = System.currentTimeMillis() + (1000 * 60 * 60);
+        this.theWord = theWord;
         //this.flag_list = new ArrayList<Flag>();
         //flag_list.add(Flag.GREEN);
     }
@@ -139,12 +147,17 @@ public class Party  implements Parcelable, ApiObject{
         female_cost = in.readInt();
         colloq_name = in.readString();
         byob = in.readByte() != 0x00;
-        //TODO add the uni parcelable back in when model is done
-        //uni = (University) in.readValue(University.class.getClassLoader());
+        uni = (University) in.readValue(University.class.getClassLoader());
         start_time = in.readLong();
         created_at = in.readLong();
         expires_at = in.readLong();
         ends_at = in.readLong();
+        if (in.readByte() == 0x01) {
+            theWord = new ArrayList<Word>();
+            in.readList(theWord, Word.class.getClassLoader());
+        } else {
+            theWord = null;
+        }
     }
 
     @Override
@@ -164,11 +177,17 @@ public class Party  implements Parcelable, ApiObject{
         dest.writeInt(female_cost);
         dest.writeString(colloq_name);
         dest.writeByte((byte) (byob ? 0x01 : 0x00));
-        //dest.writeValue(uni);
+        dest.writeValue(uni);
         dest.writeLong(start_time);
         dest.writeLong(created_at);
         dest.writeLong(expires_at);
         dest.writeLong(ends_at);
+        if (theWord == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(theWord);
+        }
     }
 
     @SuppressWarnings("unused")
@@ -202,6 +221,10 @@ public class Party  implements Parcelable, ApiObject{
 
     public String getformatted_address() {
         return formatted_address;
+    }
+
+    public ArrayList<Word> getTheWord(){
+        return this.theWord;
     }
 
     @Override
@@ -281,10 +304,19 @@ public class Party  implements Parcelable, ApiObject{
             float latitude = json.get("latitude").getAsFloat();
             float longitude = json.get("longitude").getAsFloat();
             boolean byob = json.get("byob").getAsBoolean();
-            if (latitude != 0f && longitude != 0f){
-                return new Party("apiParty", desc, formattedAddress, latitude, longitude);
+            ArrayList<Word> wordList = new ArrayList<Word>();
+            JsonArray theWordJsonArray = json.get("theWord").getAsJsonArray();
+            Log.d("receive", "received " + theWordJsonArray.size() + " words from server");
+            for (int i = 0; i < theWordJsonArray.size(); i++){
+                JsonObject wordJson = theWordJsonArray.get(i).getAsJsonObject();
+                Word w = Word.WordFactory.create(wordJson);
+                wordList.add(w);
             }
-            return new Party("apiParty", desc, formattedAddress);
+
+            if (latitude != 0f && longitude != 0f){
+                return new Party("apiParty", desc, formattedAddress, latitude, longitude, wordList);
+            }
+            return new Party("apiParty", desc, formattedAddress, wordList);
         }
 
         protected Party create(Parcel in){
@@ -303,7 +335,7 @@ public class Party  implements Parcelable, ApiObject{
             long created_at = in.readLong();
             long expires_at = in.readLong();
             return new Party(oId, title, desc, latitude, longitude, formatted_address, male_cost, female_cost,
-                                colloq_name, byob, uni, created_at, starts_at, expires_at, 0);
+                                colloq_name, byob, uni, created_at, starts_at, expires_at, 0, new ArrayList<Word>());
         }
     }
 }

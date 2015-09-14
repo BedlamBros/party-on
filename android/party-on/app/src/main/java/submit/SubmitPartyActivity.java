@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -16,9 +17,11 @@ import com.google.gson.JsonObject;
 import net.john.partyon.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import models.Party;
+import models.Word;
 
 /**
  * Created by John on 9/2/2015.
@@ -36,6 +39,9 @@ public class SubmitPartyActivity extends Activity {
 
     private Party apiParty;
 
+    private TextView mSubmitFormTitle;
+    private TextView mSubmitFormColloqName;
+
     //helpful for iterating through required views
     private final int REQUIRED_ETS = 2;
     private final int REQUIRED_TPS = 1;
@@ -43,6 +49,7 @@ public class SubmitPartyActivity extends Activity {
     private EditText mColloq_name_et;
     private EditText mDesc_et;
     private EditText mAddress_et;
+    private Switch mDaySw;
     private TimePicker mTimePicker_start;
     private TimePicker mTimePicker_end;
 
@@ -56,12 +63,16 @@ public class SubmitPartyActivity extends Activity {
         super.onCreate(saved_instance);
         setContentView(R.layout.activity_submit_party);
 
+        //get all textviews that should have the Pg99 Typeface
+        mSubmitFormTitle = (TextView) findViewById(R.id.submit_form_activity_title);
+
+
         //get all relevant views from the layout
         mColloq_name_et = (EditText) findViewById(R.id.submit_form_edit_title);
         mDesc_et = (EditText) findViewById(R.id.submit_form_edit_desc);
         mAddress_et = (EditText) findViewById(R.id.submit_form_edit_loc);
         mTimePicker_start = (TimePicker) findViewById(R.id.submit_form_edit_starts_at);
-       // mTimePicker_end = (TimePicker) findViewById(R.id.submit_form_edit_ends_at);
+        mDaySw = (Switch) findViewById(R.id.day_toggle);
 
         //get the submit button
         mSubmit_button = (Button) findViewById(R.id.submit_button);
@@ -100,7 +111,7 @@ public class SubmitPartyActivity extends Activity {
     public void onSubmitButtonClick(View view){
         Log.d("submit", "submit button clicked");
         mApiObjectSubmitter = new ApiObjectSubmitter();
-        Party mParty = new Party(mColloq_name_et.getText().toString(), mDesc_et.getText().toString(), "420 N Jefferson");
+        Party mParty = new Party(mColloq_name_et.getText().toString(), mDesc_et.getText().toString(), "420 N Jefferson", new ArrayList<Word>());
         String jsonObject = mParty.toJson();
         mApiObjectSubmitter.execute(jsonObject);
     }

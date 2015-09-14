@@ -2,6 +2,7 @@ package receive;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,26 +29,21 @@ public class ListWordAdapter extends ArrayAdapter<Word> {
     }
 
     public View getView(int position, View convert_view, ViewGroup parent){
-        /*
         Word mWord = mWordList.get(position);
-        mWord.toString();
         if (convert_view == null){
             convert_view = LayoutInflater.from(mContext)
-                    .inflate(R.layout.party_list_item, parent, false);
+                    .inflate(R.layout.word_list_item, parent, false);
         }
-        TextView mTv_title = (TextView) convert_view.findViewById(R.id.party_title);
-        mTv_title.setText(mParty_list.get(position).getTitle());
-        TextView mTv_desc = (TextView) convert_view.findViewById(R.id.party_desc);
-        mTv_desc.setText(mParty_list.get(position).getDesc());
-        TextView mTv_readable_loc = (TextView) convert_view.findViewById(R.id.party_readable_loc);
-        mTv_readable_loc.setText(mParty_list.get(position).getformatted_address());
-        //convert_view.setOnClickListener(mPartyItemClickListener);
+        TextView mTv_body = (TextView) convert_view.findViewById(R.id.word_body);
+        TextView mTv_created = (TextView) convert_view.findViewById(R.id.word_created);
+
+        mTv_body.setText(mWordList.get(position).getBody());
 
         //set the typeface
         Typeface font = Typeface.createFromAsset(mContext.getAssets(),
                 mContext.getResources().getString(R.string.typeface_stylish));
-        mTv_title.setTypeface(font);
-        */
+        mTv_body.setTypeface(font);
+
         return convert_view;
     }
 }
