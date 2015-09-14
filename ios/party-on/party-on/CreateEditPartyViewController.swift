@@ -50,6 +50,10 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
         self.girlsPay?.leftView = girlsPayCurrencyLabel
         self.girlsPay?.leftViewMode = UITextFieldViewMode.Always
         
+        self.startTimePicker?.minimumDate = NSDate(timeIntervalSinceNow: -(60 * 60 * 8))
+        self.startTimePicker?.maximumDate = NSDate(timeIntervalSinceNow: (60 * 60 * 24))
+        self.startTimePicker?.minuteInterval = 15
+        
         // Gesture recognizer to dismiss keyboard
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "dismissKeyboard"))
     }

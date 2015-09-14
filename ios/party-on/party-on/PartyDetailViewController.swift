@@ -72,16 +72,16 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         self.startsLabel?.text = timeFormatter.stringFromDate(self.party.startTime)
         
         let now = NSDate(timeIntervalSinceNow: 0)
-        let calendar = timeFormatter.calendar
-        let desiredDateComponents = NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute
-        let startDateComponents = calendar.component(desiredDateComponents, fromDate: self.party.startTime)
-        let nowComponents = calendar.component(desiredDateComponents, fromDate: now)
-        
         if now.timeIntervalSince1970 < party.startTime.timeIntervalSince1970 {
             // party is in the future
         } else {
             // party is in the past
         }
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = NSTimeZone.systemTimeZone()
+        dateFormatter.dateFormat = "MMM d"
+        self.dayLabel?.text = dateFormatter.stringFromDate(self.party.startTime)
         
         //if let endTime = self.party.endTime {
         if false {
@@ -338,7 +338,8 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     private let theWordWriteCellReuseIdentifier = "TheWordWriteCell"
     private let minTheWordCellHeight: CGFloat = 44
     private let minTheWordDateLabelHeight: CGFloat = 12
-    private let refreshPartyTimeInterval: NSTimeInterval = 5
+    private let refreshPartyTimeInterval: NSTimeInterval = 10
 }
+
 
 
