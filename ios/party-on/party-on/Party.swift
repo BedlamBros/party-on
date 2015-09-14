@@ -44,6 +44,10 @@ class Party: NSObject, ServerModel {
         
         self.startTime = NSDate(timeIntervalSince1970: json["startTime"].number!.doubleValue / 1000)
         
+        for wordJson in json["theWord"].arrayValue {
+            self.theWord.append(TheWordMessage(json: wordJson))
+        }
+        
         // optional properties
         if let colloquialName = json["colloquialName"].string {
             self.colloquialName = colloquialName
@@ -58,6 +62,8 @@ class Party: NSObject, ServerModel {
             self.endTime = NSDate(timeIntervalSince1970: json["endTime"].number!.doubleValue / 1000)
         }
         
+        
+        return
         let dummyMessages = [
             "Nothing yet",
             "Heating up",

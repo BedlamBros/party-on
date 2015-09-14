@@ -17,9 +17,12 @@ class TheWordMessage: NSObject, ServerModel {
     
     required init(json: JSON) {
         super.init()
+        self.oID = json["_id"].string
+        self.created = NSDate(timeIntervalSince1970: json["created"].numberValue.doubleValue / 1000)
+        self.body = json["body"].stringValue
     }
     
-    init(oID: String, body: String, created: NSDate) {
+    init(oID: String?, body: String, created: NSDate) {
         super.init()
         self.oID = oID
         self.body = body
@@ -27,6 +30,13 @@ class TheWordMessage: NSObject, ServerModel {
     }
     
     func toJSON() -> JSON {
-        return JSON([])
+        var json = JSON([
+            "body": body
+        ])
+        
+        if let oid = self.oID {
+            json["_id"] = JSON(oid)
+        }
+        return json
     }
 }

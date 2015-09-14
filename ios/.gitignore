@@ -44,3 +44,6 @@ Podfile.lock
 Carthage/Build
 
 .DS_Store
+
+# Apple Certs
+certs/
