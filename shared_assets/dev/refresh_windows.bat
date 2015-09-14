@@ -1,0 +1,1 @@
+xcopy /s C:\Users\John\StudioProjects\party-on\shared-assets C:\Users\John\StudioProjects\party-on\android\party-on\app\src\main\res\drawable
