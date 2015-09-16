@@ -67,6 +67,25 @@ describe('Testing FlagHistories and Banning', function() {
       });
     });
 
+    it('should not ban a good user', function(done) {
+      this.timeout(10000);
+      var goodUser = _.clone(user);
+      var endpoint = '/api/test/parties/bannedstatus';
+      request({
+	uri: config.hostname + endpoint,
+	method: 'POST',
+	json: {
+	  user: goodUser
+	}
+      }, function(err, resp, body) {
+	expect(err).to.be(null);
+	expect(resp.statusCode).to.be(200);
+	expect(body.banned).to.be(false);
+	done();
+      });
+    });
+
+
     it('should be able to file a flag against a new user', function(done) {
       this.timeout(10000);
       var complaintBody = 'Meh I\'m angry';
@@ -96,6 +115,26 @@ describe('Testing FlagHistories and Banning', function() {
 	});
       });
     });
+
+
+    it('should ban a bad user', function(done) {
+      this.timeout(10000);
+      var badUser = _.clone(user);
+      var endpoint = '/api/test/parties/bannedstatus';
+      request({
+	uri: config.hostname + endpoint,
+	method: 'POST',
+	json: {
+	  user: badUser
+	}
+      }, function(err, resp, body) {
+	expect(err).to.be(null);
+	expect(resp.statusCode).to.be(200);
+	expect(body.banned).to.be(true);
+	done();
+      });
+    });
+
 
     after(function(done) {
       this.timeout(10000);

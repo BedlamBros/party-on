@@ -39,6 +39,18 @@ module.exports = function(Parties, app, auth) {
     .put(parties.addAWord);
   app.route('/api/parties/:partyId/flag')
     .put(flaghistories.raise);
+  app.route('/api/parties/bannedstatus')
+    .get(auth.requiresLogin, flaghistories.isBanned);
+
+  if (process.env.NODE_ENV == 'test') {
+    // create a test route for .isBanned that doesn't authenticate
+    app.route('/api/test/parties/bannedstatus')
+      .post(function(req, res, next) {
+	// pipe the user through like auth middleware would
+	req.user = req.body.user;
+	next();
+      }, flaghistories.isBanned);
+  }
 
   app.param('partyId', parties.party);
 };
