@@ -290,7 +290,7 @@ module.exports = function(MeanUser) {
 		  });
 		} else {
 		  // user already exists
-		  if (user.facebook && user.facebook.access_token == req.body.access_token) {
+		  if (user.facebook && user.facebook.accessToken == req.body.access_token) {
 		    // user access token matches current facebook access_token
 		    return cb(null, user);
 		  } else {
