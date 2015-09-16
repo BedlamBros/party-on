@@ -10,6 +10,24 @@ var mongoose = require('mongoose'),
 var supportedUniversities = ['Indiana University'];
 
 /**
+ * Word Schema
+ */
+var WordSchema = new Schema({
+  created: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
+  body: {
+    type: String,
+    minlength: 1,
+    maxlength: 140,
+    required: true
+  } 
+});
+
+
+/**
  * Party Schema
  */
 var PartySchema = new Schema({
@@ -77,7 +95,11 @@ var PartySchema = new Schema({
     type: String,
     required: true,
     enum: supportedUniversities
-  }
+  },
+  theWord: {
+    type: [WordSchema],
+    required: false
+  },
 });
 
 /**
@@ -118,6 +140,24 @@ PartySchema.path('user').validate(function(userRef) {
 PartySchema.path('university').validate(function(university) {
   return !!university;
 }, 'University cannot be blank');
+
+PartySchema.methods.toJSON = function() {
+    var json = this.toObject();
+    json.startTime = json.startTime.getTime();
+    json.created = json.created.getTime();
+
+    //return response in UTC timestamp
+    if (_.has(json, 'endTime')) {
+      json.endTime = json.endTime.getTime();
+    }
+
+    // apply transform to sub documents
+    for (var idx in json.theWord) {
+      var word = json.theWord[idx];
+      word.created = word.created.getTime();
+    }
+    return json;
+};
 
 /**
  * Statics
@@ -161,4 +201,5 @@ PartySchema.statics.currentForUniversity = function(universityName, cb) {
   return promise;
 };
 
+mongoose.model('Word', WordSchema);
 mongoose.model('Party', PartySchema);

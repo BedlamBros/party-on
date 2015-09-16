@@ -39,6 +39,30 @@ var escapeProperty = function(value) {
 };
 
 /**
+ * Facebook Login info sub-schema
+ */
+
+var FBLoginSchema = new Schema({
+  userId: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  accessToken: {
+    type: String,
+    required: true
+  }
+});
+
+FBLoginSchema.path('userId').validate(function(userId) {
+  return !!userId;
+});
+
+FBLoginSchema.path('accessToken').validate(function(accessToken) {
+  return !!accessToken;
+});
+
+/**
  * User Schema
  */
 
@@ -50,7 +74,7 @@ var UserSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
     // Regexp to validate emails with more strict rules as added in tests/users.js which also conforms mostly with RFC2822 guide lines
     match: [/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Please enter a valid email'],
@@ -58,7 +82,7 @@ var UserSchema = new Schema({
   },
   username: {
     type: String,
-    unique: true,
+    unique: false,
     required: true,
     get: escapeProperty
   },
@@ -78,7 +102,10 @@ var UserSchema = new Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   profile: {},
-  facebook: {},
+  facebook: {
+    type: Schema.ObjectId,
+    ref: 'FBLogin'
+  },
   twitter: {},
   github: {},
   google: {},
@@ -102,6 +129,15 @@ UserSchema.virtual('password').set(function(password) {
 UserSchema.pre('save', function(next) {
   if (this.isNew && this.provider === 'local' && this.password && !this.password.length)
     return next(new Error('Invalid password'));
+  next();
+});
+
+UserSchema.pre('remove', function(next) {
+  if (!!this.facebook) {
+    mongoose.model('FBLogin').remove({
+      _id: this.facebook
+    }).exec();
+  }
   next();
 });
 
@@ -179,4 +215,5 @@ UserSchema.methods = {
   }
 };
 
+mongoose.model('FBLogin', FBLoginSchema);
 mongoose.model('User', UserSchema);

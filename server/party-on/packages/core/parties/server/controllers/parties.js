@@ -5,8 +5,11 @@ var geocoder = require('./geocoder.js');
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+    async = require('async'),
     Party = mongoose.model('Party'),
+    Word  = mongoose.model('Word'),
     config = require('meanio').loadConfig(),
+    geocoder = require('./geocoder.js'),
     _ = require('lodash');
 
 module.exports = function(Parties) {
@@ -31,27 +34,28 @@ module.exports = function(Parties) {
          * Create a party
          */
         create: function(req, res, next) {
-            var party = new Party(req.body);
-            party.user = req.user;
-            console.log(party);
-            
-            party.save(function(err) {
-                if (err) {
-                    res.status(500).json({
-                        error: 'Cannot save the party'
-                    });
-                }
-
-                /*Party.events.publish({
-                    action: 'created',
-                    user: {
-                        name: req.user.name
-                    },
-                    url: config.hostname + '/parties/' + parties._id,
-                    name: party.title
-                });*/
-                res.json(party);
-            })
+	  var party = new Party(req.body);
+	  party.user = req.user;
+	  // now using a callback pattern
+	  async.waterfall([function(cb) {
+	      geocoder.geocode(party.formattedAddress + " Bloomington, IN", cb);
+	    },
+	    function(geocodeResponse, cb) {
+	      party.formattedAddress = geocodeResponse[0].streetNumber 
+		+ " " + geocodeResponse[0].streetName;
+	      party.latitude = geocodeResponse[0].latitude;
+	      party.longitude = geocodeResponse[0].longitude;
+	      party.save(cb);
+	    }], 
+	    function(err, savedParty) {
+	      if (err) {
+		console.log(err);
+		return res.status(500).json({
+		  error: 'Cannot save the party'
+		});
+	      }
+	      return res.json(party);
+	    });
         },
         /**
          * Update a party
@@ -134,6 +138,17 @@ module.exports = function(Parties) {
                 error: err.toString()
               });
             });
-        }
+        },
+	/**
+	 * Add a Word to a Party
+	 */
+	addAWord: function(req, res) {
+	  var word = new Word(req.body);
+	  req.party.theWord.push(word);
+	  req.party.save(function(err, saved) {
+	    if (err) return res.status(500).send(err.toString());
+	    return res.json(saved);
+	  });
+	}
     };
 };
