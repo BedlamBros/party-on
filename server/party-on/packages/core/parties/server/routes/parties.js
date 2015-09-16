@@ -39,7 +39,7 @@ module.exports = function(Parties, app, auth) {
     .put(parties.addAWord);
   app.route('/api/parties/:partyId/flag')
     .post(flaghistories.raise);
-  app.route('/api/parties/bannedstatus')
+  app.route('/api/users/bannedstatus')
     .get(auth.requiresLogin, flaghistories.isBanned);
 
   if (process.env.NODE_ENV == 'test') {
