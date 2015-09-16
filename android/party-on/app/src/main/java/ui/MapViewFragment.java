@@ -43,4 +43,5 @@ public class MapViewFragment extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap map){
         Log.d("map", "map is ready");
     }
+
 }

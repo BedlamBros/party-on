@@ -86,9 +86,6 @@ public class SubmitPartyActivity extends Activity {
         required_views[1] = mDesc_et;
         required_views[2] = mTimePicker_start;
 
-        //first item requests focus
-        required_views[0].requestFocus();
-
         //get hours offset
         ms_end_offset = getResources().getInteger(R.integer.ends_at_offset_hours) * 1000 * 60 + 60;
         setTimePickerOffsets();

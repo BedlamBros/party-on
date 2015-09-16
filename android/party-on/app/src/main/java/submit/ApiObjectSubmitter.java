@@ -17,6 +17,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 import models.Party;
 
@@ -60,15 +61,22 @@ public class ApiObjectSubmitter extends AsyncTask<String, Void, ApiObject> {
     protected Party doInBackground(String... jsonObjects){
         if (mHttpClient == null) mHttpClient = new DefaultHttpClient();
         Log.d("submit", "ApiObjectSubmitter attempting to submit on new thread");
-        String json = jsonObjects[0];
+        JsonObject json = new JsonObject();
+        json.addProperty("_id", "55ee1c874db6aa021458cf1f");
+        json.addProperty("startTime", new Date().getTime());
+        json.addProperty("university", "Indiana University");
+
+
         Log.d("submit", "attempting to POST this json :" + json);
         HttpPost httpPost = new HttpPost(mApiUrl + ENDPOINT);
         Log.d("submit", "attempting to submit to url:" + httpPost.getURI().toString());
         try {
-            StringEntity entity = new StringEntity(json);
+            StringEntity entity = new StringEntity(json.toString());
             httpPost.setEntity(entity);
             httpPost.setHeader("Content-type", "application/json");
-            httpPost.setHeader("Authentication", "login bearer");
+            //TODO append facebook token
+            httpPost.setHeader("Authentication", "bearer");
+            httpPost.setHeader("Passport-auth-provider", "facebook");
             try {
                 HttpResponse res = mHttpClient.execute(httpPost);
                 Log.d("submit", "res code: " + res.getStatusLine().toString());

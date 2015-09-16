@@ -1,6 +1,7 @@
 package receive;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListActivity;
@@ -8,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +21,9 @@ import android.widget.Switch;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.maps.CameraUpdate;
@@ -31,9 +35,12 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.maps.android.heatmaps.HeatmapTileProvider;
+import com.google.maps.android.heatmaps.WeightedLatLng;
 
 import net.john.partyon.R;
 
@@ -48,18 +55,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import models.Party;
 import prefs.UniPrefFragment;
 import submit.FacebookLoginCallback;
 import submit.SubmitPartyActivity;
+import ui.ToolbarFragment;
 import util.VibrateClickResponseListener;
 
 /**
  * Created by John on 8/31/2015.
  */
-public class ListPartyActivity extends ListActivity implements CompoundButton.OnCheckedChangeListener{
+public class ListPartyActivity extends FragmentActivity implements CompoundButton.OnCheckedChangeListener{
     final String DUMMY_FILENAME = "dummy.json";
 
     //get views and viewgroups here
@@ -85,17 +94,10 @@ public class ListPartyActivity extends ListActivity implements CompoundButton.On
     public void onCreate(Bundle saved_instance){
         super.onCreate(saved_instance);
 
-        AlertDialog.Builder eulaDialog = new AlertDialog.Builder(this, R.style.dialog);
-        eulaDialog.setTitle(R.string.eula_title)
-            .setNegativeButton("decline", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+        Log.d("test", "entry point");
 
-                    }
-                    }
-
-                    //initialize the Facebook sdk to get the login button
-                    FacebookSdk.sdkInitialize(getApplicationContext());
+        //initialize the Facebook sdk to get the login button
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         //set content view only after initializing facebook sdk
         setContentView(R.layout.party_list);
@@ -107,12 +109,40 @@ public class ListPartyActivity extends ListActivity implements CompoundButton.On
         fragmentContainer = (LinearLayout) findViewById(R.id.cont);
 
         //get facebook login button and set callback manager
-        mLoginButton = (LoginButton) findViewById(R.id.facebook_login_bttn);
+        //mLoginButton = (LoginButton) findViewById(R.id.facebook_login_bttn);
+        //mLoginButton.setReadPermissions("user_friends");
         callbackManager = CallbackManager.Factory.create();
-        FacebookCallback<LoginResult> mFacebookLoginCallback = new FacebookLoginCallback(this);
-        mLoginButton.registerCallback(callbackManager, mFacebookLoginCallback);
+        Log.d("auth", "callback manager=" + callbackManager.toString());
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                        Log.d("auth", "logged in from activity");
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                        Log.d("auth", "login canceled ");
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                        Log.d("auth", "error");
+                    }
+                });
+
+        //calls the facebook login button onClickListener from cold launch
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
 
         //TODO use a FragmentManager transaction to load the toolbar
+        ToolbarFragment toolbar = new ToolbarFragment();
+        getSupportFragmentManager()
+            .beginTransaction()
+                .add(R.id.toolbar_container, new ToolbarFragment(), "toolbar").commit();
 
         list = (ListView) findViewById(android.R.id.list);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
@@ -174,6 +204,10 @@ public class ListPartyActivity extends ListActivity implements CompoundButton.On
                                 @Override
                                 public void onCameraChange(CameraPosition cameraPosition) {
                                     List<LatLng> coordsList = new ArrayList<LatLng>();
+                                    List<WeightedLatLng> weightCoords = new ArrayList<WeightedLatLng>();
+
+                                    //fail if list is null
+                                    if (mParty_list.size() == 0) return;
                                     for (int i = 0; i < mParty_list.size(); i++) {
                                         MarkerOptions m = new MarkerOptions()
                                                 .position(new LatLng(mParty_list.get(i).getlatitude(), mParty_list.get(i).getLon()))
@@ -181,6 +215,8 @@ public class ListPartyActivity extends ListActivity implements CompoundButton.On
                                         mMap.addMarker(m);
                                         coordsList.add(new LatLng(mParty_list.get(i).getlatitude(),
                                                 mParty_list.get(i).getLon()));
+                                        double weight = mParty_list.get(i).getTheWord().size();
+                                        weightCoords.add(new WeightedLatLng(coordsList.get(i), weight));
                                     }
                                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
                                     for (int i = 0; i < mParty_list.size(); i++) {
@@ -189,6 +225,12 @@ public class ListPartyActivity extends ListActivity implements CompoundButton.On
                                     LatLngBounds bounds = builder.build();
                                     CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds, PIXELS_OFFSET);
                                     mMap.animateCamera(update);
+
+                                    //set the heat map from our weighted LatLng list
+                                    HeatmapTileProvider mProvider = new HeatmapTileProvider.Builder()
+                                            .weightedData(weightCoords)
+                                            .build();
+                                    mMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
                                 }
                             });
                         }
