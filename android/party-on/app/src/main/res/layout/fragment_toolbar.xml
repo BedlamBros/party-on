@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:visibility="visible"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="right"
-    android:background="@drawable/toolbar_background"
+    android:background="@drawable/the_word_background"
+    android:padding="6dp"
     android:id="@+id/toolbar_fragment">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_drawer"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="onHamburgerClick" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_drawer"
-            android:layout_alignParentLeft="true"
-            android:onClick="onHamburgerClick" />
+    <ImageView
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:src="@drawable/ic_48px"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="toolbarIconOnClick"
+        android:id="@+id/toolbar_icon"/>
 
-        <com.facebook.login.widget.LoginButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/facebook_auth_bttn"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_add_party"
+        android:onClick="onAddPartyClick"
+        android:id="@+id/toolbar_ic_add_party"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_add_party"
-            android:onClick="onAddPartyClick"
-            android:id="@+id/toolbar_ic_add_party"/>
-
-    </RelativeLayout>
-
-</android.support.v7.widget.Toolbar>
+</RelativeLayout>
