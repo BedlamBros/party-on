@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="universities">
+        <item>Indiana</item>
+        <item>Purdue</item>
+    </string-array>
+</resources>

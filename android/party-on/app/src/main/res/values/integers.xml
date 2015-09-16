@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="title_char_limit" type="integer">20</item>
+    <item name="desc_char_limit" type="integer">256</item>
+    <item name="loc_char_limit" type="integer">30</item>
+
+    <!-- used in SubmitPartyActivity -->
+    <item name="ends_at_offset_hours" type="integer">8</item>
+
+    <!-- used in util -->
+    <item name="vibrate_ms_length" type="integer">50</item>
+</resources>

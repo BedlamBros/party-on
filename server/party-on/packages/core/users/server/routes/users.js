@@ -77,6 +77,7 @@ module.exports = function(MeanUser, app, auth, database, passport) {
       res.send(configuredApps);
     });
 
+    console.log(config.strategies.facebook.enabled);
   if(config.strategies.facebook.enabled)
   {
       // Setting the facebook oauth routes

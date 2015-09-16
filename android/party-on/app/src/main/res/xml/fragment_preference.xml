@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+    <PreferenceCategory
+    android:title="@string/preferences_uni_title">
+
+        <ListPreference
+            android:key="list_preference"
+            android:title="@string/preferences_uni_title"
+            android:summary="@string/summary_list_preference"
+            android:entries="@array/universities"
+            android:entryValues="@array/universities"
+            android:dialogTitle="@string/dialog_title_list_preference" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

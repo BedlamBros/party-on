@@ -1,4 +1,5 @@
 'use strict';
+var geocoder = require('./geocoder.js');
 
 /**
  * Module dependencies.
@@ -33,6 +34,7 @@ module.exports = function(Parties) {
          * Create a party
          */
         create: function(req, res, next) {
+<<<<<<< HEAD
 	  var party = new Party(req.body);
 	  party.user = req.user;
 	  // now using a callback pattern
@@ -55,6 +57,29 @@ module.exports = function(Parties) {
 	      }
 	      return res.json(party);
 	    });
+=======
+            var party = new Party(req.body);
+            party.user = req.user;
+            console.log(party);
+            
+            party.save(function(err) {
+                if (err) {
+                    res.status(500).json({
+                        error: 'Cannot save the party'
+                    });
+                }
+
+                /*Party.events.publish({
+                    action: 'created',
+                    user: {
+                        name: req.user.name
+                    },
+                    url: config.hostname + '/parties/' + parties._id,
+                    name: party.title
+                });*/
+                res.json(party);
+            })
+>>>>>>> master
         },
         /**
          * Update a party
