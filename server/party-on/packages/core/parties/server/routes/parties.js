@@ -25,6 +25,7 @@ var hasAuthorization = function(req, res, next) {
 module.exports = function(Parties, app, auth) {
   
   var parties = require('../controllers/parties')(Parties);
+  var flaghistories = require('../controllers/flaghistories')(Parties);
 
   app.route('/api/parties')
     .post(auth.requiresLogin, parties.create);
@@ -36,6 +37,8 @@ module.exports = function(Parties, app, auth) {
     .get(parties.listCurrent);
   app.route('/api/parties/:partyId/word')
     .put(parties.addAWord);
+  app.route('/api/parties/:partyId/flag')
+    .put(flaghistories.raise);
 
   app.param('partyId', parties.party);
 };

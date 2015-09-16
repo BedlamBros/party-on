@@ -341,26 +341,34 @@ describe('Create and save party', function() {
 
     it('should be able to post a word', function(done) {
       this.timeout(10000);
-      Party.findOne(function(err, party) {
 
-	var msg = 'Message number ' + Math.random();
-	var oldMsgCount = party.theWord.length;
-	var wordEndpoint = config.hostname + '/api/parties/' + party._id + '/word';
-	request({
-	  method: 'PUT',
-	  uri: wordEndpoint,
-	  json: {
-	    body: msg
-	  }
-	}, function(err, resp, body) {
-	  expect(err).to.be(null);
-	  expect(resp.statusCode).to.be(200);
-	  var newParty = new Party(body);
-	  expect(newParty.theWord.length)
-	    .to.be(oldMsgCount + 1);
-	  expect(newParty.theWord[newParty.theWord.length-1].body)
-	    .to.be.equal(msg);
-	  done();
+      var user = User.findOne({}, function(err, user) {
+	Party.findOne({}, function(err, party) {
+
+	  var newParty = new Party(party);
+	  party.user = user._id;
+	  party.save(function(err) {
+	    
+	    var msg = 'Message number ' + Math.random();
+	    var oldMsgCount = party.theWord.length;
+	    var wordEndpoint = config.hostname + '/api/parties/' + party._id + '/word';
+	    request({
+	      method: 'PUT',
+	      uri: wordEndpoint,
+	      json: {
+		body: msg
+	      }
+	    }, function(err, resp, body) {
+	      expect(err).to.be(null);
+	      expect(resp.statusCode).to.be(200);
+	      var newParty = new Party(body);
+	      expect(newParty.theWord.length)
+		.to.be(oldMsgCount + 1);
+	      expect(newParty.theWord[newParty.theWord.length-1].body)
+		.to.be.equal(msg);
+	      done();
+	    });
+	  });
 	});
       });
     });
