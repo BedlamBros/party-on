@@ -11,7 +11,7 @@ import CoreLocation
 
 class UniversityPickerController: UIViewController {
     
-    @IBOutlet weak var indianaUniversityLogo: UIImageView?
+    @IBOutlet weak var indianaUniversityButton: UIButton?
     @IBOutlet weak var backgroundImageView: UIImageView?
     
     override func viewDidLoad() {
@@ -26,10 +26,6 @@ class UniversityPickerController: UIViewController {
         }
         
         self.backgroundImageView?.contentMode = UIViewContentMode.ScaleToFill
-        self.indianaUniversityLogo?.contentMode = UIViewContentMode.Center
-        
-        let clickUniversityGestureRecognizer = UITapGestureRecognizer(target: self, action: "selectUniversity:")
-        self.indianaUniversityLogo?.addGestureRecognizer(clickUniversityGestureRecognizer)
         
         let viewFrame = self.backgroundImageView!.frame
         let titleFrameVertPercentage: CGFloat = 0.1
@@ -46,11 +42,9 @@ class UniversityPickerController: UIViewController {
         super.viewWillAppear(animated)
     }
     
-    func selectUniversity(sender: AnyObject?) {
-        if let sendingView = sender?.view {
-            if sendingView === self.indianaUniversityLogo {
-                University.currentUniversity = University.universityForType(UniversityType.IndianaUniversity)
-            }
+    @IBAction func selectUniversity(sender: UIView) {
+        if sender === self.indianaUniversityButton {
+            University.currentUniversity = University.universityForType(UniversityType.IndianaUniversity)
             self.performSegueWithIdentifier(enterAppSegueIdentifier, sender: self)
         }
     }

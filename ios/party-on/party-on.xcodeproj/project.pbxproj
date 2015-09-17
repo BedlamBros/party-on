@@ -15,12 +15,14 @@
 		503657F81B9A831400F7C70A /* newspile-illegal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503657F71B9A831400F7C70A /* newspile-illegal.jpg */; };
 		503657FA1B9B96F600F7C70A /* crumpled_black_paper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503657F91B9B96F600F7C70A /* crumpled_black_paper.jpg */; };
 		5047658E1B98BFA900303DF0 /* ModalMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */; };
-		504765901B98DBB700303DF0 /* LicenseDocumentation.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5047658F1B98DBB700303DF0 /* LicenseDocumentation.txt */; };
 		504765921B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */; };
 		50633AEF1B990444002A685E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50633AEE1B990444002A685E /* FBSDKCoreKit.framework */; };
 		50633AF11B990451002A685E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50633AF01B990451002A685E /* FBSDKLoginKit.framework */; };
 		50633AF31B992263002A685E /* CreateEditPartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50633AF21B992263002A685E /* CreateEditPartyViewController.swift */; };
 		509827421B959B6600154D4B /* parties.json in Resources */ = {isa = PBXBuildFile; fileRef = 509827411B959B6600154D4B /* parties.json */; };
+		50C2A1981BA75087006F5A2E /* EULAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2A1961BA75087006F5A2E /* EULAViewController.swift */; };
+		50C2A1991BA75087006F5A2E /* EULAViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C2A1971BA75087006F5A2E /* EULAViewController.xib */; };
+		50C2A19B1BAB4347006F5A2E /* EULA.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50C2A19A1BAB4347006F5A2E /* EULA.txt */; };
 		50D3AA251B97C2BE00CBA394 /* PartyAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */; };
 		50D3AA271B97D02000CBA394 /* disclosure_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 50D3AA261B97D02000CBA394 /* disclosure_indicator.png */; };
 		50D3AA291B97FDAE00CBA394 /* PartiesDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3AA281B97FDAE00CBA394 /* PartiesDataStore.swift */; };
@@ -66,12 +68,14 @@
 		503657F71B9A831400F7C70A /* newspile-illegal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "newspile-illegal.jpg"; sourceTree = "<group>"; };
 		503657F91B9B96F600F7C70A /* crumpled_black_paper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crumpled_black_paper.jpg; sourceTree = "<group>"; };
 		5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalMapViewController.swift; sourceTree = "<group>"; };
-		5047658F1B98DBB700303DF0 /* LicenseDocumentation.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LicenseDocumentation.txt; sourceTree = "<group>"; };
 		504765911B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Indiana_University_(Athletics)_logo.png"; sourceTree = "<group>"; };
 		50633AEE1B990444002A685E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		50633AF01B990451002A685E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		50633AF21B992263002A685E /* CreateEditPartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEditPartyViewController.swift; sourceTree = "<group>"; };
 		509827411B959B6600154D4B /* parties.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parties.json; sourceTree = "<group>"; };
+		50C2A1961BA75087006F5A2E /* EULAViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EULAViewController.swift; sourceTree = "<group>"; };
+		50C2A1971BA75087006F5A2E /* EULAViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EULAViewController.xib; sourceTree = "<group>"; };
+		50C2A19A1BAB4347006F5A2E /* EULA.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = EULA.txt; path = ../../../shared_assets/legal/EULA.txt; sourceTree = "<group>"; };
 		50D3AA241B97C2BE00CBA394 /* PartyAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyAnnotation.swift; sourceTree = "<group>"; };
 		50D3AA261B97D02000CBA394 /* disclosure_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = disclosure_indicator.png; path = ../../../../../Downloads/disclosure_indicator.png; sourceTree = "<group>"; };
 		50D3AA281B97FDAE00CBA394 /* PartiesDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartiesDataStore.swift; sourceTree = "<group>"; };
@@ -124,6 +128,8 @@
 				5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */,
 				50F4B5381B94BC8D00748D02 /* LoginViewController.swift */,
 				50633AF21B992263002A685E /* CreateEditPartyViewController.swift */,
+				50C2A1961BA75087006F5A2E /* EULAViewController.swift */,
+				50C2A1971BA75087006F5A2E /* EULAViewController.xib */,
 			);
 			name = Modal;
 			sourceTree = "<group>";
@@ -187,6 +193,7 @@
 		50F4B5151B94507800748D02 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				50C2A19A1BAB4347006F5A2E /* EULA.txt */,
 				503657F91B9B96F600F7C70A /* crumpled_black_paper.jpg */,
 				503657F71B9A831400F7C70A /* newspile-illegal.jpg */,
 				503657F31B9A810200F7C70A /* culture-newspaper-illegal.jpg */,
@@ -195,7 +202,6 @@
 				50D3AA261B97D02000CBA394 /* disclosure_indicator.png */,
 				50F4B5161B94507800748D02 /* Info.plist */,
 				509827411B959B6600154D4B /* parties.json */,
-				5047658F1B98DBB700303DF0 /* LicenseDocumentation.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -349,12 +355,13 @@
 				50F4B5221B94507800748D02 /* LaunchScreen.xib in Resources */,
 				50D3AA271B97D02000CBA394 /* disclosure_indicator.png in Resources */,
 				503657FA1B9B96F600F7C70A /* crumpled_black_paper.jpg in Resources */,
+				50C2A19B1BAB4347006F5A2E /* EULA.txt in Resources */,
 				509827421B959B6600154D4B /* parties.json in Resources */,
 				50F4B51F1B94507800748D02 /* Images.xcassets in Resources */,
 				504765921B98E09A00303DF0 /* Indiana_University_(Athletics)_logo.png in Resources */,
 				5001C9AC1B9A2AFD009E3EDE /* Blue_Placeholder_Icon.png in Resources */,
+				50C2A1991BA75087006F5A2E /* EULAViewController.xib in Resources */,
 				503657F41B9A810200F7C70A /* culture-newspaper-illegal.jpg in Resources */,
-				504765901B98DBB700303DF0 /* LicenseDocumentation.txt in Resources */,
 				503657F81B9A831400F7C70A /* newspile-illegal.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,6 +432,7 @@
 				500068CB1B94D4CC008E6BB7 /* Party.swift in Sources */,
 				50F4B53C1B94BD3C00748D02 /* User.swift in Sources */,
 				50F00DC81BA24A8C008B7CD3 /* TheWordTableViewCell.swift in Sources */,
+				50C2A1981BA75087006F5A2E /* EULAViewController.swift in Sources */,
 				50F4B5401B94BEC000748D02 /* ServerModel.swift in Sources */,
 				50DE45711B94E0D40075CBF9 /* PartyDetailViewController.swift in Sources */,
 				5047658E1B98BFA900303DF0 /* ModalMapViewController.swift in Sources */,
