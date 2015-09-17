@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -138,17 +139,25 @@ public class ListPartyActivity extends FragmentActivity implements CompoundButto
         //calls the facebook login button onClickListener from cold launch
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
 
-        //TODO use a FragmentManager transaction to load the toolbar
+        //load the toolbar with frag manager
         ToolbarFragment toolbar = new ToolbarFragment();
         getSupportFragmentManager()
             .beginTransaction()
                 .add(R.id.toolbar_container, new ToolbarFragment(), "toolbar").commit();
 
-        list = (ListView) findViewById(android.R.id.list);
+        //load the list fragment with frag manager
+        getFragmentManager().beginTransaction()
+                .replace(R.id.list_container, new PartyListFragment()).commit();
+
+        //set relevant views
+        list =  (ListView) (((ViewGroup) findViewById(R.id.list_container))).getChildAt(0);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         //instantiate the party list before passing it to adapter
         mParty_list = new ArrayList<Party>();
+
+        //TODO take out this block after listFragment is tested
+        /*
         mListPartyAdapter = new ListPartyAdapter(getApplicationContext(), mParty_list);
         //list.setAdapter(mListPartyAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -167,8 +176,9 @@ public class ListPartyActivity extends FragmentActivity implements CompoundButto
                 return "this is overriding the onItemClickListener's behavior";
             }
         });
+        */
 
-        Log.d("receive", list.getOnItemClickListener().toString());
+        //Log.d("receive", list.getOnItemClickListener().toString());
 
         //set the swipe refresh listener
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -249,6 +259,10 @@ public class ListPartyActivity extends FragmentActivity implements CompoundButto
         refreshPartyList();
     }
 
+    public ArrayList<Party> getPartyList(){
+        return mParty_list;
+    }
+
     public void onCheckedChanged(CompoundButton butt, boolean isChecked){
 
     }
@@ -267,7 +281,7 @@ public class ListPartyActivity extends FragmentActivity implements CompoundButto
     }
 
     public void refreshPartyList() {
-        mListPartyAdapter.notifyDataSetChanged();
+        //mListPartyAdapter.notifyDataSetChanged();
         final AsyncLoadJson mApiObjectLoader = new AsyncLoadJson(){
            public void onResponseReceived(ArrayList<Party> apiObject){
                //hacky way to fail gracefully
@@ -275,10 +289,13 @@ public class ListPartyActivity extends FragmentActivity implements CompoundButto
                if (apiObject.size() == 0) return;
                //Log.d("receive", "response received on UI thread");
                mParty_list = apiObject;
+               //TODO take out when listFragment is wired
+               /*
                list.setAdapter(new ListPartyAdapter(getApplicationContext(), mParty_list));
                for (int i = 0; i < mParty_list.size(); i++){
                    Log.d("receive", mParty_list.get(i).toString());
                }
+               */
            }
 
             public void onPostExecute(ArrayList<Party> partyArrayList){
@@ -287,7 +304,7 @@ public class ListPartyActivity extends FragmentActivity implements CompoundButto
                     this.onResponseReceived(partyArrayList);
                     mSwipeRefreshLayout.setRefreshing(false);
                     Log.d("receive", "partylist size " + mParty_list.size());
-                    Log.d("receive", "list adapter can see " + mListPartyAdapter.getCount());
+                    //Log.d("receive", "list adapter can see " + mListPartyAdapter.getCount());
                 } else {
                     Log.wtf("receive", "server returned empty party list");
                 }
@@ -377,6 +394,7 @@ public class ListPartyActivity extends FragmentActivity implements CompoundButto
     }
 
     public ListPartyAdapter getListAdapter(){
-        return mListPartyAdapter;
+        return null;
+        //return mListPartyAdapter;
     }
 }
