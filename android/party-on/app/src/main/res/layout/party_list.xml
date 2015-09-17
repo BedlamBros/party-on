@@ -24,6 +24,14 @@
         android:textOn="@string/list_view_on_option"
         android:id="@+id/party_list_view_switch"/>
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,17 +43,15 @@
             android:layout_height="match_parent"
             android:id="@+id/cont">
 
-            <ListView
+            <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".ListPartyActivity"
-                android:divider="@color/accent"
-                android:dividerHeight="@dimen/party_list_divider_size"
                 android:clickable="true"
-                android:id="@+id/android:list">
+                android:id="@+id/list_container">
 
-            </ListView>
+            </LinearLayout>
 
         </LinearLayout>
 
