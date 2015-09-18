@@ -2,9 +2,10 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EULAViewController" customModule="party_on" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EULAViewController" customModule="culturepage" customModuleProvider="target">
             <connections>
                 <outlet property="eulaTextView" destination="Nck-Zx-5Yy" id="Jw9-YZ-MDr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -21,36 +22,83 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J7L-EG-omG">
-                    <rect key="frame" x="130" y="627" width="154" height="30"/>
-                    <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="15"/>
-                    <state key="normal" title="Accept">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="didAcceptEULA" destination="-1" eventType="touchUpInside" id="ijd-a6-EVN"/>
-                    </connections>
-                </button>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nck-Zx-5Yy" userLabel="EULATextView">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nck-Zx-5Yy" userLabel="EULATextView">
                     <rect key="frame" x="40" y="125" width="335" height="316"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
                     <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J7L-EG-omG">
+                    <rect key="frame" x="130" y="597" width="154" height="30"/>
+                    <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="15"/>
+                    <state key="normal" title="Accept">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                        <rect key="frame" x="130" y="661" width="154" height="30"/>
+                    </variation>
+                    <connections>
+                        <action selector="didAcceptEULA" destination="-1" eventType="touchUpInside" id="ijd-a6-EVN"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="J7L-EG-omG" firstAttribute="centerX" secondItem="Nck-Zx-5Yy" secondAttribute="centerX" constant="-0.5" id="0Mx-CY-pbI"/>
+                <constraint firstItem="J7L-EG-omG" firstAttribute="top" secondItem="Nck-Zx-5Yy" secondAttribute="bottom" constant="119" id="67R-sr-Hyl"/>
+                <constraint firstAttribute="bottom" secondItem="J7L-EG-omG" secondAttribute="bottom" constant="45" id="9Jb-xN-joX"/>
+                <constraint firstItem="J7L-EG-omG" firstAttribute="top" secondItem="Nck-Zx-5Yy" secondAttribute="bottom" constant="20" id="Ajq-BD-mFf"/>
+                <constraint firstItem="J7L-EG-omG" firstAttribute="top" secondItem="Nck-Zx-5Yy" secondAttribute="bottom" constant="156" id="DPA-hl-S9c"/>
+                <constraint firstItem="J7L-EG-omG" firstAttribute="centerX" secondItem="Nck-Zx-5Yy" secondAttribute="centerX" constant="-0.5" id="DQw-p7-0vu"/>
                 <constraint firstItem="3h3-I0-ji1" firstAttribute="centerX" secondItem="Nck-Zx-5Yy" secondAttribute="centerX" constant="-0.5" id="HlM-nl-HwA"/>
                 <constraint firstItem="3h3-I0-ji1" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="N7q-xs-lgP"/>
                 <constraint firstAttribute="centerX" secondItem="3h3-I0-ji1" secondAttribute="centerX" id="SsU-g1-SEy"/>
+                <constraint firstItem="Nck-Zx-5Yy" firstAttribute="top" secondItem="3h3-I0-ji1" secondAttribute="bottom" constant="31" id="Xu1-4X-cee"/>
                 <constraint firstItem="Nck-Zx-5Yy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="YCs-KY-KQg"/>
+                <constraint firstAttribute="bottom" secondItem="J7L-EG-omG" secondAttribute="bottom" constant="109" id="f7P-Pq-2nc"/>
+                <constraint firstItem="J7L-EG-omG" firstAttribute="top" secondItem="Nck-Zx-5Yy" secondAttribute="bottom" constant="85" id="kwB-gq-Aqy"/>
+                <constraint firstItem="J7L-EG-omG" firstAttribute="top" secondItem="Nck-Zx-5Yy" secondAttribute="bottom" constant="55" id="laS-Bt-SCZ"/>
+                <constraint firstItem="J7L-EG-omG" firstAttribute="top" secondItem="Nck-Zx-5Yy" secondAttribute="bottom" constant="156" id="lhC-vD-UoF"/>
                 <constraint firstAttribute="bottom" secondItem="J7L-EG-omG" secondAttribute="bottom" constant="79" id="lvV-PD-D3z"/>
                 <constraint firstAttribute="trailing" secondItem="Nck-Zx-5Yy" secondAttribute="trailing" constant="39" id="mN3-03-qog"/>
+                <constraint firstItem="J7L-EG-omG" firstAttribute="width" secondItem="Nck-Zx-5Yy" secondAttribute="height" multiplier="154:417" id="o8k-cH-Gjg"/>
+                <constraint firstAttribute="bottom" secondItem="J7L-EG-omG" secondAttribute="bottom" constant="79" id="tQX-iz-aeg"/>
+                <constraint firstAttribute="bottom" secondItem="J7L-EG-omG" secondAttribute="bottom" constant="109" id="vZC-jJ-Pdf"/>
             </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Xu1-4X-cee"/>
+                    <exclude reference="0Mx-CY-pbI"/>
+                    <exclude reference="67R-sr-Hyl"/>
+                    <exclude reference="9Jb-xN-joX"/>
+                    <exclude reference="Ajq-BD-mFf"/>
+                    <exclude reference="DPA-hl-S9c"/>
+                    <exclude reference="f7P-Pq-2nc"/>
+                    <exclude reference="kwB-gq-Aqy"/>
+                    <exclude reference="laS-Bt-SCZ"/>
+                    <exclude reference="lhC-vD-UoF"/>
+                    <exclude reference="lvV-PD-D3z"/>
+                    <exclude reference="o8k-cH-Gjg"/>
+                    <exclude reference="tQX-iz-aeg"/>
+                    <exclude reference="vZC-jJ-Pdf"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="constraints">
+                    <include reference="Xu1-4X-cee"/>
+                    <exclude reference="67R-sr-Hyl"/>
+                    <include reference="9Jb-xN-joX"/>
+                    <include reference="Ajq-BD-mFf"/>
+                    <exclude reference="f7P-Pq-2nc"/>
+                    <exclude reference="kwB-gq-Aqy"/>
+                    <exclude reference="laS-Bt-SCZ"/>
+                    <exclude reference="lhC-vD-UoF"/>
+                    <exclude reference="o8k-cH-Gjg"/>
+                    <exclude reference="tQX-iz-aeg"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>
