@@ -27,6 +27,11 @@ class UniversityPickerController: UIViewController {
         
         self.backgroundImageView?.contentMode = UIViewContentMode.ScaleToFill
         
+        // Configure Indiana University button
+        self.indianaUniversityButton?.layer.cornerRadius = 5
+        self.indianaUniversityButton?.clipsToBounds = true
+        
+        // Configure title label
         let viewFrame = self.backgroundImageView!.frame
         let titleFrameVertPercentage: CGFloat = 0.1
         let titleFrameSideMargin: CGFloat = 0.05 * viewFrame.width

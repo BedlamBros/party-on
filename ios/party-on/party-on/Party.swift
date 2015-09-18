@@ -61,19 +61,6 @@ class Party: NSObject, ServerModel {
         if let endTime = json["endTime"].number {
             self.endTime = NSDate(timeIntervalSince1970: json["endTime"].number!.doubleValue / 1000)
         }
-        
-        
-        return
-        let dummyMessages = [
-            "Nothing yet",
-            "Heating up",
-            "They ran out of alcohol alks jsad nweo rinqw inwe roqm wnr oi wenrio wrn n iow ernqo wer oiw enro qew",
-            "Great keg just got here"
-        ]
-        for (idx, message) in enumerate(dummyMessages) {
-            let msgCount = count(message)
-            self.theWord.append(TheWordMessage(oID: "", body: message, created: NSDate(timeIntervalSinceNow: NSTimeInterval(60 * 60 * (idx - msgCount - msgCount)))))
-        }
     }
     
     convenience init(oID: String, formattedAddress: String, location: CLLocationCoordinate2D, startTime: NSDate, endTime: NSDate?, maleCost: UInt, femaleCost: UInt, byob: Bool, colloquialName: String?, description: String?) {
