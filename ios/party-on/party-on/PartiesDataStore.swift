@@ -129,7 +129,7 @@ class PartiesDataStore: NSObject {
     }
     
     private func putOrPost(party: Party, method: String, callback: UpdatePartyCallback) {
-        prepareAuthHeaders()
+        MainUser.applyAuthHeaders(self.httpManager)
         //self.httpManager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let syncCallback: UpdatePartyCallback = { (err: NSError?, party: Party?) -> Void in
@@ -170,13 +170,6 @@ class PartiesDataStore: NSObject {
                 return syncCallback(err: NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Not a valid http method"]), party: nil)
             }
         })
-    }
-    
-    private func prepareAuthHeaders() {
-        if let fbToken = MainUser.sharedInstance?.fbToken {
-            self.httpManager.requestSerializer.setValue("Bearer " + fbToken, forHTTPHeaderField: "Authorization")
-            self.httpManager.requestSerializer.setValue("facebook", forHTTPHeaderField: "Passport-Auth-Strategy")
-        }
     }
     
     private func updateSingleParty(updatedParty: Party) -> Bool {

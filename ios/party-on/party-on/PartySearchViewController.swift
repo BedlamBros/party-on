@@ -11,6 +11,7 @@ import MapKit
 import SwiftyJSON
 import SVProgressHUD
 import FBSDKCoreKit
+import FBSDKLoginKit
 
 public let SADFACE_CHAR: Character = "\u{1F61E}"
 
@@ -203,9 +204,13 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     
     func loginDidSucceed(loginController: LoginViewController) {
         println("login did succeed")
-        loginController.dismissViewControllerAnimated(true, completion: {() -> Void in {
+        // Now we need to check for banned status to be safe
+        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
+            appDelegate.checkForBanned()
+        }
+        loginController.dismissViewControllerAnimated(true, completion: {() -> Void in
             self.performSegueWithIdentifier("CreatePartySegue", sender: self)
-        }})
+        })
     }
     
     func loginDidFail(loginController: LoginViewController, error: NSError!) {
@@ -252,21 +257,31 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     @IBAction func createPartyButtonClick(sender: AnyObject?) {
-        if FBSDKAccessToken.currentAccessToken() == nil {
+        if let currentFBToken = FBSDKAccessToken.currentAccessToken() {
+            // we have a token locally
+            let oneDaysTime = NSTimeInterval(60 * 60 * 24)
+            let oneDayAgo = NSDate(timeIntervalSinceNow: -oneDaysTime)
+            if (currentFBToken.expirationDate.timeIntervalSince1970 > oneDayAgo.timeIntervalSince1970) {
+                // time to renew the token
+                println("logging out to renew token")
+                FBSDKLoginManager().logOut()
+                self.performSegueWithIdentifier(loginSegueIdentifier, sender: self)
+            } else {
+                // user is already logged in
+                MainUser.loginWithFBToken({ (err) -> Void in
+                    if err != nil {
+                        // FB logged in but failed on servers
+                        println("failed to log in to server because \(err)")
+                        UIAlertView(title: "Uh-oh", message: "Failed to log in to our servers", delegate: nil, cancelButtonTitle: "Ok").show()
+                    } else {
+                        // logged in and got our user data
+                        self.performSegueWithIdentifier(self.createPartySegueIdentifier, sender: self)
+                    }
+                })
+            }
+        } else {
             // user is not logged in
             self.performSegueWithIdentifier(loginSegueIdentifier, sender: self)
-        } else {
-            // user is already logged in
-            MainUser.loginWithFBToken({ (err) -> Void in
-                if err != nil {
-                    // FB logged in but failed on servers
-                    println("failed to log in to server because \(err)")
-                    UIAlertView(title: "Uh-oh", message: "Failed to log in to our servers", delegate: nil, cancelButtonTitle: "Ok").show()
-                } else {
-                    // logged in and got our user data
-                    self.performSegueWithIdentifier(self.createPartySegueIdentifier, sender: self)
-                }
-            })
         }
     }
     

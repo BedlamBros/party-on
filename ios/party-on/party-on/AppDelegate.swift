@@ -38,6 +38,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         FBSDKAppEvents.activateApp()
         self.partyDetailControllerInFocus?.scheduleRefreshParty()
+        
+        // Check for EULA acceptance
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let didAcceptEULA = userDefaults.boolForKey(AppDelegate.didAcceptEULADefaultsKey)
+        if !didAcceptEULA {
+            // Force the EULA acceptance
+            let eulaController = EULAViewController(nibName: "EULAViewController", bundle: NSBundle.mainBundle())
+            self.window?.rootViewController?.presentViewController(eulaController, animated: true, completion: nil)
+        } else {
+            // check for banned status immediately
+            self.checkForBanned()
+        }
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -47,5 +59,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
+    
+    func checkForBanned() {
+        MainUser.checkForBannedStatus { (isBanned) -> Void in
+            if isBanned {
+                let alert = UIAlertController(title: "Sorry", message: "Your account has been banned for inappropriate content", preferredStyle: UIAlertControllerStyle.Alert)
+                /*alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
+                    // Force exit if banned
+                    exit(0)
+                }))*/
+                self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    static let didAcceptEULADefaultsKey = "did-accept-eula"
 }
 

@@ -21,30 +21,37 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="crumpled_black_paper.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="HyH-w6-WOc">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <imageView tag="7" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Indiana_University_(Athletics)_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="lHM-pE-Y7K">
-                                <rect key="frame" x="60" y="134" width="201" height="245"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="(Others coming soon)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efj-Dw-xRj">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="(Others coming soon)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efj-Dw-xRj">
                                 <rect key="frame" x="16" y="454" width="288" height="21"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mcn-5d-JdT">
+                                <rect key="frame" x="41" y="233" width="239" height="31"/>
+                                <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="19"/>
+                                <state key="normal" title="Indiana University">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectUniversity:" destination="E6b-LP-2N3" eventType="touchUpInside" id="pRn-mT-M12"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="lHM-pE-Y7K" secondAttribute="centerX" constant="-0.5" id="0x3-Ig-ixR"/>
+                            <constraint firstItem="Mcn-5d-JdT" firstAttribute="top" secondItem="Td5-Mq-hGx" secondAttribute="bottom" constant="169" id="0TH-Nm-NcJ"/>
                             <constraint firstItem="ccX-Go-rpZ" firstAttribute="top" secondItem="efj-Dw-xRj" secondAttribute="bottom" constant="93" id="1zA-jr-BZG"/>
                             <constraint firstAttribute="width" secondItem="HyH-w6-WOc" secondAttribute="width" id="5fs-hu-iqI"/>
-                            <constraint firstItem="lHM-pE-Y7K" firstAttribute="centerX" secondItem="efj-Dw-xRj" secondAttribute="centerX" constant="0.5" id="ICf-5T-tX9"/>
+                            <constraint firstItem="efj-Dw-xRj" firstAttribute="top" secondItem="Mcn-5d-JdT" secondAttribute="bottom" constant="191" id="Fb9-GZ-HYl"/>
+                            <constraint firstAttribute="centerX" secondItem="Mcn-5d-JdT" secondAttribute="centerX" id="d5p-m8-3e2"/>
                             <constraint firstAttribute="height" secondItem="HyH-w6-WOc" secondAttribute="height" id="fcK-Dq-pmd"/>
-                            <constraint firstItem="efj-Dw-xRj" firstAttribute="top" secondItem="lHM-pE-Y7K" secondAttribute="bottom" constant="75" id="mhd-jg-2GA"/>
-                            <constraint firstItem="lHM-pE-Y7K" firstAttribute="top" secondItem="Td5-Mq-hGx" secondAttribute="bottom" constant="70" id="vIr-4B-zOg"/>
+                            <constraint firstItem="efj-Dw-xRj" firstAttribute="centerX" secondItem="Mcn-5d-JdT" secondAttribute="centerX" id="taz-sg-kIH"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vwv-S8-UhU"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="HyH-w6-WOc" id="WQp-Ij-D3D"/>
-                        <outlet property="indianaUniversityLogo" destination="lHM-pE-Y7K" id="fWc-MS-1LD"/>
+                        <outlet property="indianaUniversityButton" destination="Mcn-5d-JdT" id="55R-a0-4qZ"/>
                         <segue destination="vXZ-lx-hvc" kind="push" identifier="EnterAppSegueAnimated" id="u4t-7J-zTN"/>
                     </connections>
                 </viewController>
@@ -645,7 +652,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Indiana_University_(Athletics)_logo.png" width="201" height="245"/>
         <image name="crumpled_black_paper.jpg" width="682" height="1023"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
