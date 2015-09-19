@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		39B826AE5271AE14C3C6018B /* Pods_party_on.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A663BBB54B3D7CC419B2244 /* Pods_party_on.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		500068C91B94C33E008E6BB7 /* PartySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500068C81B94C33E008E6BB7 /* PartySearchViewController.swift */; };
 		500068CB1B94D4CC008E6BB7 /* Party.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500068CA1B94D4CC008E6BB7 /* Party.swift */; };
 		5047658E1B98BFA900303DF0 /* ModalMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */; };
@@ -34,11 +33,11 @@
 		50F4B51F1B94507800748D02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50F4B51E1B94507800748D02 /* Images.xcassets */; };
 		50F4B5221B94507800748D02 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F4B5201B94507800748D02 /* LaunchScreen.xib */; };
 		50F4B52E1B94507800748D02 /* party_onTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B52D1B94507800748D02 /* party_onTests.swift */; };
-		50F4B5391B94BC8D00748D02 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B5381B94BC8D00748D02 /* LoginViewController.swift */; };
 		50F4B53C1B94BD3C00748D02 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B53B1B94BD3C00748D02 /* User.swift */; };
 		50F4B53E1B94BD4F00748D02 /* MainUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B53D1B94BD4F00748D02 /* MainUser.swift */; };
 		50F4B5401B94BEC000748D02 /* ServerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B53F1B94BEC000748D02 /* ServerModel.swift */; };
 		50F4B5421B94BFF600748D02 /* University.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B5411B94BFF600748D02 /* University.swift */; };
+		FB188DAD30F1F15E67AD38EB /* Pods_culturepage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE342F1672F6CCB78C3AC8FB /* Pods_culturepage.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,8 +52,7 @@
 
 /* Begin PBXFileReference section */
 		0A663BBB54B3D7CC419B2244 /* Pods_party_on.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_party_on.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2FBF0600EE99D576624B5A3A /* Pods-party-on.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-party-on.release.xcconfig"; path = "Pods/Target Support Files/Pods-party-on/Pods-party-on.release.xcconfig"; sourceTree = "<group>"; };
-		42F5FF059F6F370261E2C720 /* Pods-party-on.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-party-on.debug.xcconfig"; path = "Pods/Target Support Files/Pods-party-on/Pods-party-on.debug.xcconfig"; sourceTree = "<group>"; };
+		3D9BCF0B1A90C786C73E8463 /* Pods-culturepage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-culturepage.release.xcconfig"; path = "Pods/Target Support Files/Pods-culturepage/Pods-culturepage.release.xcconfig"; sourceTree = "<group>"; };
 		500068C81B94C33E008E6BB7 /* PartySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartySearchViewController.swift; sourceTree = "<group>"; };
 		500068CA1B94D4CC008E6BB7 /* Party.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Party.swift; sourceTree = "<group>"; };
 		500068CC1B94D6C7008E6BB7 /* libPods-party-on-SwiftyJSON.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-party-on-SwiftyJSON.a"; path = "Pods/build/Debug-iphoneos/libPods-party-on-SwiftyJSON.a"; sourceTree = "<group>"; };
@@ -64,6 +62,7 @@
 		50633AEE1B990444002A685E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		50633AF01B990451002A685E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		50633AF21B992263002A685E /* CreateEditPartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEditPartyViewController.swift; sourceTree = "<group>"; };
+		5094EB731BACA2AC0013F1E0 /* culturepage-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "culturepage-Bridging-Header.h"; sourceTree = "<group>"; };
 		509827411B959B6600154D4B /* parties.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parties.json; sourceTree = "<group>"; };
 		50C2A1961BA75087006F5A2E /* EULAViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EULAViewController.swift; sourceTree = "<group>"; };
 		50C2A1971BA75087006F5A2E /* EULAViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EULAViewController.xib; sourceTree = "<group>"; };
@@ -88,11 +87,12 @@
 		50F4B5271B94507800748D02 /* culturepageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = culturepageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50F4B52C1B94507800748D02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50F4B52D1B94507800748D02 /* party_onTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = party_onTests.swift; sourceTree = "<group>"; };
-		50F4B5381B94BC8D00748D02 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		50F4B53B1B94BD3C00748D02 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		50F4B53D1B94BD4F00748D02 /* MainUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainUser.swift; sourceTree = "<group>"; };
 		50F4B53F1B94BEC000748D02 /* ServerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerModel.swift; sourceTree = "<group>"; };
 		50F4B5411B94BFF600748D02 /* University.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = University.swift; sourceTree = "<group>"; };
+		A7FED92E847A90E201C15599 /* Pods-culturepage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-culturepage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-culturepage/Pods-culturepage.debug.xcconfig"; sourceTree = "<group>"; };
+		BE342F1672F6CCB78C3AC8FB /* Pods_culturepage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_culturepage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,9 +100,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39B826AE5271AE14C3C6018B /* Pods_party_on.framework in Frameworks */,
 				50633AEF1B990444002A685E /* FBSDKCoreKit.framework in Frameworks */,
 				50633AF11B990451002A685E /* FBSDKLoginKit.framework in Frameworks */,
+				FB188DAD30F1F15E67AD38EB /* Pods_culturepage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,7 +120,6 @@
 			isa = PBXGroup;
 			children = (
 				5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */,
-				50F4B5381B94BC8D00748D02 /* LoginViewController.swift */,
 				50633AF21B992263002A685E /* CreateEditPartyViewController.swift */,
 				50C2A1961BA75087006F5A2E /* EULAViewController.swift */,
 				50C2A1971BA75087006F5A2E /* EULAViewController.xib */,
@@ -180,6 +179,7 @@
 				50F4B51E1B94507800748D02 /* Images.xcassets */,
 				50F4B5201B94507800748D02 /* LaunchScreen.xib */,
 				50F4B5151B94507800748D02 /* Supporting Files */,
+				5094EB731BACA2AC0013F1E0 /* culturepage-Bridging-Header.h */,
 			);
 			path = "party-on";
 			sourceTree = "<group>";
@@ -246,6 +246,7 @@
 				500068CE1B94D741008E6BB7 /* libPods-party-on-SwiftyJSON.a */,
 				500068CC1B94D6C7008E6BB7 /* libPods-party-on-SwiftyJSON.a */,
 				0A663BBB54B3D7CC419B2244 /* Pods_party_on.framework */,
+				BE342F1672F6CCB78C3AC8FB /* Pods_culturepage.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -253,8 +254,8 @@
 		96099C22838B9AA6DB6A72C6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				42F5FF059F6F370261E2C720 /* Pods-party-on.debug.xcconfig */,
-				2FBF0600EE99D576624B5A3A /* Pods-party-on.release.xcconfig */,
+				A7FED92E847A90E201C15599 /* Pods-culturepage.debug.xcconfig */,
+				3D9BCF0B1A90C786C73E8463 /* Pods-culturepage.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -377,7 +378,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-party-on/Pods-party-on-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-culturepage/Pods-culturepage-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7E2C8EEB738A6C80273F2621 /* Check Pods Manifest.lock */ = {
@@ -407,7 +408,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-party-on/Pods-party-on-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-culturepage/Pods-culturepage-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -428,7 +429,6 @@
 				50F00DC61BA0D4A3008B7CD3 /* TheWordMessage.swift in Sources */,
 				50DE456F1B94DB6E0075CBF9 /* PartyTableViewCell.swift in Sources */,
 				50D3AA291B97FDAE00CBA394 /* PartiesDataStore.swift in Sources */,
-				50F4B5391B94BC8D00748D02 /* LoginViewController.swift in Sources */,
 				50F4B5181B94507800748D02 /* AppDelegate.swift in Sources */,
 				50D3AA251B97C2BE00CBA394 /* PartyAnnotation.swift in Sources */,
 				50F4B5421B94BFF600748D02 /* University.swift in Sources */,
@@ -556,7 +556,7 @@
 		};
 		50F4B5321B94507800748D02 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 42F5FF059F6F370261E2C720 /* Pods-party-on.debug.xcconfig */;
+			baseConfigurationReference = A7FED92E847A90E201C15599 /* Pods-culturepage.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -574,12 +574,13 @@
 				);
 				PRODUCT_NAME = culturepage;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/party-on/$(PROJECT_NAME)-Bridging-Header.h";
 			};
 			name = Debug;
 		};
 		50F4B5331B94507800748D02 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2FBF0600EE99D576624B5A3A /* Pods-party-on.release.xcconfig */;
+			baseConfigurationReference = 3D9BCF0B1A90C786C73E8463 /* Pods-culturepage.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -597,6 +598,7 @@
 				);
 				PRODUCT_NAME = culturepage;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/party-on/$(PROJECT_NAME)-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -615,6 +617,7 @@
 				INFOPLIST_FILE = "party-onTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = culturepageTests;
+				SWIFT_OBJC_BRIDGING_HEADER = "culturepage-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/party-on.app/party-on";
 			};
 			name = Debug;
@@ -630,6 +633,7 @@
 				INFOPLIST_FILE = "party-onTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = culturepageTests;
+				SWIFT_OBJC_BRIDGING_HEADER = "culturepage-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/party-on.app/party-on";
 			};
 			name = Release;
