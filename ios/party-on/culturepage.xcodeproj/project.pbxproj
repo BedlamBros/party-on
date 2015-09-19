@@ -13,6 +13,8 @@
 		50633AEF1B990444002A685E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50633AEE1B990444002A685E /* FBSDKCoreKit.framework */; };
 		50633AF11B990451002A685E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50633AF01B990451002A685E /* FBSDKLoginKit.framework */; };
 		50633AF31B992263002A685E /* CreateEditPartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50633AF21B992263002A685E /* CreateEditPartyViewController.swift */; };
+		5094EB771BAD2BF80013F1E0 /* 500px-White_flag_icon.svg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094EB761BAD2BF80013F1E0 /* 500px-White_flag_icon.svg.png */; };
+		5094EB791BAD30470013F1E0 /* grayed_white_flag_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094EB781BAD30470013F1E0 /* grayed_white_flag_icon.png */; };
 		509827421B959B6600154D4B /* parties.json in Resources */ = {isa = PBXBuildFile; fileRef = 509827411B959B6600154D4B /* parties.json */; };
 		50C2A1981BA75087006F5A2E /* EULAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2A1961BA75087006F5A2E /* EULAViewController.swift */; };
 		50C2A1991BA75087006F5A2E /* EULAViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C2A1971BA75087006F5A2E /* EULAViewController.xib */; };
@@ -63,6 +65,8 @@
 		50633AF01B990451002A685E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		50633AF21B992263002A685E /* CreateEditPartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEditPartyViewController.swift; sourceTree = "<group>"; };
 		5094EB731BACA2AC0013F1E0 /* culturepage-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "culturepage-Bridging-Header.h"; sourceTree = "<group>"; };
+		5094EB761BAD2BF80013F1E0 /* 500px-White_flag_icon.svg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "500px-White_flag_icon.svg.png"; path = "../../../shared_assets/dev/500px-White_flag_icon.svg.png"; sourceTree = "<group>"; };
+		5094EB781BAD30470013F1E0 /* grayed_white_flag_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayed_white_flag_icon.png; path = ../../../shared_assets/dev/grayed_white_flag_icon.png; sourceTree = "<group>"; };
 		509827411B959B6600154D4B /* parties.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parties.json; sourceTree = "<group>"; };
 		50C2A1961BA75087006F5A2E /* EULAViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EULAViewController.swift; sourceTree = "<group>"; };
 		50C2A1971BA75087006F5A2E /* EULAViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EULAViewController.xib; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 		50F4B5151B94507800748D02 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5094EB781BAD30470013F1E0 /* grayed_white_flag_icon.png */,
+				5094EB761BAD2BF80013F1E0 /* 500px-White_flag_icon.svg.png */,
 				50C2A19C1BAB4B66006F5A2E /* crumpled_black_paper.jpg */,
 				50C2A19D1BAB4B66006F5A2E /* culture-newspaper-illegal.jpg */,
 				50C2A19A1BAB4347006F5A2E /* EULA.txt */,
@@ -347,11 +353,13 @@
 				50F4B51D1B94507800748D02 /* Main.storyboard in Resources */,
 				50C2A19E1BAB4B66006F5A2E /* crumpled_black_paper.jpg in Resources */,
 				50F4B5221B94507800748D02 /* LaunchScreen.xib in Resources */,
+				5094EB791BAD30470013F1E0 /* grayed_white_flag_icon.png in Resources */,
 				50D3AA271B97D02000CBA394 /* disclosure_indicator.png in Resources */,
 				50C2A19B1BAB4347006F5A2E /* EULA.txt in Resources */,
 				509827421B959B6600154D4B /* parties.json in Resources */,
 				50F4B51F1B94507800748D02 /* Images.xcassets in Resources */,
 				50C2A19F1BAB4B66006F5A2E /* culture-newspaper-illegal.jpg in Resources */,
+				5094EB771BAD2BF80013F1E0 /* 500px-White_flag_icon.svg.png in Resources */,
 				50C2A1991BA75087006F5A2E /* EULAViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

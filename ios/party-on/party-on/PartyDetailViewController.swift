@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import MessageUI
+import SVProgressHUD
 
 public let OK_EMOJI: Character = "\u{1F44C}"
 public let THUMBS_DOWN_EMOJI: Character = "\u{1F44E}"
@@ -42,7 +43,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         
         scheduleRefreshParty()
         
-        // Navigation Item
+        // Navigation Item Title
         self.navigationItem.title = party.formattedAddress
         
         var navigationBarTextAttrs: [NSObject: AnyObject] = [:]
@@ -50,6 +51,16 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             navigationBarTextAttrs[NSFontAttributeName] = smallCourier
         }
         self.navigationController?.navigationBar.titleTextAttributes = navigationBarTextAttrs
+        
+        // Navigation Item Flag
+        let flagImage = UIImage(named: "grayed_white_flag_icon.png")
+        let flagImageView = UIImageView(frame: CGRectMake(8, 8, 36, 36))
+        flagImageView.image = flagImage
+        flagImageView.contentMode = UIViewContentMode.ScaleAspectFit
+        flagImageView.alpha = 0.8
+        flagImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "flagTapped"))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: flagImageView)
+        
         
         // Fill in Party data
         self.providedBoolLabel?.text = party.byob ? "BYO" : "PROVIDED"
@@ -119,6 +130,49 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+    }
+    
+    
+    // Mark: - Flagging
+    
+    func flagTapped() {
+        let flagDialog = UIAlertController(title: "Report Abuse", message: "If this posting got out of hand, or if the party got kind of scary, leave us a message and we'll take a look at it", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        flagDialog.addTextFieldWithConfigurationHandler { (textField: UITextField!) -> Void in
+            textField.autocapitalizationType = .Sentences
+        }
+        
+        flagDialog.addAction(UIAlertAction(title: "Report", style: UIAlertActionStyle.Destructive, handler: { (action: UIAlertAction!) -> Void in
+            self.sendFlagRequest((flagDialog.textFields?.first as? UITextField)?.text)
+            flagDialog.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        flagDialog.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction!) -> Void in
+            flagDialog.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        self.presentViewController(flagDialog, animated: true, completion: nil)
+    }
+    
+    private func sendFlagRequest(complaint: String?) {
+        let displayErrorDialog = { () -> Void in
+            UIAlertView(title: "Oh no", message: "Failed to flag this party. Try again another time.", delegate: nil, cancelButtonTitle: "Ok").show()
+        }
+        if self.party.oID == nil {
+            // doon't seg fault for lack of oID, it's not worth the risk
+            return displayErrorDialog()
+        }
+        
+        SVProgressHUD.showAndBlockInteraction(self.view)
+        PartiesDataStore.sharedInstance.flag(self.party.oID!, complaint: complaint) { (err: NSError?) -> Void in
+            SVProgressHUD.dismissAndUnblockInteraction(self.view)
+            
+            if err == nil {
+                UIAlertView(title: "Thanks for keeping watch", message: "We'll take a look at this party and remove it if need be", delegate: nil, cancelButtonTitle: "Ok").show()
+            } else {
+                displayErrorDialog()
+            }
+        }
     }
     
     
@@ -314,6 +368,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         // launch an alert view for sending a message
         let dialog = UIAlertView(title: "Spread the word", message: "What's going on at this party?", delegate: self, cancelButtonTitle: "Send", otherButtonTitles: "Nevermind")
         dialog.alertViewStyle = UIAlertViewStyle.PlainTextInput
+        dialog.textFieldAtIndex(0)?.autocapitalizationType = .Sentences
         dialog.show()
     }
     

@@ -88,6 +88,31 @@ class PartiesDataStore: NSObject {
         })
     }
     
+    func flag(partyId: String, complaint: String?, callback: ((NSError?) -> Void)?) {
+        let syncCallback = { (err: NSError?) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                callback?(err)
+            })
+        }
+        let endpoint = API_ROOT + "/parties/" + partyId + "/flag"
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            
+            var params = JSON([
+                "party": partyId
+            ])
+            if let c = complaint {
+                params["complaint"] = JSON(c)
+            }
+            
+            self.httpManager.POST(endpoint, parameters: params.dictionaryObject, success: { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
+                    return syncCallback(nil)
+                }, failure: { (operation: AFHTTPRequestOperation, err: NSError) -> Void in
+                    return syncCallback(err)
+            })
+        })
+    }
+    
     func POST(party: Party, callback: UpdatePartyCallback) {
         return putOrPost(party, method: "POST", callback: callback)
     }
