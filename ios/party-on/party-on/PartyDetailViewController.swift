@@ -30,8 +30,6 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     @IBOutlet weak var descriptionLabel: UILabel?
     @IBOutlet weak var descriptionTextView: UITextView?
     
-    private static var textMessageViewController: MFMessageComposeViewController?
-    
     var party: Party!
     private var wordTimeLabelHeight: CGFloat?
     private var refreshPartyTimer: NSTimer?
@@ -52,13 +50,6 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             navigationBarTextAttrs[NSFontAttributeName] = smallCourier
         }
         self.navigationController?.navigationBar.titleTextAttributes = navigationBarTextAttrs
-        
-
-        
-        // Init texting controller
-        if MFMessageComposeViewController.canSendText() {
-            PartyDetailViewController.textMessageViewController = MFMessageComposeViewController()
-        }
         
         // Fill in Party data
         self.providedBoolLabel?.text = party.byob ? "BYO" : "PROVIDED"
@@ -138,6 +129,8 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             if result.value == MessageComposeResultFailed.value {
                 UIAlertView(title: "Oh no!", message: "Message failed to send", delegate: nil, cancelButtonTitle: "Ok").show()
             }
+            // presenting this controller stopped refreshing the party, restart
+            self.scheduleRefreshParty()
         })
     }
     
@@ -190,7 +183,8 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     }
     
     @IBAction func sendTextMessageButtonClick(sender: AnyObject?) {
-        if let textController = PartyDetailViewController.textMessageViewController {
+        if MFMessageComposeViewController.canSendText() {
+            let textController = MFMessageComposeViewController()
             textController.messageComposeDelegate = self
             textController.body = self.party.formattedAddress
             self.presentViewController(textController, animated: true, completion: nil)
