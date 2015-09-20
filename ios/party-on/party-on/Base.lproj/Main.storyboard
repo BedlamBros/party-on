@@ -141,11 +141,6 @@
                                 <action selector="backBarItemClick:" destination="vXZ-lx-hvc" id="hfu-eN-gIf"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="lJc-h9-ld5">
-                            <connections>
-                                <action selector="createPartyButtonClick:" destination="vXZ-lx-hvc" id="i3W-EA-xxw"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="listView" destination="Hjp-gb-gIc" id="r2B-rC-rGn"/>
