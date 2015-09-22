@@ -14,7 +14,12 @@ import SVProgressHUD
 public let OK_EMOJI: Character = "\u{1F44C}"
 public let THUMBS_DOWN_EMOJI: Character = "\u{1F44E}"
 
-class PartyDetailViewController: UIViewController, MFMessageComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate {
+// Receives a signal when one particular party changed
+protocol SinglePartyDidChangeResponder: class {
+    func singlePartyDidChange(party: Party)
+}
+
+class PartyDetailViewController: UIViewController, MFMessageComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, CreateEditPartyViewControllerDelegate {
     
     @IBOutlet weak var addressButton: UIButton?
     @IBOutlet weak var textFriendButton: UIButton?
@@ -31,7 +36,36 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     @IBOutlet weak var descriptionLabel: UILabel?
     @IBOutlet weak var descriptionTextView: UITextView?
     
-    var party: Party!
+    weak var singlePartyDidChangeResponder: SinglePartyDidChangeResponder?
+    
+    var _party: Party!
+    var party: Party! {
+        get {
+            return _party
+        } set(val) {
+            _party = val
+            
+            // Fill in Party data
+            self.navigationItem.title = _party.formattedAddress
+            self.providedBoolLabel?.text = _party.byob ? "BYO" : "PROVIDED"
+            self.party.maleCost == 0;
+            self.guysPayLabel?.text = _party.maleCost != 0 ? "$" + String(_party.maleCost) : "FREE"
+            self.girlsPayLabel?.text = _party.femaleCost != 0 ? "$" + String(_party.femaleCost) : "FREE"
+            self.dayLabel?.text = _party.startDay
+            
+            
+            let timeFormatter = NSDateFormatter()
+            timeFormatter.timeZone = NSTimeZone.systemTimeZone()
+            timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+            self.startsLabel?.text = timeFormatter.stringFromDate(_party.startTime)
+            
+            // update The Word
+            self.theWordTableView?.reloadData()
+            self.scrollToTheWordBottom(true)
+        }
+    }
+    
+    
     private var wordTimeLabelHeight: CGFloat?
     private var refreshPartyTimer: NSTimer?
 
@@ -52,26 +86,21 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         }
         self.navigationController?.navigationBar.titleTextAttributes = navigationBarTextAttrs
         
-        // Navigation Item Flag
-        let flagImage = UIImage(named: "grayed_white_flag_icon.png")
-        let flagImageView = UIImageView(frame: CGRectMake(8, 8, 36, 36))
-        flagImageView.image = flagImage
-        flagImageView.contentMode = UIViewContentMode.ScaleAspectFit
-        flagImageView.alpha = 0.8
-        flagImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "flagTapped"))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: flagImageView)
-        
-        
-        // Fill in Party data
-        self.providedBoolLabel?.text = party.byob ? "BYO" : "PROVIDED"
-        self.party.maleCost == 0;
-        self.guysPayLabel?.text = self.party.maleCost != 0 ? "$" + String(self.party.maleCost) : "FREE"
-        self.girlsPayLabel?.text = self.party.femaleCost != 0 ? "$" + String(self.party.femaleCost) : "FREE"
-        
-        let timeFormatter = NSDateFormatter()
-        timeFormatter.timeZone = NSTimeZone.systemTimeZone()
-        timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-        self.startsLabel?.text = timeFormatter.stringFromDate(self.party.startTime)
+        // Determine which right bar button item to use
+        println("PartyDetailViewController comparing storied id \(MainUser.storedUserId) to party's id \(self.party.userId)")
+        if MainUser.storedUserId != nil && MainUser.storedUserId == self.party.userId {
+            // MainUser made this party
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPartyButtonClick")
+        } else {
+            // This is someone else's party, flag
+            let flagImage = UIImage(named: "grayed_white_flag_icon.png")
+            let flagImageView = UIImageView(frame: CGRectMake(8, 8, 36, 36))
+            flagImageView.image = flagImage
+            flagImageView.contentMode = UIViewContentMode.ScaleAspectFit
+            flagImageView.alpha = 0.8
+            flagImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "flagTapped"))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: flagImageView)
+        }
         
         let now = NSDate(timeIntervalSinceNow: 0)
         if now.timeIntervalSince1970 < party.startTime.timeIntervalSince1970 {
@@ -79,11 +108,6 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         } else {
             // party is in the past
         }
-        
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone.systemTimeZone()
-        dateFormatter.dateFormat = "MMM d"
-        self.dayLabel?.text = dateFormatter.stringFromDate(self.party.startTime)
         
         //if let endTime = self.party.endTime {
         if false {
@@ -100,6 +124,9 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             self.descriptionTextView?.hidden = true
             self.descriptionLabel?.hidden = true
         }
+        
+        // force triggering of party population
+        self.party = _party
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -128,8 +155,14 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        super.prepareForSegue(segue, sender: sender)
+        if segue.identifier == editPartySegueIdentifier {
+            let editPartyController = segue.destinationViewController as! CreateEditPartyViewController
+            self.descheduleRefreshParty()
+            editPartyController.delegate = self
+            editPartyController.method = .PUT
+            editPartyController.party = self.party
+        }
     }
     
     
@@ -202,8 +235,6 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
                             // reload TheWord locally
                             self.party = party
                             println("\(self.party!.theWord.count) msgs in party word")
-                            self.theWordTableView?.reloadData()
-                            self.scrollToTheWordBottom(true)
                         } else {
                             UIAlertView(title: "Uh-oh", message: "Had trouble sending message", delegate: nil, cancelButtonTitle: "Ok").show()
                         }
@@ -269,12 +300,6 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         if let myPartyId = self.party.oID {
             PartiesDataStore.sharedInstance.getParty(myPartyId, callback: { (err, party) -> Void in
                 if err == nil {
-                    if party!.theWord.count != self.party.theWord.count {
-                        // new messages have come in, refresh TheWord
-                        println("the word changed in length")
-                        self.theWordTableView?.reloadData()
-                        self.scrollToTheWordBottom(true)
-                    }
                     self.party = party
                 }
             })
@@ -353,6 +378,23 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     }
     
     
+    // MARK: CreateEditPartyViewControllerDelegate
+    
+    func createEditPartyDidCancel(viewController: CreateEditPartyViewController) {
+        viewController.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.scheduleRefreshParty()
+        })
+    }
+    
+    func createEditPartyDidSucceed(viewController: CreateEditPartyViewController, party: Party, method: CreateEditPartyActionType) {
+        self.party = party
+        viewController.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.scheduleRefreshParty()
+            self.singlePartyDidChangeResponder?.singlePartyDidChange(party)
+        })
+    }
+    
+    
     // MARK: Helpers
     
     private func theWordForRowAtIndexPath(indexPath: NSIndexPath, tableView: UITableView) -> TheWordMessage? {
@@ -380,11 +422,16 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         }
     }
     
+    func editPartyButtonClick() {
+        self.performSegueWithIdentifier(editPartySegueIdentifier, sender: self)
+    }
+    
     
     // MARK: Primitive Constants
     
     private let theWordReadCellReuseIdentifier = "TheWordReadCell"
     private let theWordWriteCellReuseIdentifier = "TheWordWriteCell"
+    private let editPartySegueIdentifier = "EditPartySegue"
     private let minTheWordCellHeight: CGFloat = 44
     private let minTheWordDateLabelHeight: CGFloat = 12
     private let refreshPartyTimeInterval: NSTimeInterval = 10

@@ -15,7 +15,7 @@ import FBSDKLoginKit
 
 public let SADFACE_CHAR: Character = "\u{1F61E}"
 
-class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, FBSDKLoginButtonDelegate, CreateEditPartyViewControllerDelegate {
+class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, FBSDKLoginButtonDelegate, CreateEditPartyViewControllerDelegate, SinglePartyDidChangeResponder {
     
     @IBOutlet var listView: UITableView?
     @IBOutlet var mapView: MKMapView?
@@ -128,6 +128,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         if segue.identifier == partyDetailSegueIdentifier {
             let partyDetailViewController = segue.destinationViewController as! PartyDetailViewController
             partyDetailViewController.party = self.selectedParty
+            partyDetailViewController.singlePartyDidChangeResponder = self
             
             // Set up the NEXT viewController's backItem, which is a property of self here
             let backItem = UIBarButtonItem(title: nil, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
@@ -308,6 +309,13 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
                 break
             }
         })
+    }
+    
+    
+    // MARK: - SinglePartyDidChangeResponder
+    
+    func singlePartyDidChange(party: Party) {
+        self.listView?.reloadData()
     }
     
     

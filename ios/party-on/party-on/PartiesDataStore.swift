@@ -165,6 +165,10 @@ class PartiesDataStore: NSObject {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             var url = API_ROOT + "/parties"
+            if method == "PUT" {
+                // modify the route for PUT
+                url += "/" + (party.oID != nil ? party.oID! : "")
+            }
             var parameters = party.toJSON().dictionaryObject
             if parameters == nil {
                 return syncCallback(err: NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not create party JSON"]), party: nil)
@@ -172,12 +176,19 @@ class PartiesDataStore: NSObject {
             
             var success: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
                 let party = Party(json: JSON(response))
-                if operation.request.HTTPMethod == "POST" {
-                    // Add party to list if it was posted
-                    synchronized(self.nearbyParties, { () -> Void in
+                
+                // Synchronize changes in the party
+                synchronized(self.nearbyParties, { () -> Void in
+                    switch method {
+                    case "POST":
                         self.nearbyParties.insert(party, atIndex: 0)
-                    })
-                }
+                    case "PUT":
+                        self.updateSingleParty(party)
+                    default:
+                        break
+                    }
+                })
+                
                 return syncCallback(err: nil, party: party)
             }
             var failure: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
