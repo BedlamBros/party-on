@@ -20,7 +20,7 @@ class MainUser: User {
     static var sharedInstance: MainUser? = nil
     private static let httpManager = AFHTTPRequestOperationManager()
     
-    private static var storedUserId: String? {
+    static var storedUserId: String? {
         get {
             let userDefaults = NSUserDefaults.standardUserDefaults()
             return userDefaults.stringForKey(storedUserIdDefaultsKey)
@@ -67,8 +67,6 @@ class MainUser: User {
                 return syncCallback(err: nil)
                 }, failure: { (operation: AFHTTPRequestOperation, err: NSError) -> Void in
                 // failure
-                    
-                let reqBody = JSON(operation.request.HTTPBody!)
                 return syncCallback(err: err)
             })
         })

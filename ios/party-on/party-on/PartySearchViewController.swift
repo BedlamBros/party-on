@@ -15,7 +15,7 @@ import FBSDKLoginKit
 
 public let SADFACE_CHAR: Character = "\u{1F61E}"
 
-class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, FBSDKLoginButtonDelegate, CreateEditPartyViewControllerDelegate {
+class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, FBSDKLoginButtonDelegate, CreateEditPartyViewControllerDelegate, SinglePartyDidChangeResponder {
     
     @IBOutlet var listView: UITableView?
     @IBOutlet var mapView: MKMapView?
@@ -27,6 +27,10 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
 
     private var requeryLock: NSLock = NSLock()
     private var navigationBarButtonTextAttributes: [NSObject: AnyObject]!
+    
+    // handle on the create party bar button
+    private weak var createPartyPressGestureRecognizer: UILongPressGestureRecognizer?
+    private weak var createPartyBarButtonImageView: UIImageView?
     
     
     
@@ -78,6 +82,21 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         self.navigationBarButtonTextAttributes = barButtonTextAttrs
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes(barButtonTextAttrs, forState: UIControlState.Normal)
         
+        // Add Party Bar Button Item
+        let partyHatImage = UIImage(named: "ic_add_party2.png")!
+        // TODO: get a party hat image with better density
+        let partyHatImageView = UIImageView(frame: CGRectMake(4, 4, 40, 40))
+        partyHatImageView.contentMode = .ScaleAspectFit
+        partyHatImageView.image = partyHatImage
+        
+        let createPartyRecognizer = UILongPressGestureRecognizer(target: self, action: "createPartyButtonClick:")
+        createPartyRecognizer.minimumPressDuration = 0.0
+        partyHatImageView.addGestureRecognizer(createPartyRecognizer)
+        
+        self.createPartyPressGestureRecognizer = createPartyRecognizer
+        self.createPartyBarButtonImageView = partyHatImageView
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: partyHatImageView)
+        
         // Start off with a requery of parties
         requery()
     }
@@ -109,6 +128,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         if segue.identifier == partyDetailSegueIdentifier {
             let partyDetailViewController = segue.destinationViewController as! PartyDetailViewController
             partyDetailViewController.party = self.selectedParty
+            partyDetailViewController.singlePartyDidChangeResponder = self
             
             // Set up the NEXT viewController's backItem, which is a property of self here
             let backItem = UIBarButtonItem(title: nil, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
@@ -292,29 +312,52 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     
+    // MARK: - SinglePartyDidChangeResponder
+    
+    func singlePartyDidChange(party: Party) {
+        self.listView?.reloadData()
+    }
+    
+    
     // MARK: - Generic Selectors
     
     @IBAction func backBarItemClick(sender: AnyObject?) {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func createPartyButtonClick(sender: AnyObject?) {
-        if let currentFBToken = FBSDKAccessToken.currentAccessToken() {
-            // we have a token locally
-            let oneDaysTime = NSTimeInterval(60 * 60 * 24)
-            let tomorrow = NSDate(timeIntervalSinceNow: +oneDaysTime)
-            if (currentFBToken.expirationDate.timeIntervalSince1970 < tomorrow.timeIntervalSince1970) {
-                // time to renew the token
-                println("logging out to renew token")
-                FBSDKLoginManager().logOut()
-                self.launchLoginDialog()
-            } else {
-                // user is already logged in
-                findUserByFBToken(currentFBToken.tokenString)
+    func createPartyButtonClick(recognizer: UILongPressGestureRecognizer) {
+        if recognizer === self.createPartyPressGestureRecognizer {
+            // change alpha of the party hat if it was the sender
+            switch recognizer.state {
+            case .Began:
+                self.createPartyBarButtonImageView?.alpha = 0.6
+            case .Ended:
+                self.createPartyBarButtonImageView?.alpha = 1.0
+            case .Cancelled:
+                self.createPartyBarButtonImageView?.alpha = 1.0
+            default:
+                break
             }
-        } else {
-            // user is not logged in
-            self.launchLoginDialog()
+        }
+        
+        if recognizer.state == .Ended {
+            if let currentFBToken = FBSDKAccessToken.currentAccessToken() {
+                // we have a token locally
+                let oneDaysTime = NSTimeInterval(60 * 60 * 24)
+                let tomorrow = NSDate(timeIntervalSinceNow: +oneDaysTime)
+                if (currentFBToken.expirationDate.timeIntervalSince1970 < tomorrow.timeIntervalSince1970) {
+                    // time to renew the token
+                    println("logging out to renew token")
+                    FBSDKLoginManager().logOut()
+                    self.launchLoginDialog()
+                } else {
+                    // user is already logged in
+                    findUserByFBToken(currentFBToken.tokenString)
+                }
+            } else {
+                // user is not logged in
+                self.launchLoginDialog()
+            }
         }
     }
     
