@@ -96,6 +96,11 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
         self.daySegmentedControl?.selectedSegmentIndex = 0
         didToggleDay()
         
+        // Font sizing for segmented controls
+        let segmentedControlFont = UIFont.systemFontOfSize(11.0)
+        self.daySegmentedControl?.setTitleTextAttributes([NSFontAttributeName: segmentedControlFont], forState: .Normal)
+        self.providedBool?.setTitleTextAttributes([NSFontAttributeName: segmentedControlFont], forState: .Normal)
+        
         let guysPayCurrencyLabel = UILabel(frame: CGRectMake(0, 0, 20, 50))
         guysPayCurrencyLabel.text = dollarSignPrefix
         self.guysPay?.leftView = guysPayCurrencyLabel
