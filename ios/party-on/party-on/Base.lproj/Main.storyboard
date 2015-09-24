@@ -20,13 +20,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="crumpled_black_paper.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="HyH-w6-WOc">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="(Others coming soon)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efj-Dw-xRj">
-                                <rect key="frame" x="16" y="454" width="288" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="(Others coming soon)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efj-Dw-xRj">
+                                <rect key="frame" x="16" y="423" width="288" height="52"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" alpha="0.94999999999999996" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mcn-5d-JdT">
+                            <button opaque="NO" alpha="0.94999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mcn-5d-JdT">
                                 <rect key="frame" x="28" y="233" width="265" height="31"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="19"/>
@@ -37,21 +37,32 @@
                                     <action selector="selectUniversity:" destination="E6b-LP-2N3" eventType="touchUpInside" id="pRn-mT-M12"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xqG-Ho-tsT">
+                                <rect key="frame" x="238" y="514" width="66" height="46"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="15"/>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="Mcn-5d-JdT" firstAttribute="top" secondItem="Td5-Mq-hGx" secondAttribute="bottom" constant="169" id="0TH-Nm-NcJ"/>
-                            <constraint firstItem="ccX-Go-rpZ" firstAttribute="top" secondItem="efj-Dw-xRj" secondAttribute="bottom" constant="93" id="1zA-jr-BZG"/>
+                            <constraint firstItem="efj-Dw-xRj" firstAttribute="trailing" secondItem="xqG-Ho-tsT" secondAttribute="trailing" id="21C-AV-d8C"/>
                             <constraint firstAttribute="width" secondItem="HyH-w6-WOc" secondAttribute="width" id="5fs-hu-iqI"/>
-                            <constraint firstItem="efj-Dw-xRj" firstAttribute="top" secondItem="Mcn-5d-JdT" secondAttribute="bottom" constant="191" id="Fb9-GZ-HYl"/>
+                            <constraint firstItem="xqG-Ho-tsT" firstAttribute="top" secondItem="efj-Dw-xRj" secondAttribute="bottom" constant="39" id="Yjf-Tx-uA7"/>
+                            <constraint firstItem="efj-Dw-xRj" firstAttribute="top" secondItem="Mcn-5d-JdT" secondAttribute="bottom" constant="159" id="csI-Hd-enL"/>
                             <constraint firstAttribute="centerX" secondItem="Mcn-5d-JdT" secondAttribute="centerX" id="d5p-m8-3e2"/>
                             <constraint firstAttribute="height" secondItem="HyH-w6-WOc" secondAttribute="height" id="fcK-Dq-pmd"/>
                             <constraint firstItem="efj-Dw-xRj" firstAttribute="centerX" secondItem="Mcn-5d-JdT" secondAttribute="centerX" id="taz-sg-kIH"/>
+                            <constraint firstItem="ccX-Go-rpZ" firstAttribute="top" secondItem="xqG-Ho-tsT" secondAttribute="bottom" constant="8" id="zY9-Ng-kmk"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vwv-S8-UhU"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="HyH-w6-WOc" id="WQp-Ij-D3D"/>
                         <outlet property="indianaUniversityButton" destination="Mcn-5d-JdT" id="55R-a0-4qZ"/>
+                        <outlet property="logInOutButton" destination="xqG-Ho-tsT" id="GFz-KV-W2g"/>
                         <segue destination="vXZ-lx-hvc" kind="push" identifier="EnterAppSegueAnimated" id="u4t-7J-zTN"/>
                     </connections>
                 </viewController>
@@ -136,7 +147,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Parties" id="MA6-xW-22z">
-                        <barButtonItem key="leftBarButtonItem" title="Change University" id="0RD-s4-8y5">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="0RD-s4-8y5">
                             <connections>
                                 <action selector="backBarItemClick:" destination="vXZ-lx-hvc" id="hfu-eN-gIf"/>
                             </connections>

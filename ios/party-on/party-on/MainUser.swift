@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import AFNetworking
 import FBSDKCoreKit
+import FBSDKLoginKit
 
 typealias MainUserLoginCallback = (err: NSError?) -> Void
 typealias MainUserIsBannedCallback = (isBanned: Bool) -> Void
@@ -29,12 +30,17 @@ class MainUser: User {
             if val != nil {
                 // setting the id
                 userDefaults.setObject(val, forKey: storedUserIdDefaultsKey)
-                userDefaults.synchronize()
             } else {
                 // deleting the id
                 userDefaults.removeObjectForKey(storedUserIdDefaultsKey)
             }
+            userDefaults.synchronize()
         }
+    }
+    
+    func logout() {
+        MainUser.storedUserId = nil
+        FBSDKLoginManager().logOut()
     }
     
     class func loginWithFBToken(callback: MainUserLoginCallback) {

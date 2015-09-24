@@ -75,12 +75,13 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         self.navigationController?.navigationBar.titleTextAttributes = navigationBarTextAttrs
         
         var barButtonTextAttrs: [NSObject: AnyObject] = [:]
-        if let smallCourier = UIFont(name: "Courier", size: 12) {
+        if let smallCourier = UIFont(name: "Courier", size: 14) {
             barButtonTextAttrs[NSFontAttributeName] = smallCourier
         }
         // save these options for all other navigation buttons
         self.navigationBarButtonTextAttributes = barButtonTextAttrs
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes(barButtonTextAttrs, forState: UIControlState.Normal)
+        //self.navigationItem.leftBarButtonItem?.title = "\u{26ED}"
         
         // Add Party Bar Button Item
         let partyHatImage = UIImage(named: "ic_add_party2.png")!
