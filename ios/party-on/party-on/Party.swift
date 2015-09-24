@@ -119,4 +119,18 @@ class Party: NSObject, ServerModel {
         
         return json
     }
+    
+    class func logicalErrorForJsonResponse(response: JSON) -> NSError? {
+        if let errorDescription = response["error"].string {
+            switch errorDescription {
+            case "UNKNOWN":
+                return NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not find this address in Google Maps"])
+            case "OUTSIDE":
+                return NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Party is too far away from the university's campus"])
+            default:
+                return NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Experienced an unknown error posting this party"])
+            }
+        }
+        return nil
+    }
 }

@@ -171,10 +171,14 @@ class PartiesDataStore: NSObject {
             }
             var parameters = party.toJSON().dictionaryObject
             if parameters == nil {
-                return syncCallback(err: NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not create party JSON"]), party: nil)
+                return syncCallback(err: NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not create the party"]), party: nil)
             }
             
             var success: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
+                let json = JSON(response)
+                if let badRequestError = Party.logicalErrorForJsonResponse(json) {
+                    return syncCallback(err: badRequestError, party: nil)
+                }
                 let party = Party(json: JSON(response))
                 
                 // Synchronize changes in the party

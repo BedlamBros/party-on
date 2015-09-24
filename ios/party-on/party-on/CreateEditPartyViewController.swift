@@ -258,7 +258,14 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
                 self.delegate?.createEditPartyDidSucceed(self, party: party!, method: self.method)
             } else {
                 // failure
-                return UIAlertView(title: "Uh-oh", message: "Had trouble saving the party", delegate: nil, cancelButtonTitle: "Ok").show()
+                var errMsg: String
+                if let msg = err?.userInfo?[NSLocalizedDescriptionKey] as? String {
+                    errMsg = msg
+                } else {
+                    errMsg = "Had trouble saving the party"
+                }
+                
+                return UIAlertView(title: "Uh-oh", message: errMsg, delegate: nil, cancelButtonTitle: "Ok").show()
             }
         }
         

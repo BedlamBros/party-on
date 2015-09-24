@@ -83,6 +83,7 @@ class UniversityPickerController: UIViewController {
                         } else {
                             self.updateLoginLogoutButtonTitle()
                             UIAlertView(title: "Welcome to APP_NAME", message: "Now that you're logged in, you can create your own parties.", delegate: nil, cancelButtonTitle: "Ok").show()
+                            MainUser.checkForBannedStatus(nil)
                         }
                     })
                 }
