@@ -248,9 +248,9 @@ describe('Create and save party', function() {
       var oneHour = 60 * 60 * 1000;
 
       var tooOldDate = new Date(now.getTime() - (oneHour * 14));
-      var tooFarOffDate = new Date(now.getTime() + (oneHour * 48));
+      var tooFarOffDate = new Date(now.getTime() + (oneHour * 72));
       var justYoungEnoughDate = new Date(now.getTime() - (oneHour * 7));
-      var justCloseEnoughDate = new Date(now.getTime() + (oneHour * 23));
+      var justCloseEnoughDate = new Date(now.getTime() + (oneHour * 47));
 
       var tooOldParty, tooFarOffParty,
         justYoungEnoughParty, justCloseEnoughParty;

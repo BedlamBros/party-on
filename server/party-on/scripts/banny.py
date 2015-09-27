@@ -12,7 +12,7 @@ db = mongo_client['party-on-test']
 
 api_root = 'http://localhost/api'
 banny_id = '138176626529976'
-banny_token = 'CAABzpqkH5PgBAG0jeaDbJOk1UilxRyj37kjta27GO1zZAVlW0lQJxE7STHhRG8QQouEvgi3KxAasc1cfwf12EcZBqJZAQU9elHqYwcpVM7nKda7ZAg4gJiFSjbLVFBI1POEiN64Q5dmcjj8oYN1JIhpvgRx1ZCi5dqqk5g7g3bw0VpW29sXRma5xZAoR0RzPZBcmhfxPu6DDotyLtNLz2WTxsJxRafDNyccOQkIbE62qwZDZD'
+banny_token = 'CAABzpqkH5PgBAG7Q9oqQtnkNXyTFfMWl0CGtLfTuTJ83epVIHajboZCzG5TfyZA54OP2C7lGbS48xWIjGuvsNTptfO5upQnxXlZA60SlH86RhZBlGoRzRDinpvHZBi7mNCQE4P3xR9VOb3PZCr8IJEYZAwLJEiFLNVw2KOqe4k0nk3e5uzvY9ghZBgRmZAq3XZCoN90a65W2H74bJuZBP8vf3mZBr9kCxIZBPvZA18fAOzw1RPoQZDZD'
 
 def make_party():
     party = {

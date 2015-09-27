@@ -186,9 +186,9 @@ PartySchema.statics.currentForUniversity = function(universityName, cb) {
   var eightHours = 60 * 60 * 1000 *  8;
   var earliestStart = new Date(now.getTime() - eightHours);
 
-  // parties that start 24 hours from now will be considered
-  var twentyFourHours = 3 * eightHours;
-  var latestStart = new Date(now.getTime() + twentyFourHours);
+  // parties that start 48 hours from now will be considered
+  var fortyEightHours = 6 * eightHours;
+  var latestStart = new Date(now.getTime() + fortyEightHours);
 
   var promise = this.find({
     university: universityName,
