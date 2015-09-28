@@ -154,7 +154,7 @@ describe('Create and save party', function() {
           },
           method: 'POST',
           json: crudParty.toJSON()
-          };
+        };
 
 	request(requestConfig, function(err, resp, body) {
             expect(err).to.be(null);
@@ -166,6 +166,35 @@ describe('Create and save party', function() {
             done();
           });
       });
+
+      it('should be able to geocode an unkown address', function(done){
+	this.timeout(3000);
+	
+	crudParty = new Party(_.omit(party.toJSON(), '_id'));
+	crudParty.formattedAddress = '405 s ronson';
+	crudParty.startTime.setHours(party.startTime.getHours() + 4);
+
+	var requestConfig = {
+          uri: config.hostname + '/api/parties',
+          auth: {
+            bearer: loginToken
+          },
+          method: 'POST',
+          json: crudParty.toJSON()
+        };
+
+
+      	request(requestConfig, function(err, resp, body) {
+            expect(err).to.be(null);
+            expect(resp.statusCode).to.be(200);
+            expect(body.formattedAddress).to.be
+            .equal('405 s ronson');
+
+            crudParty = new Party(body);
+            done();
+          });
+      });
+
 
       it('should be able to GET a party', function(done) {
         this.timeout(10000);

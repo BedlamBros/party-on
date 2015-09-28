@@ -12,9 +12,9 @@ module.exports = {
     debug: false
   },
   http: {
-    port: 80
+    port: 420
   },
-  hostname: 'http://localhost:80',
+  hostname: 'http://localhost:420',
   app: {
     name: 'The Docket - Get to the party faster, safer, and easier'
   },

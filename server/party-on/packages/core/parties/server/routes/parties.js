@@ -38,8 +38,8 @@ module.exports = function(Parties, app, auth) {
   app.route('/api/parties/:partyId/word')
     .put(parties.addAWord);
   app.route('/api/parties/:partyId/flag')
-    .post(flaghistories.raise);
-  app.route('/api/parties/bannedstatus')
+    .post(flaghistories.sendEmail, flaghistories.raise);
+  app.route('/api/users/bannedstatus')
     .get(auth.requiresLogin, flaghistories.isBanned);
 
   if (process.env.NODE_ENV == 'test') {
