@@ -28,8 +28,7 @@ public class ToolbarFragment extends Fragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_toolbar, container, false);
 
-        /*
-        mLoginButton = (LoginButton) view.findViewById(R.id.facebook_auth_bttn);
+        mLoginButton = (LoginButton) view.findViewById(R.id.login_button);
         mLoginButton.setReadPermissions("user_friends");
         // If using in a fragment
         mLoginButton.setFragment(this);
@@ -54,7 +53,7 @@ public class ToolbarFragment extends Fragment {
                 // App code
             }
         });
-        */
+
         return inflater.inflate(R.layout.fragment_toolbar, container, false);
     }
 }
