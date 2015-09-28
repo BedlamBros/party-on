@@ -16,6 +16,7 @@
 		5094EB771BAD2BF80013F1E0 /* 500px-White_flag_icon.svg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094EB761BAD2BF80013F1E0 /* 500px-White_flag_icon.svg.png */; };
 		5094EB791BAD30470013F1E0 /* grayed_white_flag_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094EB781BAD30470013F1E0 /* grayed_white_flag_icon.png */; };
 		5094EB7B1BAE2BEC0013F1E0 /* ic_add_party2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094EB7A1BAE2BEC0013F1E0 /* ic_add_party2.png */; };
+		5094EB7F1BB633DD0013F1E0 /* crumpled_paper_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094EB7E1BB633DD0013F1E0 /* crumpled_paper_dark.png */; };
 		509827421B959B6600154D4B /* parties.json in Resources */ = {isa = PBXBuildFile; fileRef = 509827411B959B6600154D4B /* parties.json */; };
 		50C2A1981BA75087006F5A2E /* EULAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C2A1961BA75087006F5A2E /* EULAViewController.swift */; };
 		50C2A1991BA75087006F5A2E /* EULAViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C2A1971BA75087006F5A2E /* EULAViewController.xib */; };
@@ -69,6 +70,7 @@
 		5094EB761BAD2BF80013F1E0 /* 500px-White_flag_icon.svg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "500px-White_flag_icon.svg.png"; path = "../../../shared_assets/dev/500px-White_flag_icon.svg.png"; sourceTree = "<group>"; };
 		5094EB781BAD30470013F1E0 /* grayed_white_flag_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayed_white_flag_icon.png; path = ../../../shared_assets/dev/grayed_white_flag_icon.png; sourceTree = "<group>"; };
 		5094EB7A1BAE2BEC0013F1E0 /* ic_add_party2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_add_party2.png; path = ../../../shared_assets/dev/ic_add_party2.png; sourceTree = "<group>"; };
+		5094EB7E1BB633DD0013F1E0 /* crumpled_paper_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = crumpled_paper_dark.png; path = ../../../shared_assets/iteration_1/app_assets/crumpled_paper_dark.png; sourceTree = "<group>"; };
 		509827411B959B6600154D4B /* parties.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = parties.json; sourceTree = "<group>"; };
 		50C2A1961BA75087006F5A2E /* EULAViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EULAViewController.swift; sourceTree = "<group>"; };
 		50C2A1971BA75087006F5A2E /* EULAViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EULAViewController.xib; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 		50F4B5151B94507800748D02 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5094EB7E1BB633DD0013F1E0 /* crumpled_paper_dark.png */,
 				5094EB7A1BAE2BEC0013F1E0 /* ic_add_party2.png */,
 				5094EB781BAD30470013F1E0 /* grayed_white_flag_icon.png */,
 				5094EB761BAD2BF80013F1E0 /* 500px-White_flag_icon.svg.png */,
@@ -358,6 +361,7 @@
 				50F4B5221B94507800748D02 /* LaunchScreen.xib in Resources */,
 				5094EB791BAD30470013F1E0 /* grayed_white_flag_icon.png in Resources */,
 				50D3AA271B97D02000CBA394 /* disclosure_indicator.png in Resources */,
+				5094EB7F1BB633DD0013F1E0 /* crumpled_paper_dark.png in Resources */,
 				50C2A19B1BAB4347006F5A2E /* EULA.txt in Resources */,
 				509827421B959B6600154D4B /* parties.json in Resources */,
 				50F4B51F1B94507800748D02 /* Images.xcassets in Resources */,
