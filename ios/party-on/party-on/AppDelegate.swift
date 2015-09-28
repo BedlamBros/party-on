@@ -37,6 +37,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         FBSDKAppEvents.activateApp()
+        println(MainUser.sharedInstance?.oID)
+        if MainUser.sharedInstance?.oID == nil {
+            // Attempt to login if a token exists already and not logged in
+            MainUser.loginWithFBToken { (err) -> Void in
+            }
+        }
         self.partyDetailControllerInFocus?.scheduleRefreshParty()
         
         // Check for EULA acceptance
@@ -64,10 +70,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MainUser.checkForBannedStatus { (isBanned) -> Void in
             if isBanned {
                 let alert = UIAlertController(title: "Sorry", message: "Your account has been banned for inappropriate content", preferredStyle: UIAlertControllerStyle.Alert)
-                /*alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction!) -> Void in
-                    // Force exit if banned
-                    exit(0)
-                }))*/
                 self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
             }
         }

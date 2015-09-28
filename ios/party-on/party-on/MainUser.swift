@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import AFNetworking
 import FBSDKCoreKit
+import FBSDKLoginKit
 
 typealias MainUserLoginCallback = (err: NSError?) -> Void
 typealias MainUserIsBannedCallback = (isBanned: Bool) -> Void
@@ -20,7 +21,7 @@ class MainUser: User {
     static var sharedInstance: MainUser? = nil
     private static let httpManager = AFHTTPRequestOperationManager()
     
-    private static var storedUserId: String? {
+    static var storedUserId: String? {
         get {
             let userDefaults = NSUserDefaults.standardUserDefaults()
             return userDefaults.stringForKey(storedUserIdDefaultsKey)
@@ -29,12 +30,17 @@ class MainUser: User {
             if val != nil {
                 // setting the id
                 userDefaults.setObject(val, forKey: storedUserIdDefaultsKey)
-                userDefaults.synchronize()
             } else {
                 // deleting the id
                 userDefaults.removeObjectForKey(storedUserIdDefaultsKey)
             }
+            userDefaults.synchronize()
         }
+    }
+    
+    func logout() {
+        MainUser.storedUserId = nil
+        FBSDKLoginManager().logOut()
     }
     
     class func loginWithFBToken(callback: MainUserLoginCallback) {
@@ -53,6 +59,7 @@ class MainUser: User {
                 self.sharedInstance?.fbToken = fbAccessToken.tokenString
             }
             let __token = FBSDKAccessToken.currentAccessToken()
+            println("current fb access token is \(__token?.tokenString)")
             let endpoint = API_ROOT + "/auth/facebook/getorcreate"
             var params: NSDictionary? = nil
             if let fbJson = self.sharedInstance?.facebookJSON()?.dictionaryObject {
@@ -67,21 +74,19 @@ class MainUser: User {
                 return syncCallback(err: nil)
                 }, failure: { (operation: AFHTTPRequestOperation, err: NSError) -> Void in
                 // failure
-                    
-                let reqBody = JSON(operation.request.HTTPBody!)
                 return syncCallback(err: err)
             })
         })
     }
     
-    class func checkForBannedStatus(callback: MainUserIsBannedCallback) {
+    class func checkForBannedStatus(callback: MainUserIsBannedCallback?) {
         if let storedUserId = MainUser.storedUserId {
             // we do have a stored user, check it
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                 
                 let syncCallback: MainUserIsBannedCallback = { (isBanned: Bool) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        return callback(isBanned: isBanned)
+                        return callback?(isBanned: isBanned)
                     })
                 }
                 
@@ -96,7 +101,7 @@ class MainUser: User {
             })
         } else {
             // we can't identify the user, so they can't be banned
-            return callback(isBanned: false)
+            callback?(isBanned: false)
         }
     }
     

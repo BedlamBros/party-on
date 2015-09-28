@@ -8,11 +8,15 @@
 
 import UIKit
 import CoreLocation
+import SVProgressHUD
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class UniversityPickerController: UIViewController {
     
     @IBOutlet weak var indianaUniversityButton: UIButton?
     @IBOutlet weak var backgroundImageView: UIImageView?
+    @IBOutlet weak var logInOutButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +28,9 @@ class UniversityPickerController: UIViewController {
                 self.navigationController?.pushViewController(searchPartiesController, animated: false)
             }
         }
+        
+        self.logInOutButton?.addTarget(self, action: "loginLogoutClick", forControlEvents: .TouchUpInside)
+        updateLoginLogoutButtonTitle()
         
         self.backgroundImageView?.contentMode = UIViewContentMode.ScaleToFill
         
@@ -43,8 +50,9 @@ class UniversityPickerController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBar.hidden = true
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.hidden = true
+        updateLoginLogoutButtonTitle()
     }
     
     @IBAction func selectUniversity(sender: UIView) {
@@ -52,6 +60,44 @@ class UniversityPickerController: UIViewController {
             University.currentUniversity = University.universityForType(UniversityType.IndianaUniversity)
             self.performSegueWithIdentifier(enterAppSegueIdentifier, sender: self)
         }
+    }
+    
+    func loginLogoutClick() {
+        let alertUserOfLoginError = { () -> Void in
+            UIAlertView(title: "Oops", message: "Wasn't able to log in", delegate: nil, cancelButtonTitle: "Ok").show()
+        }
+        
+        if MainUser.storedUserId == nil {
+            // logging in
+            FBSDKLoginManager().logInWithReadPermissions(["public_profile"], handler: { (result: FBSDKLoginManagerLoginResult!, err: NSError!) -> Void in
+                if err != nil {
+                    alertUserOfLoginError()
+                } else if result.isCancelled {
+                    // login was cancelled, ignore
+                } else {
+                    SVProgressHUD.showAndBlockInteraction(self.view)
+                    MainUser.loginWithFBToken({ (err) -> Void in
+                        SVProgressHUD.dismissAndUnblockInteraction(self.view)
+                        if err != nil {
+                            alertUserOfLoginError()
+                        } else {
+                            self.updateLoginLogoutButtonTitle()
+                            UIAlertView(title: "Welcome to Hangloose", message: "Now that you're logged in, you can create your own parties.", delegate: nil, cancelButtonTitle: "Ok").show()
+                            MainUser.checkForBannedStatus(nil)
+                        }
+                    })
+                }
+            })
+        } else {
+            // logging out
+            MainUser.sharedInstance?.logout()
+            self.updateLoginLogoutButtonTitle()
+            UIAlertView(title: "Success", message: "You've been logged out", delegate: nil, cancelButtonTitle: "Ok").show()
+        }
+    }
+    
+    private func updateLoginLogoutButtonTitle() {
+        self.logInOutButton?.setTitle(MainUser.storedUserId == nil ? "Login" : "Logout", forState: .Normal)
     }
     
     private let enterAppSegueIdentifier = "EnterAppSegueAnimated"

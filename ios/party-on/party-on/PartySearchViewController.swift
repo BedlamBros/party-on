@@ -15,17 +15,24 @@ import FBSDKLoginKit
 
 public let SADFACE_CHAR: Character = "\u{1F61E}"
 
-class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, LoginViewControllerDelegate, CreateEditPartyViewControllerDelegate {
+class PartySearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MKMapViewDelegate, FBSDKLoginButtonDelegate, CreateEditPartyViewControllerDelegate, SinglePartyDidChangeResponder {
     
     @IBOutlet var listView: UITableView?
     @IBOutlet var mapView: MKMapView?
     @IBOutlet weak var useMapViewSegmentedControl: UISegmentedControl?
     weak var refreshControl: UIRefreshControl!
+    private var fbLoginButton: FBSDKLoginButton!
     
     private weak var selectedParty: Party?
 
     private var requeryLock: NSLock = NSLock()
     private var navigationBarButtonTextAttributes: [NSObject: AnyObject]!
+    
+    // handle on the create party bar button
+    private weak var createPartyPressGestureRecognizer: UILongPressGestureRecognizer?
+    private weak var createPartyBarButtonImageView: UIImageView?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +45,11 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         
         let tableRefreshControl = UIRefreshControl()
         tableRefreshControl.layer.zPosition -= 1
+        
+        // Facebook Login Button
+        self.fbLoginButton = FBSDKLoginButton()
+        fbLoginButton.readPermissions = ["public_profile"]
+        fbLoginButton.delegate = self
         
         
         let refereshImageView = UIImageView(image: UIImage(named: "culture-newspaper-illegal.jpg"))
@@ -63,12 +75,28 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         self.navigationController?.navigationBar.titleTextAttributes = navigationBarTextAttrs
         
         var barButtonTextAttrs: [NSObject: AnyObject] = [:]
-        if let smallCourier = UIFont(name: "Courier", size: 12) {
+        if let smallCourier = UIFont(name: "Courier", size: 14) {
             barButtonTextAttrs[NSFontAttributeName] = smallCourier
         }
         // save these options for all other navigation buttons
         self.navigationBarButtonTextAttributes = barButtonTextAttrs
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes(barButtonTextAttrs, forState: UIControlState.Normal)
+        //self.navigationItem.leftBarButtonItem?.title = "\u{26ED}"
+        
+        // Add Party Bar Button Item
+        let partyHatImage = UIImage(named: "ic_add_party2.png")!
+        // TODO: get a party hat image with better density
+        let partyHatImageView = UIImageView(frame: CGRectMake(4, 4, 40, 40))
+        partyHatImageView.contentMode = .ScaleAspectFit
+        partyHatImageView.image = partyHatImage
+        
+        let createPartyRecognizer = UILongPressGestureRecognizer(target: self, action: "createPartyButtonClick:")
+        createPartyRecognizer.minimumPressDuration = 0.0
+        partyHatImageView.addGestureRecognizer(createPartyRecognizer)
+        
+        self.createPartyPressGestureRecognizer = createPartyRecognizer
+        self.createPartyBarButtonImageView = partyHatImageView
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: partyHatImageView)
         
         // Start off with a requery of parties
         requery()
@@ -101,15 +129,13 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         if segue.identifier == partyDetailSegueIdentifier {
             let partyDetailViewController = segue.destinationViewController as! PartyDetailViewController
             partyDetailViewController.party = self.selectedParty
+            partyDetailViewController.singlePartyDidChangeResponder = self
             
             // Set up the NEXT viewController's backItem, which is a property of self here
             let backItem = UIBarButtonItem(title: nil, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
             backItem.setTitleTextAttributes(navigationBarButtonTextAttributes, forState: UIControlState.Normal)
             self.navigationItem.backBarButtonItem = backItem
             
-        } else if segue.identifier == loginSegueIdentifier {
-            let loginController = segue.destinationViewController as! LoginViewController
-            loginController.delegate = self
         } else if segue.identifier == createPartySegueIdentifier {
             let createPartyController = segue.destinationViewController as! CreateEditPartyViewController
             createPartyController.delegate = self
@@ -200,28 +226,65 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     
-    // MARK: - LoginViewControllerDelegate
+    // MARK: - Login
     
-    func loginDidSucceed(loginController: LoginViewController) {
+    func launchLoginDialog() {
+        let loginDialog = UIAlertController(title: "Create a new party", message: "Log in with Facebook to get started", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        loginDialog.addAction(UIAlertAction(title: "Login", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction!) -> Void in
+            // Clicking the login alert will simulate a click to the FB login button
+            self.fbLoginButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+        }))
+        
+        loginDialog.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction!) -> Void in
+            // Clicking cancel will dismiss the login dialog
+            loginDialog.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        self.presentViewController(loginDialog, animated: true, completion: nil)
+    }
+    
+    func loginDidSucceed() {
         println("login did succeed")
         // Now we need to check for banned status to be safe
         if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
             appDelegate.checkForBanned()
         }
-        loginController.dismissViewControllerAnimated(true, completion: {() -> Void in
-            self.performSegueWithIdentifier("CreatePartySegue", sender: self)
+    }
+    
+    func loginDidFail(error: NSError!) {
+        println("failed to log in to server because \(error)")
+        UIAlertView(title: "Uh-oh", message: "Failed to log in to our servers", delegate: nil, cancelButtonTitle: "Ok").show()
+    }
+    
+    func findUserByFBToken(fbToken: String) {
+        MainUser.loginWithFBToken({ (err) -> Void in
+            if err != nil {
+                // FB logged in but failed on servers
+                self.loginDidFail(err)
+            } else {
+                // logged in and got our user data
+                self.performSegueWithIdentifier(self.createPartySegueIdentifier, sender: self)
+            }
         })
     }
     
-    func loginDidFail(loginController: LoginViewController, error: NSError!) {
-        println("login did fail")
-        UIAlertView(title: "Login Error", message: "Couldn't log in through Facebook", delegate: nil, cancelButtonTitle: "Ok")
-        loginController.dismissViewControllerAnimated(true, completion: nil)
+    
+    // MARK: - FBSDKLoginButtonDelegate
+    
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        //println("Downloaded access token for userId \(result.token.userID) with value \(result.token.tokenString)")
+        if error != nil {
+            self.loginDidFail(error)
+        } else if result.isCancelled {
+            // login was cancelled, ignore
+        } else {
+            findUserByFBToken(result.token.tokenString)
+        }
     }
     
-    func loginWasCancelled(loginController: LoginViewController) {
-        println("login was cancelled")
-        loginController.dismissViewControllerAnimated(true, completion: nil)
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        // TODO: support logout
     }
     
     
@@ -250,38 +313,52 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     
+    // MARK: - SinglePartyDidChangeResponder
+    
+    func singlePartyDidChange(party: Party) {
+        self.listView?.reloadData()
+    }
+    
+    
     // MARK: - Generic Selectors
     
     @IBAction func backBarItemClick(sender: AnyObject?) {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func createPartyButtonClick(sender: AnyObject?) {
-        if let currentFBToken = FBSDKAccessToken.currentAccessToken() {
-            // we have a token locally
-            let oneDaysTime = NSTimeInterval(60 * 60 * 24)
-            let oneDayAgo = NSDate(timeIntervalSinceNow: -oneDaysTime)
-            if (currentFBToken.expirationDate.timeIntervalSince1970 > oneDayAgo.timeIntervalSince1970) {
-                // time to renew the token
-                println("logging out to renew token")
-                FBSDKLoginManager().logOut()
-                self.performSegueWithIdentifier(loginSegueIdentifier, sender: self)
-            } else {
-                // user is already logged in
-                MainUser.loginWithFBToken({ (err) -> Void in
-                    if err != nil {
-                        // FB logged in but failed on servers
-                        println("failed to log in to server because \(err)")
-                        UIAlertView(title: "Uh-oh", message: "Failed to log in to our servers", delegate: nil, cancelButtonTitle: "Ok").show()
-                    } else {
-                        // logged in and got our user data
-                        self.performSegueWithIdentifier(self.createPartySegueIdentifier, sender: self)
-                    }
-                })
+    func createPartyButtonClick(recognizer: UILongPressGestureRecognizer) {
+        if recognizer === self.createPartyPressGestureRecognizer {
+            // change alpha of the party hat if it was the sender
+            switch recognizer.state {
+            case .Began:
+                self.createPartyBarButtonImageView?.alpha = 0.6
+            case .Ended:
+                self.createPartyBarButtonImageView?.alpha = 1.0
+            case .Cancelled:
+                self.createPartyBarButtonImageView?.alpha = 1.0
+            default:
+                break
             }
-        } else {
-            // user is not logged in
-            self.performSegueWithIdentifier(loginSegueIdentifier, sender: self)
+        }
+        
+        if recognizer.state == .Ended {
+            if let currentFBToken = FBSDKAccessToken.currentAccessToken() {
+                // we have a token locally
+                let oneDaysTime = NSTimeInterval(60 * 60 * 24)
+                let tomorrow = NSDate(timeIntervalSinceNow: +oneDaysTime)
+                if (currentFBToken.expirationDate.timeIntervalSince1970 < tomorrow.timeIntervalSince1970) {
+                    // time to renew the token
+                    println("logging out to renew token")
+                    FBSDKLoginManager().logOut()
+                    self.launchLoginDialog()
+                } else {
+                    // user is already logged in
+                    findUserByFBToken(currentFBToken.tokenString)
+                }
+            } else {
+                // user is not logged in
+                self.launchLoginDialog()
+            }
         }
     }
     
@@ -355,7 +432,6 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - Primitive Constants
     
     private let partyDetailSegueIdentifier = "PartyDetailSegue"
-    private let loginSegueIdentifier = "LoginSegue"
     private let createPartySegueIdentifier = "CreatePartySegue"
     private let minimumCellsInListView = 11
     private let partyCellReuseIdentifier = "PartySearchCell"

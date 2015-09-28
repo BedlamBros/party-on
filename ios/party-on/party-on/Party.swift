@@ -12,6 +12,7 @@ import SwiftyJSON
 
 class Party: NSObject, ServerModel {
     var oID: String?// required
+    var userId: String?
     var formattedAddress: String!// required
     var location: CLLocationCoordinate2D!// required
     var maleCost: UInt = 0// required - default 0
@@ -25,6 +26,15 @@ class Party: NSObject, ServerModel {
     
     var endTime: NSDate?
     
+    var startDay: String {
+        get {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.timeZone = NSTimeZone.systemTimeZone()
+            dateFormatter.dateFormat = "MMM d"
+            return dateFormatter.stringFromDate(self.startTime)
+        }
+    }
+    
     override init() {
         super.init()
     }
@@ -33,6 +43,12 @@ class Party: NSObject, ServerModel {
         // required properties
         self.oID = json["_id"].stringValue
         self.formattedAddress = json["formattedAddress"].stringValue
+        
+        if let userId = json["user"].string {
+            self.userId = userId
+        } else if let userJsonObject = json["user"].dictionary {
+            self.userId = userJsonObject["_id"]?.stringValue
+        }
         
         let latitude = CLLocationDegrees(json["latitude"].number!.doubleValue)
         let longitude = CLLocationDegrees(json["longitude"].number!.doubleValue)
@@ -102,5 +118,19 @@ class Party: NSObject, ServerModel {
         }
         
         return json
+    }
+    
+    class func logicalErrorForJsonResponse(response: JSON) -> NSError? {
+        if let errorDescription = response["error"].string {
+            switch errorDescription {
+            case "UNKNOWN":
+                return NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not find this address in Google Maps"])
+            case "OUTSIDE":
+                return NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Party is too far away from the university's campus"])
+            default:
+                return NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Experienced an unknown error posting this party"])
+            }
+        }
+        return nil
     }
 }

@@ -88,6 +88,31 @@ class PartiesDataStore: NSObject {
         })
     }
     
+    func flag(partyId: String, complaint: String?, callback: ((NSError?) -> Void)?) {
+        let syncCallback = { (err: NSError?) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                callback?(err)
+            })
+        }
+        let endpoint = API_ROOT + "/parties/" + partyId + "/flag"
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+            
+            var params = JSON([
+                "party": partyId
+            ])
+            if let c = complaint {
+                params["complaint"] = JSON(c)
+            }
+            
+            self.httpManager.POST(endpoint, parameters: params.dictionaryObject, success: { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
+                    return syncCallback(nil)
+                }, failure: { (operation: AFHTTPRequestOperation, err: NSError) -> Void in
+                    return syncCallback(err)
+            })
+        })
+    }
+    
     func POST(party: Party, callback: UpdatePartyCallback) {
         return putOrPost(party, method: "POST", callback: callback)
     }
@@ -140,19 +165,34 @@ class PartiesDataStore: NSObject {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
             var url = API_ROOT + "/parties"
+            if method == "PUT" {
+                // modify the route for PUT
+                url += "/" + (party.oID != nil ? party.oID! : "")
+            }
             var parameters = party.toJSON().dictionaryObject
             if parameters == nil {
-                return syncCallback(err: NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not create party JSON"]), party: nil)
+                return syncCallback(err: NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not create the party"]), party: nil)
             }
             
             var success: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
-                let party = Party(json: JSON(response))
-                if operation.request.HTTPMethod == "POST" {
-                    // Add party to list if it was posted
-                    synchronized(self.nearbyParties, { () -> Void in
-                        self.nearbyParties.insert(party, atIndex: 0)
-                    })
+                let json = JSON(response)
+                if let badRequestError = Party.logicalErrorForJsonResponse(json) {
+                    return syncCallback(err: badRequestError, party: nil)
                 }
+                let party = Party(json: JSON(response))
+                
+                // Synchronize changes in the party
+                synchronized(self.nearbyParties, { () -> Void in
+                    switch method {
+                    case "POST":
+                        self.nearbyParties.insert(party, atIndex: 0)
+                    case "PUT":
+                        self.updateSingleParty(party)
+                    default:
+                        break
+                    }
+                })
+                
                 return syncCallback(err: nil, party: party)
             }
             var failure: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
