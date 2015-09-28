@@ -169,10 +169,10 @@ describe('Create and save party', function() {
 
       it('should be able to geocode an unkown address', function(done){
 	this.timeout(3000);
+	var ronsonParty = new Party(_.omit(party.toJSON(), '_id'));
 	
-	crudParty = new Party(_.omit(party.toJSON(), '_id'));
-	crudParty.formattedAddress = '405 s ronson';
-	crudParty.startTime.setHours(party.startTime.getHours() + 4);
+	ronsonParty.formattedAddress = '405 s ronson';
+	ronsonParty.startTime.setHours(party.startTime.getHours() + 4);
 
 	var requestConfig = {
           uri: config.hostname + '/api/parties',
@@ -180,24 +180,24 @@ describe('Create and save party', function() {
             bearer: loginToken
           },
           method: 'POST',
-          json: crudParty.toJSON()
+          json: ronsonParty.toJSON()
         };
-
 
       	request(requestConfig, function(err, resp, body) {
             expect(err).to.be(null);
             expect(resp.statusCode).to.be(200);
-            expect(body.formattedAddress).to.be
-            .equal('405 s ronson');
+            expect(body.errorCode).to.be
+            .equal('UNKNOWN');
 
-            crudParty = new Party(body);
-            done();
-          });
+          done();
+        });
       });
-
 
       it('should be able to GET a party', function(done) {
         this.timeout(10000);
+
+	crudParty.formattedAddress = "629 S Woodlawn Ave.";
+
         request.get({
           uri: config.hostname + '/api/parties/' + crudParty.id.toString(), 
           auth: {
@@ -208,13 +208,14 @@ describe('Create and save party', function() {
           // @hack - re-serialize body because 
           // it uses some black magic that makes it
           // come as not a real json object at all
-          body = JSON.parse(body.toString());
-          
+          var newBody = JSON.parse(body.toString());
+          var expectedGeocodeAddress = '629 South Woodlawn Avenue';
+
           expect(err).to.be(null);
-          expect(body['_id']).to.be
+          expect(newBody['_id']).to.be
             .equal(crudParty.id.toString());
-          expect(body.formattedAddress).to.be
-            .equal(crudParty.formattedAddress);
+          expect(newBody['formattedAddress']).to.be
+            .equal(expectedGeocodeAddress);
           done();
           });
       });

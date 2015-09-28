@@ -3,7 +3,7 @@
 module.exports = {
   db: 'mongodb://' + (process.env.DB_PORT_27017_TCP_ADDR || 'localhost') + '/party-on-test',
   http: {
-    port: 3002
+    port: 3001
   },
   aggregate: false,
   assets: {

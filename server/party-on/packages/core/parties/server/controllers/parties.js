@@ -36,7 +36,7 @@ module.exports = function(Parties) {
          */
         create: function(req, res, next) {
 	  var party = new Party(req.body);
-	  var error = null;
+	  var errorCode = null;
 	  party.user = req.user;
 	  // now using a callback pattern
 	  async.waterfall([function(cb) {
@@ -47,26 +47,31 @@ module.exports = function(Parties) {
 		+ " " + geocodeResponse[0].streetName;
 	      party.latitude = geocodeResponse[0].latitude;
 	      party.longitude = geocodeResponse[0].longitude;
-	      if (geocodeResponse[0].extra.confidence < 0.7){
+	      console.log(geocodeResponse[0].extra.confidence);
+	      if (geocodeResponse[0].extra.confidence > 0.7){
 		console.log("geocode was ok");
 	      } else {
 		//set an error code for unkown address
-		console.log("geocode error: " + geocodeResponse.status);
-		error = "UNKOWN";
+		console.log("geocode error: low confidence");
+		errorCode = "UNKNOWN";
 	      }
-	      party.save(cb);
+	      if (!errorCode){
+	        party.save(cb);
+	      } else {
+	        cb();
+	      }
 	    }], 
 	    function(err, savedParty) {
 	      if (err) {
 		console.log(err);
-		return res.status(500).json({
-		  error: 'Cannot save the party'
-		});
 	      }
 	      //if an error exists, add it to the json
-	      if (error){
-		party.errorCode = error;
-		return res.json(party);
+	      if (errorCode == "UNKNOWN"){
+		console.log("sending party with errorCode");
+		party.errorCode = errorCode;
+		return res.json({
+		  errorCode: "UNKNOWN"
+		});
 	      }
 	      return res.json(party);
 	    });
