@@ -47,7 +47,6 @@ module.exports = function(Parties) {
 		+ " " + geocodeResponse[0].streetName;
 	      party.latitude = geocodeResponse[0].latitude;
 	      party.longitude = geocodeResponse[0].longitude;
-	      console.log(geocodeResponse[0].extra.confidence);
 	      if (geocodeResponse[0].extra.confidence > 0.7){
 		console.log("geocode was ok");
 	      } else {
@@ -80,29 +79,39 @@ module.exports = function(Parties) {
          * Update a party
          */
         update: function(req, res) {
-            var party = req.party;
-            party = new Party(_.extend(party.toJSON(), req.body));
-            party.isNew = false;
-            
-            party.save(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        error: 'Cannot update the party'
-                    });
-                }
-              
-                /*Parties.events.publish({
-                    action: 'updated',
-                    user: {
-                        name: req.user.name
-                    },
-                    name: article.title,
-                    url: config.hostname + '/parties/' + party._id
-                });*/
-
-                res.json(party);
-            });
-        },
+	  var errorCode = null;
+	  
+          var party = req.party;
+          party = new Party(_.extend(party.toJSON(), req.body));
+	  party.isNew = false;
+	  async.waterfall([function(cb) {
+	    geocoder.geocode(party.formattedAddress + " Bloomington, IN", cb);
+	    }],
+	    function(err, geocodeResponse) {
+	      if (err || geocodeResponse[0].extra.confidence < 0.7) {
+		errorCode = "UNKNOWN";
+	      }
+	      else if (geocodeResponse[0]) {
+		party.formattedAddress = geocodeResponse[0].streetNumber
+		  + " " + geocodeResponse[0].streetName;
+	      }
+	      
+	      if (errorCode){
+		return res.json({
+		  errorCode: errorCode
+	      	});
+	      } else {
+		party.save(function(err) {
+		  if (err) {
+   	            return res.status(500).json({
+        	      error: 'Cannot update the party'
+		    });
+              	  }
+		  return res.json(party);
+		});
+	      }
+	    });
+	  },
         /**
          * Delete a party
          */

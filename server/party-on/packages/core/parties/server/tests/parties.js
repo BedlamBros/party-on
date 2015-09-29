@@ -18,6 +18,7 @@ var expect = require('expect.js'),
  * Globals
  */
 var user, party, loginToken;
+var invalidAddress = '405 s ronson';
 
 /**
  * Test Suites
@@ -161,7 +162,7 @@ describe('Create and save party', function() {
             expect(resp.statusCode).to.be(200);
             expect(body.formattedAddress).to.be
             .equal('629 South Woodlawn Avenue');
-
+	    
             crudParty = new Party(body);
             done();
           });
@@ -170,10 +171,8 @@ describe('Create and save party', function() {
       it('should be able to geocode an unkown address', function(done){
 	this.timeout(3000);
 	var ronsonParty = new Party(_.omit(party.toJSON(), '_id'));
-	
-	ronsonParty.formattedAddress = '405 s ronson';
+	ronsonParty.formattedAddress = invalidAddress;
 	ronsonParty.startTime.setHours(party.startTime.getHours() + 4);
-
 	var requestConfig = {
           uri: config.hostname + '/api/parties',
           auth: {
@@ -182,13 +181,11 @@ describe('Create and save party', function() {
           method: 'POST',
           json: ronsonParty.toJSON()
         };
-
-      	request(requestConfig, function(err, resp, body) {
-            expect(err).to.be(null);
-            expect(resp.statusCode).to.be(200);
-            expect(body.errorCode).to.be
+	request(requestConfig, function(err, resp, body) {
+	  expect(err).to.be(null);
+          expect(resp.statusCode).to.be(200);
+	  expect(body.errorCode).to.be
             .equal('UNKNOWN');
-
           done();
         });
       });
@@ -250,6 +247,31 @@ describe('Create and save party', function() {
           
             done();
         });
+      });
+
+      it('should not be able to PUT an invalid address', function(done) {
+ 	this.timeout(10000);
+	  
+	var invalidParty = new Party(crudParty.toJSON());
+	invalidParty.startTime.setHours(party.startTime.getHours() + 4);
+	invalidParty.formattedAddress = invalidAddress;
+	
+	var requestConfig = {
+	  uri: config.hostname + '/api/parties/' + invalidParty.id,
+	  auth: {
+	    bearer: loginToken
+	  },
+	  method: 'PUT',
+	  json: invalidParty.toJSON()
+	};
+	
+	request(requestConfig, function(err, resp, body) {
+	  expect(err).to.be(null);
+	  expect(resp.statusCode).to.be(200);
+	  expect(body.errorCode).to.be
+	    .equal('UNKNOWN');
+	  done();
+	});	
       });
 
       it('should be able to DELETE a party', function(done) {
