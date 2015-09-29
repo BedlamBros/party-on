@@ -78,6 +78,7 @@ describe('Testing FlagHistories and Banning', function() {
 	  user: goodUser
 	}
       }, function(err, resp, body) {
+	console.log(err);
 	expect(err).to.be(null);
 	expect(resp.statusCode).to.be(200);
 	expect(body.banned).to.be(false);

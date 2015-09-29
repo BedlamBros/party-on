@@ -1,4 +1,5 @@
 'use strict';
+//in progress
 var geocoder = require('./geocoder.js');
 
 /**
@@ -35,6 +36,7 @@ module.exports = function(Parties) {
          */
         create: function(req, res, next) {
 	  var party = new Party(req.body);
+	  var errorCode = null;
 	  party.user = req.user;
 	  // now using a callback pattern
 	  async.waterfall([function(cb) {
@@ -45,13 +47,29 @@ module.exports = function(Parties) {
 		+ " " + geocodeResponse[0].streetName;
 	      party.latitude = geocodeResponse[0].latitude;
 	      party.longitude = geocodeResponse[0].longitude;
-	      party.save(cb);
+	      if (geocodeResponse[0].extra.confidence > 0.7){
+		console.log("geocode was ok");
+	      } else {
+		//set an error code for unkown address
+		console.log("geocode error: low confidence");
+		errorCode = "UNKNOWN";
+	      }
+	      if (!errorCode){
+	        party.save(cb);
+	      } else {
+	        cb();
+	      }
 	    }], 
 	    function(err, savedParty) {
 	      if (err) {
 		console.log(err);
-		return res.status(500).json({
-		  error: 'Cannot save the party'
+	      }
+	      //if an error exists, add it to the json
+	      if (errorCode == "UNKNOWN"){
+		console.log("sending party with errorCode");
+		party.errorCode = errorCode;
+		return res.json({
+		  errorCode: "UNKNOWN"
 		});
 	      }
 	      return res.json(party);
@@ -61,29 +79,41 @@ module.exports = function(Parties) {
          * Update a party
          */
         update: function(req, res) {
-            var party = req.party;
-            party = new Party(_.extend(party.toJSON(), req.body));
-            party.isNew = false;
-            
-            party.save(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        error: 'Cannot update the party'
-                    });
-                }
-              
-                /*Parties.events.publish({
-                    action: 'updated',
-                    user: {
-                        name: req.user.name
-                    },
-                    name: article.title,
-                    url: config.hostname + '/parties/' + party._id
-                });*/
-
-                res.json(party);
-            });
-        },
+	  var errorCode = null;
+	  
+          var party = req.party;
+          party = new Party(_.extend(party.toJSON(), req.body));
+	  party.isNew = false;
+	  async.waterfall([function(cb) {
+	    geocoder.geocode(party.formattedAddress + " Bloomington, IN", cb);
+	    }],
+	    function(err, geocodeResponse) {
+	      if (err || geocodeResponse[0].extra.confidence < 0.7) {
+		errorCode = "UNKNOWN";
+	      }
+	      else if (geocodeResponse[0]) {
+		party.formattedAddress = geocodeResponse[0].streetNumber
+		  + " " + geocodeResponse[0].streetName;
+		party.latitude = geocodeResponse[0].latitude;
+		party.longitude = geocodeResponse[0].longitude;
+	      }
+	      
+	      if (errorCode){
+		return res.json({
+		  errorCode: errorCode
+	      	});
+	      } else {
+		party.save(function(err) {
+		  if (err) {
+   	            return res.status(500).json({
+        	      error: 'Cannot update the party'
+		    });
+              	  }
+		  return res.json(party);
+		});
+	      }
+	    });
+	  },
         /**
          * Delete a party
          */
@@ -152,3 +182,16 @@ module.exports = function(Parties) {
 	}
     };
 };
+
+var getAddressEncoding = function(geocodeResponse){
+    //if no errors exist in the geocodeResponse, format the address and return
+    if (geocodeResponse[0].streetName){
+      return geocodeResponse[0].streetNumber 
+	+ " " + geocodeResponse[0].streetName;
+    } else {
+      return "UNKNOWN";
+    }
+    
+};
+
+

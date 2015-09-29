@@ -8,6 +8,8 @@ var mongoose = require('mongoose'),
     Party = mongoose.model('Party'),
     FlagHistory = mongoose.model('FlagHistory'),
     config = require('meanio').loadConfig(),
+    nodemailer = require('nodemailer'),
+    sesTransport = require('nodemailer-ses-transport'),
     _ = require('underscore');
 
 // Number of unique party complaints to get you banned
@@ -16,6 +18,17 @@ var BAN_COMPLAINT_THRESHOLD = 3;
 // any single party of yours, gets you banned immediately
 var ABSURD_SINGLE_PARTY_THRESHOLD = 10;
 
+//used by the nodemailer package
+var transport = nodemailer.createTransport(sesTransport({
+    accessKeyId: "AKIAJHZYHGSOB7VOYKMQ",
+    secretAccessKey: "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",
+    serviceUrl: 'email-smtp.us-west-2.amazonaws.com',
+    region: 'us-west-2',
+    rateLimit: 1 // do not send more than 1 message in a second
+}));
+
+
+
 module.exports = function(FlagHistories) {
   return {
     raise: function(req, res) {
@@ -23,6 +36,26 @@ module.exports = function(FlagHistories) {
 	if (err) return res.status(500).send(err);
 	return res.json(status);
       });
+    },
+    sendEmail: function(req, res, next){
+	console.log("sending email");
+	var complaint = req.body.complaint;
+	//set a relevant subject line
+	var subjectline = 'Flagged Party Received - ' + new Date().toString();
+
+        var mailOptions = {
+	  from: 'bedlamcorp.llc@gmail.com',
+	  to: 'bedlamcorp.llc@gmail.com',
+	  subject: subjectline,
+	  text: complaint
+        };
+    transport.sendMail(mailOptions, function(error, info){
+	if (error){
+	  return console.log(error);
+	}
+	console.log('Message sent:' + info.response);
+	next();
+    });             
     },
     isBanned: function(req, res) {
       async.waterfall([
