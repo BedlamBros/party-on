@@ -38,14 +38,13 @@ module.exports = function(FlagHistories) {
       });
     },
     sendEmail: function(req, res, next){
-	console.log("sending email");
 	var complaint = req.body.complaint;
 	//set a relevant subject line
 	var subjectline = 'Flagged Party Received - ' + new Date().toString();
 
         var mailOptions = {
-	  from: 'bedlamcorp.llc@gmail.com',
-	  to: 'bedlamcorp.llc@gmail.com',
+	  from: 'greenlightstudios.llc@gmail.com',
+	  to: 'greenlightstudios.llc@gmail.com',
 	  subject: subjectline,
 	  text: complaint
         };
@@ -53,7 +52,6 @@ module.exports = function(FlagHistories) {
 	if (error){
 	  return console.log(error);
 	}
-	console.log('Message sent:' + info.response);
 	next();
     });             
     },

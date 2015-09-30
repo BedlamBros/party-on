@@ -28,5 +28,4 @@ transport.sendMail(mailOptions, function(error, info){
 	console.log("error on send");
         return console.log(error);
     }
-    console.log('Message sent: ' + info.response);
 });

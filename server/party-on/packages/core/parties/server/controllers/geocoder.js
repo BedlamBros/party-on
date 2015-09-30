@@ -8,11 +8,4 @@ var httpAdapter = 'https';
           
           var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra);
 
-          // example
-          geocoder.geocode('629 S Woodlawn Ave.', function(err, res) {
-              console.log(res);
-          });
-
-              //TODO failover if l2short and l1short do not match model for university
-
               module.exports = geocoder;

@@ -47,11 +47,8 @@ module.exports = function(Parties) {
 		+ " " + geocodeResponse[0].streetName;
 	      party.latitude = geocodeResponse[0].latitude;
 	      party.longitude = geocodeResponse[0].longitude;
-	      if (geocodeResponse[0].extra.confidence > 0.7){
-		console.log("geocode was ok");
-	      } else {
+	      if (geocodeResponse[0].extra.confidence < 0.7){
 		//set an error code for unkown address
-		console.log("geocode error: low confidence");
 		errorCode = "UNKNOWN";
 	      }
 	      if (!errorCode){
@@ -66,7 +63,6 @@ module.exports = function(Parties) {
 	      }
 	      //if an error exists, add it to the json
 	      if (errorCode == "UNKNOWN"){
-		console.log("sending party with errorCode");
 		party.errorCode = errorCode;
 		return res.json({
 		  errorCode: "UNKNOWN"
