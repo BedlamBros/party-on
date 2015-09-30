@@ -85,7 +85,6 @@ public class ListPartyActivity extends FragmentActivity implements CompoundButto
     private MapFragment mMapFragment;
 
     //migrate this to the toolbar when ready
-    private LoginButton mLoginButton;
     private CallbackManager callbackManager;
 
     //handles the vibrating response on the ic_add_party button
@@ -110,8 +109,6 @@ public class ListPartyActivity extends FragmentActivity implements CompoundButto
         fragmentContainer = (LinearLayout) findViewById(R.id.cont);
 
         //get facebook login button and set callback manager
-        //mLoginButton = (LoginButton) findViewById(R.id.facebook_login_bttn);
-        //mLoginButton.setReadPermissions("user_friends");
         callbackManager = CallbackManager.Factory.create();
         Log.d("auth", "callback manager=" + callbackManager.toString());
 

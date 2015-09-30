@@ -1,6 +1,7 @@
 {
-	"primary": "#550C00",
-	"white": "#FFFFFF",
-	"black": "#000000"
+	"primary": "#C93535",
+	"accent": "#669999",
+	"readable-background": "#FFFFFF",
+	"stylized-background": "#CCFF99",
 	"gray": "#D3D3D3"
 }
