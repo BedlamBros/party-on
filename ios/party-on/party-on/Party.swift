@@ -121,7 +121,7 @@ class Party: NSObject, ServerModel {
     }
     
     class func logicalErrorForJsonResponse(response: JSON) -> NSError? {
-        if let errorDescription = response["error"].string {
+        if let errorDescription = response["errorCode"].string {
             switch errorDescription {
             case "UNKNOWN":
                 return NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not find this address in Google Maps"])
