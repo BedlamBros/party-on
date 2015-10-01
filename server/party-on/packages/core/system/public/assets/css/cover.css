@@ -27,7 +27,7 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #550C00;
+  background-color: #C93535;
 }
 body {
   color: #fff;
@@ -49,14 +49,24 @@ body {
   vertical-align: top;
 }
 .cover-container {
-  background-color: #A9A9A9;
+  background-color: #e0e0e0;
   margin-right: auto;
   margin-left: auto;
+  padding: 20px;
+  border-radius: 20px;
 }
 
 /* Padding for spacing */
 .inner {
   padding: 30px;
+}
+
+/* the app store badge */
+.badge {
+  text-align: center;
+  vertical-align: middle;
+  background-color: transparent;
+  margin-top: 20px;
 }
 
 
@@ -111,7 +121,9 @@ body {
  */
 
 .cover {
+    color: #000;
   padding: 0 20px;
+  text-align: left;
 }
 .cover .btn-lg {
   padding: 10px 20px;
@@ -146,6 +158,7 @@ body {
   /* Start the vertical centering */
   .site-wrapper-inner {
     vertical-align: middle;
+    text-align: center;
   }
   /* Handle the widths */
   .masthead,

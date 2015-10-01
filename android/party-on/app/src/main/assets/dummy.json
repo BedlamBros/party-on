@@ -1,0 +1,28 @@
+{
+  "results": [
+    {
+      "title": "Douchey Frat Party",
+      "desc": "girls are free, guys $5",
+      "lat": 120.05,
+      "lon": 80.69,
+      "readable_loc": "123 N Jefferson st.",
+      "flags": []
+    },
+    {
+      "title": "Super Douchey Frat Party",
+      "desc": "girls are free, guys $10",
+      "lat": 119.69,
+      "lon": 80.69,
+      "readable_loc": "123 S Jefferson st.",
+      "flags": []
+    },
+    {
+      "title": "Cool Punk Show",
+      "desc": "All the cool bands are laying",
+      "lat": 119.69,
+      "lon": 80.69,
+      "readable_loc": "704 E Maxwell Ln.",
+      "flags": []
+    }
+  ]
+}
