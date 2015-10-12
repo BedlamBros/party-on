@@ -15,7 +15,7 @@ typealias NearbyPartiesCallback = (err: NSError?, parties: [Party]?) -> Void
 typealias UpdatePartyCallback = (err: NSError?, party: Party?) -> Void
 
 // WARNING: - Exposing all API secrets here
-public let API_ROOT: String = "http://52.10.210.220/api"
+public let API_ROOT: String = "http://greenlightstudios.xyz/api"
 
 class PartiesDataStore: NSObject {
    
