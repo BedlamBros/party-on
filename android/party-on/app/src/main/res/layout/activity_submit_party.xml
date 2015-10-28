@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/submit_form_colloq_name_title"
                     android:textSize="@dimen/party_title_text_size"
-                    android:textColor="@color/primary_hard"
+                    android:textColor="@color/primary"
                     android:id="@+id/submit_form_title"/>
 
                 <EditText
@@ -66,14 +66,14 @@
             android:layout_below="@id/submit_form_title"
             android:text="@string/submit_form_desc_title"
             android:textSize="@dimen/party_title_text_size"
-            android:textColor="@color/primary_hard"
+            android:textColor="@color/primary"
             android:id="@+id/submit_form_desc"/>
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/submit_form_edit_title"
-            android:textColor="@color/black"
+            android:textColor="@color/primary"
             android:hint="@string/party_desc_default"
             android:maxLength="@integer/desc_char_limit"
             android:layout_weight="1"
@@ -96,7 +96,7 @@
                     android:layout_toLeftOf="@id/submit_form_edit_desc"
                     android:text="@string/submit_form_loc_title"
                     android:textSize="@dimen/party_title_text_size"
-                    android:textColor="@color/primary_hard"
+                    android:textColor="@color/primary"
                     android:id="@+id/submit_form_loc"/>
 
                 <EditText
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/submit_form_edit_title"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/primary"
                     android:hint="@string/party_loc_default"
                     android:imeOptions="actionSearch"
                     android:id="@+id/submit_form_edit_loc"/>
@@ -133,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/party_title_text_size"
-                    android:textColor="@color/primary_hard"
+                    android:textColor="@color/primary"
                     android:text="@string/day_toggle_title"
                     android:id="@+id/day_toggle_title"/>
 
@@ -162,7 +162,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/submit_form_starts_at_title"
                     android:textSize="@dimen/party_title_text_size"
-                    android:textColor="@color/primary_hard"
+                    android:textColor="@color/primary"
                     android:id="@+id/submit_form_starts_at"/>
 
                 <TimePicker
@@ -207,11 +207,12 @@
 
     </ScrollView>
 
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="@dimen/edit_row_height"
-        android:background="@color/secondary_soft"
-        android:textColor="@color/primary_hard"
+        android:background="@color/background_stylized"
+        android:textColor="@color/primary"
         android:text="@string/submit_form_button_unsubmittable"
         android:clickable="true"
         android:onClick="onSubmitButtonClick"

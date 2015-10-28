@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="primary_hard" type="color">#550C00</item>
-    <item name="primary_soft" type="color">#FFB6AA</item>
-    <item name="secondary_hard" type="color">#000000</item>
-    <item name="secondary_soft" type="color">#192225</item>
-    <item name="black" type="color">#000000</item>
+    <item name="primary" type="color">#C93535</item>
+    <item name="accent" type="color">#7ab0da</item>
+    <item name="background_readable" type="color">#FFFFFF</item>
+    <item name="background_stylized" type="color">#CCFF99</item>
+    <item name="gray" type="color">#D3D3D3</item>
     <item name="white" type="color">#FFFFFF</item>
-    <item name="accent" type="color">#e2e2e2</item>
+    <item name="black" type="color">#000000</item>
 
 </resources>

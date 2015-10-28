@@ -17,7 +17,7 @@
     <string name="party_model_created_at_name">created</string>
 
     <!-- used to define the file names of typefaces -->
-    <string name="typeface_stylish">SpecialElite.ttf</string>
+    <string name="typeface_stylish">Kaffee.ttf</string>
 
     <!-- used for the Facebook SDK -->
     <string name="app_id">127159637632248</string>
@@ -52,8 +52,10 @@
     <string name="submit_form_button_submittable">SUBMIT</string>
 
     <!-- default values for party fields used throughout app -->
-    <string name="party_title_default">It a Party</string>
+    <string name="party_title_default">123 N Jefferson st.</string>
     <string name="party_desc_default">Come to the party</string>
+    <string name="party_start_time_default">10pm</string>
+    <string name="party_prices_serialized_default">Guys $5 / Girls Free</string>
     <string name="party_loc_default">My House</string>
     <string name="party_time_default">8:00 PM</string>
     <string name="party_byob_default">true</string>
