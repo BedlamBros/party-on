@@ -22,7 +22,7 @@ class ModalMapViewController: UIViewController {
         self.mapView = mapView
         self.view.addSubview(mapView)
         
-        if let backButton = UIButton.buttonWithType(UIButtonType.System) as? UIButton {
+        if let backButton = UIButton(type: UIButtonType.System) as? UIButton {
             backButton.frame = CGRectMake(0, UIApplication.sharedApplication().statusBarFrame.height, viewFrame.width * 0.3, viewFrame.height * 0.05)
             backButton.setTitle("Back", forState: UIControlState.Normal)
             backButton.titleLabel?.textColor = UIColor.blackColor()

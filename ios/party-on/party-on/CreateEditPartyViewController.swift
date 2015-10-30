@@ -77,7 +77,7 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
                 self.providedBool?.selectedSegmentIndex = _party!.byob ? 1 : 0
                 
                 // Put date into existing time label
-                var dateFormatter = NSDateFormatter()
+                let dateFormatter = NSDateFormatter()
                 dateFormatter.dateFormat = self.dateFormatPattern
                 self.existingTimeLabel?.text = dateFormatter.stringFromDate(_party!.startTime)
             }
@@ -120,7 +120,7 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
         dismissWhenTouchedViews.append(self.startTimePicker)
         dismissWhenTouchedViews.append(self.providedBool)
         for view in dismissWhenTouchedViews {
-            var dismissKeyboardRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+            let dismissKeyboardRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
             dismissKeyboardRecognizer.cancelsTouchesInView = false
             view?.addGestureRecognizer(dismissKeyboardRecognizer)
         }
@@ -147,7 +147,7 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
         let buttonFont = UIFont(name: "American Typewriter", size: 15.0)
         
         if self.cancelUpdatingTimeButton == nil {
-            let cancelUpdatingTimeButton = UIButton.buttonWithType(.System) as! UIButton
+            let cancelUpdatingTimeButton = UIButton(type: .System)
             cancelUpdatingTimeButton.hidden = true
             cancelUpdatingTimeButton.setTitle("Keep original time", forState: .Normal)
             cancelUpdatingTimeButton.titleLabel?.font = buttonFont
@@ -197,10 +197,10 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         if textField === self.guysPay || textField === self.girlsPay {
-            if count(string) < 1 {
+            if string.characters.count < 1 {
                 return true
             }
-            if string.rangeOfCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet, options: NSStringCompareOptions.allZeros, range: nil) != nil {
+            if string.rangeOfCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet, options: NSStringCompareOptions(), range: nil) != nil {
                     return false
             }
         }
@@ -224,8 +224,13 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
         var userId: String?
         
         formattedAddress = self.address?.text
-        guysPay = self.guysPay?.text.stringByReplacingOccurrencesOfString(dollarSignPrefix, withString: "", options: NSStringCompareOptions.allZeros, range: nil).toInt()
-        girlsPay = self.girlsPay?.text.stringByReplacingOccurrencesOfString(dollarSignPrefix, withString: "", options: NSStringCompareOptions.allZeros, range: nil).toInt()
+        if let guysPayText = self.guysPay?.text?.stringByReplacingOccurrencesOfString(dollarSignPrefix, withString: "", options: NSStringCompareOptions(), range: nil) {
+            guysPay = Int(guysPayText)
+        }
+        
+        if let girlsPayText = self.girlsPay?.text?.stringByReplacingOccurrencesOfString(dollarSignPrefix, withString: "", options: NSStringCompareOptions(), range: nil) {
+            girlsPay = Int(girlsPayText)
+        }
         
         if self.timePickerIsHidden && self.party != nil {
             // use the static time that party had previously
@@ -259,7 +264,7 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
             } else {
                 // failure
                 var errMsg: String
-                if let msg = err?.userInfo?[NSLocalizedDescriptionKey] as? String {
+                if let msg = err?.userInfo[NSLocalizedDescriptionKey] as? String {
                     errMsg = msg
                 } else {
                     errMsg = "Had trouble saving the party"
@@ -305,15 +310,15 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
     }
     
     func dismissKeyboard() {
-        println("dismissKeyboard")
-        println(self.startTimePicker!.date)
+        print("dismissKeyboard")
+        print(self.startTimePicker!.date)
         self.view.endEditing(true)
     }
     
     func didToggleDay() {
         // Change allowed range of date picker based on day
         let calendar = NSCalendar.currentCalendar()
-        let currentMinutes = calendar.component(.CalendarUnitMinute, fromDate: NSDate(timeIntervalSinceNow: 0))
+        let currentMinutes = calendar.component(.Minute, fromDate: NSDate(timeIntervalSinceNow: 0))
         let minutesAwayFromPreviousFifteenInterval = currentMinutes % 15
 
         if self.daySegmentedControl!.selectedSegmentIndex == 0 {
@@ -329,7 +334,7 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
     
     func toggleEditingTime() {
         // Decided to stick with old date
-        println("toggle editing")
+        print("toggle editing")
         if self.method == .POST {
             fatalError("Should never be able to toggleEditingTime during POST")
         }

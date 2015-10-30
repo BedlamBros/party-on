@@ -80,14 +80,14 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         // Navigation Item Title
         self.navigationItem.title = party.formattedAddress
         
-        var navigationBarTextAttrs: [NSObject: AnyObject] = [:]
+        var navigationBarTextAttrs: [String: AnyObject] = [:]
         if let smallCourier = UIFont(name: "AmericanTypewriter", size: 15) {
             navigationBarTextAttrs[NSFontAttributeName] = smallCourier
         }
         self.navigationController?.navigationBar.titleTextAttributes = navigationBarTextAttrs
         
         // Determine which right bar button item to use
-        println("PartyDetailViewController comparing storied id \(MainUser.storedUserId) to party's id \(self.party.userId)")
+        print("PartyDetailViewController comparing storied id \(MainUser.storedUserId) to party's id \(self.party.userId)")
         if MainUser.storedUserId != nil && MainUser.storedUserId == self.party.userId {
             // MainUser made this party
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPartyButtonClick")
@@ -175,12 +175,12 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             textField.autocapitalizationType = .Sentences
         }
         
-        flagDialog.addAction(UIAlertAction(title: "Report", style: UIAlertActionStyle.Destructive, handler: { (action: UIAlertAction!) -> Void in
-            self.sendFlagRequest((flagDialog.textFields?.first as? UITextField)?.text)
+        flagDialog.addAction(UIAlertAction(title: "Report", style: UIAlertActionStyle.Destructive, handler: { (action: UIAlertAction) -> Void in
+            self.sendFlagRequest(flagDialog.textFields?.first?.text)
             flagDialog.dismissViewControllerAnimated(true, completion: nil)
         }))
         
-        flagDialog.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction!) -> Void in
+        flagDialog.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
             flagDialog.dismissViewControllerAnimated(true, completion: nil)
         }))
         
@@ -211,9 +211,9 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     
     // MARK: - MFMessageComposeViewControllerDelegate methods
     
-    func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
         controller.dismissViewControllerAnimated(true, completion: { () -> Void in
-            if result.value == MessageComposeResultFailed.value {
+            if result.rawValue == MessageComposeResultFailed.rawValue {
                 UIAlertView(title: "Oh no!", message: "Message failed to send", delegate: nil, cancelButtonTitle: "Ok").show()
             }
             // presenting this controller stopped refreshing the party, restart
@@ -228,13 +228,13 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         if buttonIndex == 0 {
             // Send button
             if let alertTextField = alertView.textFieldAtIndex(0) {
-                if count(alertTextField.text) > 0 {
-                    let newWord = TheWordMessage(oID: nil, body: alertTextField.text, created: NSDate(timeIntervalSinceNow: 0))
+                if alertTextField.text != nil && alertTextField.text!.characters.count > 0 {
+                    let newWord = TheWordMessage(oID: nil, body: alertTextField.text!, created: NSDate(timeIntervalSinceNow: 0))
                     PartiesDataStore.sharedInstance.sendword(newWord, party: self.party, callback: { (err, party) -> Void in
                         if err == nil {
                             // reload TheWord locally
                             self.party = party
-                            println("\(self.party!.theWord.count) msgs in party word")
+                            print("\(self.party!.theWord.count) msgs in party word")
                         } else {
                             UIAlertView(title: "Uh-oh", message: "Had trouble sending message", delegate: nil, cancelButtonTitle: "Ok").show()
                         }
@@ -281,7 +281,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     /* schedule a timer to periodically refresh the party */
     func scheduleRefreshParty() {
         if self.refreshPartyTimer == nil {
-            println("scheduling refresh party")
+            print("scheduling refresh party")
             self.refreshPartyTimer = NSTimer.scheduledTimerWithTimeInterval(refreshPartyTimeInterval, target: self, selector: "refreshParty", userInfo: nil, repeats: true)
             self.refreshPartyTimer?.fire()
         }
@@ -289,14 +289,14 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     
     /* kill the timer that is refreshing the party */
     func descheduleRefreshParty() {
-        println("descheduling refresh party")
+        print("descheduling refresh party")
         self.refreshPartyTimer?.invalidate()
         self.refreshPartyTimer = nil
     }
     
     /* Refresh the data for this party and its entry in the PartiesDataStore */
     func refreshParty() {
-        println("refresh party")
+        print("refresh party")
         if let myPartyId = self.party.oID {
             PartiesDataStore.sharedInstance.getParty(myPartyId, callback: { (err, party) -> Void in
                 if err == nil {
@@ -331,7 +331,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             cell = wordCell
         } else {
             // last row in the table
-            cell = tableView.dequeueReusableCellWithIdentifier(theWordWriteCellReuseIdentifier, forIndexPath: indexPath) as! UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier(theWordWriteCellReuseIdentifier, forIndexPath: indexPath) 
         }
         return cell
     }
@@ -350,12 +350,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         
         let width = tableView.frame.width
         
-        var font: UIFont
-        if let f = UIFont(name: "American Typewriter", size: 16) {
-            font = f
-        } else {
-            font = UIFont.systemFontOfSize(16)
-        }
+        let font = UIFont.systemFontOfSize(16)
         
         let attributedString = NSAttributedString(string: text, attributes: [NSFontAttributeName: font])
         let boundingRect = attributedString.boundingRectWithSize(CGSizeMake(width, CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
@@ -365,7 +360,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             timeLabelHeight = h
         } else {
             timeLabelHeight = minTheWordDateLabelHeight
-        };let x = tableView.frame; let y = self.view.frame;
+        }
         return max(ceil(boundingRect.height) + timeLabelHeight, minTheWordCellHeight)
     }
     
@@ -416,7 +411,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     
     private func scrollToTheWordBottom(animated: Bool) {
         if let theWordTableView = self.theWordTableView {
-            let bottomSection = theWordTableView.numberOfSections() - 1
+            let bottomSection = theWordTableView.numberOfSections - 1
             let bottomCell = theWordTableView.numberOfRowsInSection(bottomSection) - 1
             theWordTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: bottomCell, inSection: bottomSection), atScrollPosition: UITableViewScrollPosition.Bottom, animated: animated)
         }

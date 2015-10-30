@@ -48,7 +48,7 @@ class MainUser: User {
             
             let syncCallback: MainUserLoginCallback = { (err: NSError?) -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    let user = self.sharedInstance
+                    _ = self.sharedInstance
                     return callback(err: err)
                 })
             }
@@ -59,7 +59,7 @@ class MainUser: User {
                 self.sharedInstance?.fbToken = fbAccessToken.tokenString
             }
             let __token = FBSDKAccessToken.currentAccessToken()
-            println("current fb access token is \(__token?.tokenString)")
+            print("current fb access token is \(__token?.tokenString)")
             let endpoint = API_ROOT + "/auth/facebook/getorcreate"
             var params: NSDictionary? = nil
             if let fbJson = self.sharedInstance?.facebookJSON()?.dictionaryObject {
@@ -80,7 +80,7 @@ class MainUser: User {
     }
     
     class func checkForBannedStatus(callback: MainUserIsBannedCallback?) {
-        if let storedUserId = MainUser.storedUserId {
+        if let _ = MainUser.storedUserId {
             // we do have a stored user, check it
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                 

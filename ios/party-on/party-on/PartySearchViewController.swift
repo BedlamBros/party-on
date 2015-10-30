@@ -26,12 +26,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     private weak var selectedParty: Party?
 
     private var requeryLock: NSLock = NSLock()
-    private var navigationBarButtonTextAttributes: [NSObject: AnyObject]!
-    
-    // handle on the create party bar button
-    private weak var createPartyPressGestureRecognizer: UILongPressGestureRecognizer?
-    private weak var createPartyBarButtonImageView: UIImageView?
-    
+    private var navigationBarButtonTextAttributes: [String: AnyObject]!
     
     
     override func viewDidLoad() {
@@ -39,7 +34,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         self.listView?.dataSource = self
         self.listView?.delegate = self
         
-        let myframe = self.view.frame
+        _ = self.view.frame
         
         self.mapView?.delegate = self
         
@@ -65,38 +60,25 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         //self.listView?.addSubview(refereshImageView)
         self.listView?.addSubview(tableRefreshControl)
         
-        let partyJsonArray = JSON(data: NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("parties", ofType: "json")!)!)["parties"].arrayValue
+        //let partyJsonArray = JSON(data: NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("parties", ofType: "json")!)!)["parties"].arrayValue
         
         // Modify navigatonBar appearance
-        var navigationBarTextAttrs: [NSObject: AnyObject] = [:]
+        var navigationBarTextAttrs: [String: AnyObject] = [
+            NSForegroundColorAttributeName: UIColor.blackColor()]
         if let largeCourier = UIFont(name: "Courier", size: 22) {
             navigationBarTextAttrs[NSFontAttributeName] = largeCourier
         }
         self.navigationController?.navigationBar.titleTextAttributes = navigationBarTextAttrs
         
-        var barButtonTextAttrs: [NSObject: AnyObject] = [:]
+        var barButtonTextAttrs: [String: AnyObject] = [:]
         if let smallCourier = UIFont(name: "Courier", size: 14) {
             barButtonTextAttrs[NSFontAttributeName] = smallCourier
         }
+        
         // save these options for all other navigation buttons
         self.navigationBarButtonTextAttributes = barButtonTextAttrs
         self.navigationItem.leftBarButtonItem?.setTitleTextAttributes(barButtonTextAttrs, forState: UIControlState.Normal)
-        //self.navigationItem.leftBarButtonItem?.title = "\u{26ED}"
-        
-        // Add Party Bar Button Item
-        let partyHatImage = UIImage(named: "ic_add_party2.png")!
-        // TODO: get a party hat image with better density
-        let partyHatImageView = UIImageView(frame: CGRectMake(4, 4, 40, 40))
-        partyHatImageView.contentMode = .ScaleAspectFit
-        partyHatImageView.image = partyHatImage
-        
-        let createPartyRecognizer = UILongPressGestureRecognizer(target: self, action: "createPartyButtonClick:")
-        createPartyRecognizer.minimumPressDuration = 0.0
-        partyHatImageView.addGestureRecognizer(createPartyRecognizer)
-        
-        self.createPartyPressGestureRecognizer = createPartyRecognizer
-        self.createPartyBarButtonImageView = partyHatImageView
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: partyHatImageView)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "createPartyButtonClick:")
         
         // Start off with a requery of parties
         requery()
@@ -110,7 +92,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         if let listView = self.listView {
-            if let selectedIndexPath = listView.indexPathForSelectedRow() {
+            if let selectedIndexPath = listView.indexPathForSelectedRow {
                 listView.deselectRowAtIndexPath(selectedIndexPath, animated: false)
             }
         }
@@ -150,7 +132,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         let isFillerCell = indexPath.row >= PartiesDataStore.sharedInstance.nearbyParties.count
         let reuseIdentifier =  isFillerCell ?  fillerCellReuseIdentifier : partyCellReuseIdentifier
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) 
         
         if !isFillerCell {
             // is a party cell
@@ -192,7 +174,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: - MKMapViewDelegate
     
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         var annotationView: MKAnnotationView
         
         
@@ -204,7 +186,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         }
         
         // set up callout to have a rightward arrow
-        let detailDisclosure: UIButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let detailDisclosure: UIButton = UIButton(type: UIButtonType.Custom)
         detailDisclosure.setImage(UIImage(contentsOfFile: NSBundle.mainBundle().pathForResource("disclosure_indicator", ofType: "png")!), forState: UIControlState.Normal)
         detailDisclosure.frame = CGRectMake(0,0,31,31)
         detailDisclosure.userInteractionEnabled = true
@@ -215,7 +197,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         return annotationView
     }
     
-    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if let partyAnnotation = view.annotation as? PartyAnnotation {
             if let party = partyAnnotation.party {
                 // segue to part detail when clicking on party annotation
@@ -231,12 +213,12 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     func launchLoginDialog() {
         let loginDialog = UIAlertController(title: "Create a new party", message: "Log in with Facebook to get started", preferredStyle: UIAlertControllerStyle.Alert)
         
-        loginDialog.addAction(UIAlertAction(title: "Login", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction!) -> Void in
+        loginDialog.addAction(UIAlertAction(title: "Login", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
             // Clicking the login alert will simulate a click to the FB login button
             self.fbLoginButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
         }))
         
-        loginDialog.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction!) -> Void in
+        loginDialog.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
             // Clicking cancel will dismiss the login dialog
             loginDialog.dismissViewControllerAnimated(true, completion: nil)
         }))
@@ -245,7 +227,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func loginDidSucceed() {
-        println("login did succeed")
+        print("login did succeed")
         // Now we need to check for banned status to be safe
         if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
             appDelegate.checkForBanned()
@@ -253,7 +235,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func loginDidFail(error: NSError!) {
-        println("failed to log in to server because \(error)")
+        print("failed to log in to server because \(error)")
         UIAlertView(title: "Uh-oh", message: "Failed to log in to our servers", delegate: nil, cancelButtonTitle: "Ok").show()
     }
     
@@ -326,39 +308,23 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    func createPartyButtonClick(recognizer: UILongPressGestureRecognizer) {
-        if recognizer === self.createPartyPressGestureRecognizer {
-            // change alpha of the party hat if it was the sender
-            switch recognizer.state {
-            case .Began:
-                self.createPartyBarButtonImageView?.alpha = 0.6
-            case .Ended:
-                self.createPartyBarButtonImageView?.alpha = 1.0
-            case .Cancelled:
-                self.createPartyBarButtonImageView?.alpha = 1.0
-            default:
-                break
-            }
-        }
-        
-        if recognizer.state == .Ended {
-            if let currentFBToken = FBSDKAccessToken.currentAccessToken() {
-                // we have a token locally
-                let oneDaysTime = NSTimeInterval(60 * 60 * 24)
-                let tomorrow = NSDate(timeIntervalSinceNow: +oneDaysTime)
-                if (currentFBToken.expirationDate.timeIntervalSince1970 < tomorrow.timeIntervalSince1970) {
-                    // time to renew the token
-                    println("logging out to renew token")
-                    FBSDKLoginManager().logOut()
-                    self.launchLoginDialog()
-                } else {
-                    // user is already logged in
-                    findUserByFBToken(currentFBToken.tokenString)
-                }
-            } else {
-                // user is not logged in
+    func createPartyButtonClick(sender: AnyObject?) {
+        if let currentFBToken = FBSDKAccessToken.currentAccessToken() {
+            // we have a token locally
+            let oneDaysTime = NSTimeInterval(60 * 60 * 24)
+            let tomorrow = NSDate(timeIntervalSinceNow: +oneDaysTime)
+            if (currentFBToken.expirationDate.timeIntervalSince1970 < tomorrow.timeIntervalSince1970) {
+                // time to renew the token
+                print("logging out to renew token")
+                FBSDKLoginManager().logOut()
                 self.launchLoginDialog()
+            } else {
+                // user is already logged in
+                findUserByFBToken(currentFBToken.tokenString)
             }
+        } else {
+            // user is not logged in
+            self.launchLoginDialog()
         }
     }
     
@@ -404,7 +370,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
                 var errorAlertMsg: String?
                 if err != nil {
                     // experienced an error during requery
-                    println("reloadData error " + err!.description)
+                    print("reloadData error " + err!.description)
                     errorAlertMsg = "Oops, had trouble contacting the server"
                 } else if PartiesDataStore.sharedInstance.nearbyParties.count == 0 {
                     // got no parties back

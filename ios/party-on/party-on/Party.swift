@@ -74,7 +74,7 @@ class Party: NSObject, ServerModel {
         
         super.init()
         
-        if let endTime = json["endTime"].number {
+        if let _ = json["endTime"].number {
             self.endTime = NSDate(timeIntervalSince1970: json["endTime"].number!.doubleValue / 1000)
         }
     }

@@ -41,7 +41,7 @@
 		50F4B53E1B94BD4F00748D02 /* MainUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B53D1B94BD4F00748D02 /* MainUser.swift */; };
 		50F4B5401B94BEC000748D02 /* ServerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B53F1B94BEC000748D02 /* ServerModel.swift */; };
 		50F4B5421B94BFF600748D02 /* University.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B5411B94BFF600748D02 /* University.swift */; };
-		6D3DF1D9F0E1B2B3A9225958 /* Pods_hangloose.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7DC62381C7B2AEB72389D1C /* Pods_hangloose.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		6D3DF1D9F0E1B2B3A9225958 /* Pods_hangloose.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7DC62381C7B2AEB72389D1C /* Pods_hangloose.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -323,7 +323,9 @@
 		50F4B50A1B94507800748D02 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Maxwell McLennan";
 				TargetAttributes = {
 					50F4B5111B94507800748D02 = {
@@ -517,6 +519,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -592,6 +595,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.GreenlightStudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = hangloose;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/party-on/$(PROJECT_NAME)-Bridging-Header.h";
@@ -616,6 +620,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.GreenlightStudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = hangloose;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/party-on/$(PROJECT_NAME)-Bridging-Header.h";
@@ -636,6 +641,7 @@
 				);
 				INFOPLIST_FILE = "party-onTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "MMcLennan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = hanglooseTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "culturepage-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/party-on.app/party-on";
@@ -652,6 +658,7 @@
 				);
 				INFOPLIST_FILE = "party-onTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "MMcLennan.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = hanglooseTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "culturepage-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/party-on.app/party-on";
