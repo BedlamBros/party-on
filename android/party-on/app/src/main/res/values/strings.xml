@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">PartyOn</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- used in networked activities -->
+    <string name="api_url">http://ec2-52-10-210-220.us-west-2.compute.amazonaws.com/api</string>
+    <string name="party_model_title_name">title</string>
+    <string name="party_model_formatted_address_name">formattedAddress</string>
+    <string name="party_model_lat_name">latitude</string>
+    <string name="party_model_lon_name">longitude</string>
+    <string name="party_model_university_name">university</string>
+    <string name="party_model_byob_name">byob</string>
+    <string name="party_model_starts_at_name">startTime</string>
+    <string name="party_model_female_cost_name">femaleCost</string>
+    <string name="party_model_male_cost_name">maleCost</string>
+    <string name="party_model_created_at_name">created</string>
+
+    <!-- used to define the file names of typefaces -->
+    <string name="typeface_stylish">Kaffee.ttf</string>
+
+    <!-- used for the Facebook SDK -->
+    <string name="app_id">127159637632248</string>
+
+    <!-- used for the Maps SDK -->
+
+    <!-- used for the word -->
+    <string name="the_word_title">The Word</string>
+
+
+    <string name="toolbar_party_list">View Parties</string>
+
+    <string name="list_view_on_option">Party Map</string>
+    <string name="list_view_off_option">Party List</string>
+
+    <string name="party_extra_name">parcelable_party_extra</string>
+
+    <!-- strings used in SubmitPartyActivity -->
+    <string name="submit_form_activity_title">Submit a Party</string>
+    <string name="submit_form_colloq_name_title">House Name: </string>
+    <string name="submit_form_loc_title">Address: </string>
+    <string name="submit_form_starts_at_title">Start Time: </string>
+    <string name="submit_form_desc_title">Details: </string>
+    <string name="submit_form_ends_at_title">End Time: </string>
+    <string name="submit_form_byob_title">BYOB: </string>
+    <string name="submit_form_male_price_title">Guys Price: </string>
+    <string name="submit_form_female_price_title">Girls Price: </string>
+    <string name="day_toggle_title">Day:</string>
+    <string name="day_toggle_text_on">Today</string>
+    <string name="day_toggle_text_off">Tomorrow</string>
+    <string name="submit_form_button_unsubmittable">Enter More Details</string>
+    <string name="submit_form_button_submittable">SUBMIT</string>
+
+    <!-- default values for party fields used throughout app -->
+    <string name="party_title_default">123 N Jefferson st.</string>
+    <string name="party_desc_default">Come to the party</string>
+    <string name="party_start_time_default">10pm</string>
+    <string name="party_prices_serialized_default">Guys $5 / Girls Free</string>
+    <string name="party_loc_default">My House</string>
+    <string name="party_time_default">8:00 PM</string>
+    <string name="party_byob_default">true</string>
+
+    <!-- string used in EULA -->
+    <string name="eula_title">End-User License Agreement</string>
+
+    <!-- strings used in PreferenceFragment -->
+    <string name="preferences_cached_model_userId"></string>
+    <string name="preferences_uni_title">University:</string>
+    <string name="summary_list_preference">Choose your preferred university.</string>
+    <string name="dialog_title_list_preference">University:</string>
+    <string name="preferences_negative">Cancel</string>
+
+    <!-- string used in entry-point screenslide -->
+    <string name="screenslide_eula">End-User License Agreement
+Culture Page, LLC does not endorse or promote underage drinking or any use or distribution of any contraband substance.</string>
+    <string name="screenslide_eula_positive">I understand</string>
+    <string name="demo_1_view_parties_tip">You can view a list of parties listed at your school. Click on a party to see details.</string>
+    <string name="demo_2_view_party_detail_tip">This is an example of what the details of the party will look like.</string>
+    <string name="submit_demo_3_submit_party_tip">You can submit a party listing at your university. Submitting a party will require you to login with Facebook.</string>
+    <string name="submit_demo_4_privacy_tip">We do not share information about parties in any context outside of this app, including on Facebook.</string>
+    <string name="submit_demo_5_privacy_tip">By submitting a party, you are agreeing to our Terms and Conditions, Privacy Policy, and Content Moderation Policy.</string>
+
+
+
+</resources>

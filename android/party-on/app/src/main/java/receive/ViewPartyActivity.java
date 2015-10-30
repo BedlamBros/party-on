@@ -83,8 +83,8 @@ public class ViewPartyActivity extends Activity {
     private void fillViewFromParty(){
         //all of these fields are required by the model and therefore will be shown
         //mTv_title.setText(mParty.getTitle());
-        mTv_readable_loc.setText(getResources().getString(R.string.submit_form_loc_title) + mParty.getformatted_address());
-        //mTv_desc.setText(getResources().getString(R.string.submit_form_desc_title) + mParty.getDesc());
+        //mTv_readable_loc.setText(getResources().getString(R.string.submit_form_loc_title) + mParty.getformatted_address());
+        mTv_desc.setText(getResources().getString(R.string.submit_form_desc_title) + mParty.getDesc());
 
         //format time
         Date mDate_starts_at = new Date(mParty.getStart_time());

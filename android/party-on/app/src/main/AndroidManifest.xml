@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.john.partyon" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.example.Test_GoogleMap.permission.MAPS_RECEIVE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_android_launcher_xxhdpi"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBtGQ0-1pMYTa_BXRXTomrvEbvLCDgrBrY"/>
+
+        <activity android:name="util.EntryPointActivity"
+                android:theme="@style/AppTheme">
+        </activity>
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId"   android:value="@string/app_id"/>
+
+
+        <activity android:name="receive.ListPartyActivity"
+            android:theme="@style/AppTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity android:name="receive.ViewPartyActivity"
+            android:theme="@style/AppTheme">
+
+        </activity>
+
+        <activity android:name="submit.SubmitPartyActivity"
+            android:theme="@style/AppTheme" >
+        </activity>
+
+    </application>
+
+</manifest>
