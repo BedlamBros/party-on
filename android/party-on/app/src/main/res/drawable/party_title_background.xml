@@ -9,11 +9,11 @@
         </shape>
     </item>
 
-    <item android:top="-1dp" android:left="5dp">
-        <shape android:shape="rectangle">
-            <stroke android:width="5dp" android:color="@color/background_stylized" />
+    <item android:top="-3dp" android:bottom="3dp" android:left="-2dp" android:right="-1dp">
+        <shape
+            android:shape="rectangle">
+            <stroke android:width="1dp" android:color="@color/accent" />
             <solid android:color="@color/background_stylized" />
         </shape>
     </item>
-
 </layer-list>

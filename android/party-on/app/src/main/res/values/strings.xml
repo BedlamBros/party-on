@@ -37,14 +37,14 @@
 
     <!-- strings used in SubmitPartyActivity -->
     <string name="submit_form_activity_title">Submit a Party</string>
-    <string name="submit_form_colloq_name_title">House Name: </string>
+    <string name="submit_form_colloq_name_title">House Name:\ </string>
     <string name="submit_form_loc_title">Address: </string>
-    <string name="submit_form_starts_at_title">Start Time: </string>
-    <string name="submit_form_desc_title">Details: </string>
-    <string name="submit_form_ends_at_title">End Time: </string>
-    <string name="submit_form_byob_title">BYOB: </string>
-    <string name="submit_form_male_price_title">Guys Price: </string>
-    <string name="submit_form_female_price_title">Girls Price: </string>
+    <string name="submit_form_starts_at_title">Start Time:\ </string>
+    <string name="submit_form_desc_title">Details:\ </string>
+    <string name="submit_form_ends_at_title">End Time:\ </string>
+    <string name="submit_form_byob_title">BYOB:\ </string>
+    <string name="submit_form_male_price_title">Guys Price:\ </string>
+    <string name="submit_form_female_price_title">Girls Price :\ </string>
     <string name="day_toggle_title">Day:</string>
     <string name="day_toggle_text_on">Today</string>
     <string name="day_toggle_text_off">Tomorrow</string>
@@ -59,6 +59,9 @@
     <string name="party_loc_default">My House</string>
     <string name="party_time_default">8:00 PM</string>
     <string name="party_byob_default">true</string>
+    <string name="party_word_comment_default">Raaaaaaaage!</string>
+    <string name="party_word_created_at_default">Tue 10/27 9:59pm</string>
+
 
     <!-- string used in EULA -->
     <string name="eula_title">End-User License Agreement</string>
