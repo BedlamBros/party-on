@@ -70,7 +70,7 @@ class University: NSObject, ServerModel {
     // returns the user's preferred university if one exists
     class func getStoredUniversityPreference() -> University? {
         var retVal: University?
-        var x = NSUserDefaults.standardUserDefaults().stringForKey(universityPreferencesKey)
+        _ = NSUserDefaults.standardUserDefaults().stringForKey(universityPreferencesKey)
         if let storedUniversityString = NSUserDefaults.standardUserDefaults().stringForKey(universityPreferencesKey) {
             if let storedUniversityType = UniversityType(rawValue: storedUniversityString) {
                 if let university = universitiesDB[storedUniversityType] {

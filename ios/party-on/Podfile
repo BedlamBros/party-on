@@ -1,8 +1,8 @@
 platform :ios, '8.0'
 use_frameworks!
 
-target 'culturepage' do
-    pod 'SwiftyJSON', '2.2.1'
+target 'hangloose' do
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
     pod 'AFNetworking', '~> 2.0'
     pod 'SVProgressHUD'
     pod 'Synchronized'

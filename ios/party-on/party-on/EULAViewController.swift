@@ -16,13 +16,13 @@ class EULAViewController: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let eulaText = String(contentsOfFile: NSBundle.mainBundle().pathForResource("EULA", ofType: "txt")!, encoding: NSUTF8StringEncoding, error: nil)
+        let eulaText = try? String(contentsOfFile: NSBundle.mainBundle().pathForResource("EULA", ofType: "txt")!, encoding: NSUTF8StringEncoding)
         self.eulaTextView!.text = eulaText!
     }
 

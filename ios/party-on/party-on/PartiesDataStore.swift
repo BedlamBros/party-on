@@ -15,7 +15,7 @@ typealias NearbyPartiesCallback = (err: NSError?, parties: [Party]?) -> Void
 typealias UpdatePartyCallback = (err: NSError?, party: Party?) -> Void
 
 // WARNING: - Exposing all API secrets here
-public let API_ROOT: String = "http://greenlightstudios.xyz/api"
+public let API_ROOT: String = "http://52.10.210.220/api"
 
 class PartiesDataStore: NSObject {
    
@@ -46,11 +46,12 @@ class PartiesDataStore: NSObject {
                 let json = JSON(response)
                 if let partiesJsonArray = json["parties"].array {
                     // extract Parties from json
-                    let parties: [Party] = map(partiesJsonArray, { (partyJson: JSON) -> Party in
+                    
+                    let parties: [Party] = partiesJsonArray.map({ (partyJson: JSON) -> Party in
                         return Party(json: partyJson)
                     })
                     // retain these parties as the current data store
-                    synchronized(self.nearbyParties, { () -> Void in
+                    synchronized(self.nearbyParties, closure: { () -> Void in
                         self.nearbyParties = parties
                     })
                     // return success
@@ -174,7 +175,7 @@ class PartiesDataStore: NSObject {
                 return syncCallback(err: NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not create the party"]), party: nil)
             }
             
-            var success: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
+            let success: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
                 let json = JSON(response)
                 if let badRequestError = Party.logicalErrorForJsonResponse(json) {
                     return syncCallback(err: badRequestError, party: nil)
@@ -182,7 +183,7 @@ class PartiesDataStore: NSObject {
                 let party = Party(json: JSON(response))
                 
                 // Synchronize changes in the party
-                synchronized(self.nearbyParties, { () -> Void in
+                synchronized(self.nearbyParties, closure: { () -> Void in
                     switch method {
                     case "POST":
                         self.nearbyParties.insert(party, atIndex: 0)
@@ -195,7 +196,7 @@ class PartiesDataStore: NSObject {
                 
                 return syncCallback(err: nil, party: party)
             }
-            var failure: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
+            let failure: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
                 let err = NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Server request failed"])
                 return syncCallback(err: err, party: nil)
             }
@@ -214,11 +215,11 @@ class PartiesDataStore: NSObject {
     
     private func updateSingleParty(updatedParty: Party) -> Bool {
         // update the party within the PartiesDataStore
-        return synchronized(self.nearbyParties, { () -> Bool in
-            for (idx, party) in enumerate(self.nearbyParties) {
+        return synchronized(self.nearbyParties, closure: { () -> Bool in
+            for (idx, party) in self.nearbyParties.enumerate() {
                 if party.oID != nil && party.oID == updatedParty.oID {
                     // found the old party, update it
-                    println("PartiesDataStore is replacing party \(updatedParty.oID)")
+                    print("PartiesDataStore is replacing party \(updatedParty.oID)")
                     self.nearbyParties[idx] = updatedParty
                     return true
                 }

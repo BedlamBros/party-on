@@ -22,7 +22,7 @@ class PartyAnnotation: MKPointAnnotation {
         self.party = party
     }
     
-    override var title: String! {
+    override var title: String? {
         get {
             if super.title != nil {
                 return super.title
@@ -36,7 +36,7 @@ class PartyAnnotation: MKPointAnnotation {
         }
     }
     
-    override var subtitle: String! {
+    override var subtitle: String? {
         get {
             if super.subtitle != nil {
                 return super.subtitle

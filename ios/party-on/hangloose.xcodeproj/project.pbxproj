@@ -41,7 +41,7 @@
 		50F4B53E1B94BD4F00748D02 /* MainUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B53D1B94BD4F00748D02 /* MainUser.swift */; };
 		50F4B5401B94BEC000748D02 /* ServerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B53F1B94BEC000748D02 /* ServerModel.swift */; };
 		50F4B5421B94BFF600748D02 /* University.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B5411B94BFF600748D02 /* University.swift */; };
-		FB188DAD30F1F15E67AD38EB /* Pods_culturepage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE342F1672F6CCB78C3AC8FB /* Pods_culturepage.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		6D3DF1D9F0E1B2B3A9225958 /* Pods_hangloose.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7DC62381C7B2AEB72389D1C /* Pods_hangloose.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +57,7 @@
 /* Begin PBXFileReference section */
 		0A663BBB54B3D7CC419B2244 /* Pods_party_on.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_party_on.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D9BCF0B1A90C786C73E8463 /* Pods-culturepage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-culturepage.release.xcconfig"; path = "Pods/Target Support Files/Pods-culturepage/Pods-culturepage.release.xcconfig"; sourceTree = "<group>"; };
+		4E855F8FBA6FC4A960DA11B3 /* Pods-hangloose.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hangloose.debug.xcconfig"; path = "Pods/Target Support Files/Pods-hangloose/Pods-hangloose.debug.xcconfig"; sourceTree = "<group>"; };
 		500068C81B94C33E008E6BB7 /* PartySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartySearchViewController.swift; sourceTree = "<group>"; };
 		500068CA1B94D4CC008E6BB7 /* Party.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Party.swift; sourceTree = "<group>"; };
 		500068CC1B94D6C7008E6BB7 /* libPods-party-on-SwiftyJSON.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-party-on-SwiftyJSON.a"; path = "Pods/build/Debug-iphoneos/libPods-party-on-SwiftyJSON.a"; sourceTree = "<group>"; };
@@ -66,7 +67,6 @@
 		50633AEE1B990444002A685E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		50633AF01B990451002A685E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		50633AF21B992263002A685E /* CreateEditPartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEditPartyViewController.swift; sourceTree = "<group>"; };
-		5094EB731BACA2AC0013F1E0 /* culturepage-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "culturepage-Bridging-Header.h"; sourceTree = "<group>"; };
 		5094EB761BAD2BF80013F1E0 /* 500px-White_flag_icon.svg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "500px-White_flag_icon.svg.png"; path = "../../../shared_assets/dev/500px-White_flag_icon.svg.png"; sourceTree = "<group>"; };
 		5094EB781BAD30470013F1E0 /* grayed_white_flag_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayed_white_flag_icon.png; path = ../../../shared_assets/dev/grayed_white_flag_icon.png; sourceTree = "<group>"; };
 		5094EB7A1BAE2BEC0013F1E0 /* ic_add_party2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_add_party2.png; path = ../../../shared_assets/dev/ic_add_party2.png; sourceTree = "<group>"; };
@@ -86,13 +86,13 @@
 		50DE45741B950A990075CBF9 /* UniversityPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversityPickerController.swift; sourceTree = "<group>"; };
 		50F00DC51BA0D4A3008B7CD3 /* TheWordMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheWordMessage.swift; sourceTree = "<group>"; };
 		50F00DC71BA24A8C008B7CD3 /* TheWordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheWordTableViewCell.swift; sourceTree = "<group>"; };
-		50F4B5121B94507800748D02 /* culturepage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = culturepage.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50F4B5121B94507800748D02 /* hangloose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hangloose.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50F4B5161B94507800748D02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50F4B5171B94507800748D02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50F4B51C1B94507800748D02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		50F4B51E1B94507800748D02 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		50F4B5211B94507800748D02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		50F4B5271B94507800748D02 /* culturepageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = culturepageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		50F4B5271B94507800748D02 /* hanglooseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = hanglooseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50F4B52C1B94507800748D02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50F4B52D1B94507800748D02 /* party_onTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = party_onTests.swift; sourceTree = "<group>"; };
 		50F4B53B1B94BD3C00748D02 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -100,7 +100,9 @@
 		50F4B53F1B94BEC000748D02 /* ServerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerModel.swift; sourceTree = "<group>"; };
 		50F4B5411B94BFF600748D02 /* University.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = University.swift; sourceTree = "<group>"; };
 		A7FED92E847A90E201C15599 /* Pods-culturepage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-culturepage.debug.xcconfig"; path = "Pods/Target Support Files/Pods-culturepage/Pods-culturepage.debug.xcconfig"; sourceTree = "<group>"; };
+		B6AA8657DEC82BB6B903637F /* Pods-hangloose.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hangloose.release.xcconfig"; path = "Pods/Target Support Files/Pods-hangloose/Pods-hangloose.release.xcconfig"; sourceTree = "<group>"; };
 		BE342F1672F6CCB78C3AC8FB /* Pods_culturepage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_culturepage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7DC62381C7B2AEB72389D1C /* Pods_hangloose.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_hangloose.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +112,7 @@
 			files = (
 				50633AEF1B990444002A685E /* FBSDKCoreKit.framework in Frameworks */,
 				50633AF11B990451002A685E /* FBSDKLoginKit.framework in Frameworks */,
-				FB188DAD30F1F15E67AD38EB /* Pods_culturepage.framework in Frameworks */,
+				6D3DF1D9F0E1B2B3A9225958 /* Pods_hangloose.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,8 +171,8 @@
 		50F4B5131B94507800748D02 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				50F4B5121B94507800748D02 /* culturepage.app */,
-				50F4B5271B94507800748D02 /* culturepageTests.xctest */,
+				50F4B5121B94507800748D02 /* hangloose.app */,
+				50F4B5271B94507800748D02 /* hanglooseTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -187,7 +189,6 @@
 				50F4B51E1B94507800748D02 /* Images.xcassets */,
 				50F4B5201B94507800748D02 /* LaunchScreen.xib */,
 				50F4B5151B94507800748D02 /* Supporting Files */,
-				5094EB731BACA2AC0013F1E0 /* culturepage-Bridging-Header.h */,
 			);
 			path = "party-on";
 			sourceTree = "<group>";
@@ -259,6 +260,7 @@
 				500068CC1B94D6C7008E6BB7 /* libPods-party-on-SwiftyJSON.a */,
 				0A663BBB54B3D7CC419B2244 /* Pods_party_on.framework */,
 				BE342F1672F6CCB78C3AC8FB /* Pods_culturepage.framework */,
+				F7DC62381C7B2AEB72389D1C /* Pods_hangloose.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -268,6 +270,8 @@
 			children = (
 				A7FED92E847A90E201C15599 /* Pods-culturepage.debug.xcconfig */,
 				3D9BCF0B1A90C786C73E8463 /* Pods-culturepage.release.xcconfig */,
+				4E855F8FBA6FC4A960DA11B3 /* Pods-hangloose.debug.xcconfig */,
+				B6AA8657DEC82BB6B903637F /* Pods-hangloose.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -275,9 +279,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		50F4B5111B94507800748D02 /* culturepage */ = {
+		50F4B5111B94507800748D02 /* hangloose */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50F4B5311B94507800748D02 /* Build configuration list for PBXNativeTarget "culturepage" */;
+			buildConfigurationList = 50F4B5311B94507800748D02 /* Build configuration list for PBXNativeTarget "hangloose" */;
 			buildPhases = (
 				7E2C8EEB738A6C80273F2621 /* Check Pods Manifest.lock */,
 				50F4B50E1B94507800748D02 /* Sources */,
@@ -290,14 +294,14 @@
 			);
 			dependencies = (
 			);
-			name = culturepage;
+			name = hangloose;
 			productName = "party-on";
-			productReference = 50F4B5121B94507800748D02 /* culturepage.app */;
+			productReference = 50F4B5121B94507800748D02 /* hangloose.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50F4B5261B94507800748D02 /* culturepageTests */ = {
+		50F4B5261B94507800748D02 /* hanglooseTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 50F4B5341B94507800748D02 /* Build configuration list for PBXNativeTarget "culturepageTests" */;
+			buildConfigurationList = 50F4B5341B94507800748D02 /* Build configuration list for PBXNativeTarget "hanglooseTests" */;
 			buildPhases = (
 				50F4B5231B94507800748D02 /* Sources */,
 				50F4B5241B94507800748D02 /* Frameworks */,
@@ -308,9 +312,9 @@
 			dependencies = (
 				50F4B5291B94507800748D02 /* PBXTargetDependency */,
 			);
-			name = culturepageTests;
+			name = hanglooseTests;
 			productName = "party-onTests";
-			productReference = 50F4B5271B94507800748D02 /* culturepageTests.xctest */;
+			productReference = 50F4B5271B94507800748D02 /* hanglooseTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -319,7 +323,9 @@
 		50F4B50A1B94507800748D02 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Maxwell McLennan";
 				TargetAttributes = {
 					50F4B5111B94507800748D02 = {
@@ -332,7 +338,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 50F4B50D1B94507800748D02 /* Build configuration list for PBXProject "culturepage" */;
+			buildConfigurationList = 50F4B50D1B94507800748D02 /* Build configuration list for PBXProject "hangloose" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -345,8 +351,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				50F4B5111B94507800748D02 /* culturepage */,
-				50F4B5261B94507800748D02 /* culturepageTests */,
+				50F4B5111B94507800748D02 /* hangloose */,
+				50F4B5261B94507800748D02 /* hanglooseTests */,
 			);
 		};
 /* End PBXProject section */
@@ -394,7 +400,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-culturepage/Pods-culturepage-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-hangloose/Pods-hangloose-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7E2C8EEB738A6C80273F2621 /* Check Pods Manifest.lock */ = {
@@ -424,7 +430,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-culturepage/Pods-culturepage-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-hangloose/Pods-hangloose-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -468,7 +474,7 @@
 /* Begin PBXTargetDependency section */
 		50F4B5291B94507800748D02 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 50F4B5111B94507800748D02 /* culturepage */;
+			target = 50F4B5111B94507800748D02 /* hangloose */;
 			targetProxy = 50F4B5281B94507800748D02 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -513,6 +519,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -572,7 +579,7 @@
 		};
 		50F4B5321B94507800748D02 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A7FED92E847A90E201C15599 /* Pods-culturepage.debug.xcconfig */;
+			baseConfigurationReference = 4E855F8FBA6FC4A960DA11B3 /* Pods-hangloose.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -588,7 +595,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
-				PRODUCT_NAME = culturepage;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.GreenlightStudios.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = hangloose;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/party-on/$(PROJECT_NAME)-Bridging-Header.h";
 			};
@@ -596,7 +604,7 @@
 		};
 		50F4B5331B94507800748D02 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D9BCF0B1A90C786C73E8463 /* Pods-culturepage.release.xcconfig */;
+			baseConfigurationReference = B6AA8657DEC82BB6B903637F /* Pods-hangloose.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -612,7 +620,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
-				PRODUCT_NAME = culturepage;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.GreenlightStudios.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = hangloose;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/party-on/$(PROJECT_NAME)-Bridging-Header.h";
 			};
@@ -632,7 +641,8 @@
 				);
 				INFOPLIST_FILE = "party-onTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = culturepageTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "MMcLennan.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = hanglooseTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "culturepage-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/party-on.app/party-on";
 			};
@@ -648,7 +658,8 @@
 				);
 				INFOPLIST_FILE = "party-onTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = culturepageTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "MMcLennan.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = hanglooseTests;
 				SWIFT_OBJC_BRIDGING_HEADER = "culturepage-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/party-on.app/party-on";
 			};
@@ -657,7 +668,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		50F4B50D1B94507800748D02 /* Build configuration list for PBXProject "culturepage" */ = {
+		50F4B50D1B94507800748D02 /* Build configuration list for PBXProject "hangloose" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50F4B52F1B94507800748D02 /* Debug */,
@@ -666,7 +677,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50F4B5311B94507800748D02 /* Build configuration list for PBXNativeTarget "culturepage" */ = {
+		50F4B5311B94507800748D02 /* Build configuration list for PBXNativeTarget "hangloose" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50F4B5321B94507800748D02 /* Debug */,
@@ -675,7 +686,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50F4B5341B94507800748D02 /* Build configuration list for PBXNativeTarget "culturepageTests" */ = {
+		50F4B5341B94507800748D02 /* Build configuration list for PBXNativeTarget "hanglooseTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50F4B5351B94507800748D02 /* Debug */,
