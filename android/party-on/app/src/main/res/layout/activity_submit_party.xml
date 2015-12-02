@@ -3,16 +3,20 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/background_stylized"
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
     android:layout_marginRight="@dimen/activity_horizontal_margin">
 
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/background_stylized"
+        >
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@color/accent"
             android:id="@+id/submission_form">
 
             <TextView
@@ -20,6 +24,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/submit_form_activity_title"
                 android:textSize="@dimen/party_title_text_size"
+                android:background="@color/background_stylized"
+                android:color="@color/primary"
                 android:layout_centerHorizontal="true"
                 android:id="@+id/submit_form_activity_title"/>
 
@@ -28,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/submit_form_activity_title"
                 android:orientation="horizontal"
+                android:background="@color/background_stylized"
                 android:id="@+id/layout_title">
 
                 <TextView
@@ -35,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/submit_form_colloq_name_title"
                     android:textSize="@dimen/party_title_text_size"
+                    android:background="@color/background_stylized"
                     android:textColor="@color/primary"
                     android:id="@+id/submit_form_title"/>
 
@@ -58,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/layout_title"
             android:orientation="horizontal"
+            android:background="@color/background_stylized"
             android:id="@+id/layout_desc">
 
         <TextView
@@ -67,6 +76,7 @@
             android:text="@string/submit_form_desc_title"
             android:textSize="@dimen/party_title_text_size"
             android:textColor="@color/primary"
+            android:background="@color/background_stylized"
             android:id="@+id/submit_form_desc"/>
 
         <EditText
