@@ -11,8 +11,6 @@
 		500068C91B94C33E008E6BB7 /* PartySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500068C81B94C33E008E6BB7 /* PartySearchViewController.swift */; };
 		500068CB1B94D4CC008E6BB7 /* Party.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500068CA1B94D4CC008E6BB7 /* Party.swift */; };
 		5047658E1B98BFA900303DF0 /* ModalMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5047658D1B98BFA900303DF0 /* ModalMapViewController.swift */; };
-		50633AEF1B990444002A685E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50633AEE1B990444002A685E /* FBSDKCoreKit.framework */; };
-		50633AF11B990451002A685E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50633AF01B990451002A685E /* FBSDKLoginKit.framework */; };
 		50633AF31B992263002A685E /* CreateEditPartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50633AF21B992263002A685E /* CreateEditPartyViewController.swift */; };
 		5094EB771BAD2BF80013F1E0 /* 500px-White_flag_icon.svg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094EB761BAD2BF80013F1E0 /* 500px-White_flag_icon.svg.png */; };
 		5094EB791BAD30470013F1E0 /* grayed_white_flag_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5094EB781BAD30470013F1E0 /* grayed_white_flag_icon.png */; };
@@ -31,6 +29,8 @@
 		50DE456F1B94DB6E0075CBF9 /* PartyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE456E1B94DB6E0075CBF9 /* PartyTableViewCell.swift */; };
 		50DE45711B94E0D40075CBF9 /* PartyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE45701B94E0D40075CBF9 /* PartyDetailViewController.swift */; };
 		50DE45751B950A990075CBF9 /* UniversityPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DE45741B950A990075CBF9 /* UniversityPickerController.swift */; };
+		50EB433D1C46FCC2006494F9 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50633AEE1B990444002A685E /* FBSDKCoreKit.framework */; };
+		50EB433E1C46FCD1006494F9 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50633AF01B990451002A685E /* FBSDKLoginKit.framework */; };
 		50F00DC61BA0D4A3008B7CD3 /* TheWordMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F00DC51BA0D4A3008B7CD3 /* TheWordMessage.swift */; };
 		50F00DC81BA24A8C008B7CD3 /* TheWordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F00DC71BA24A8C008B7CD3 /* TheWordTableViewCell.swift */; };
 		50F4B5181B94507800748D02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4B5171B94507800748D02 /* AppDelegate.swift */; };
@@ -112,8 +112,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50633AEF1B990444002A685E /* FBSDKCoreKit.framework in Frameworks */,
-				50633AF11B990451002A685E /* FBSDKLoginKit.framework in Frameworks */,
+				50EB433D1C46FCC2006494F9 /* FBSDKCoreKit.framework in Frameworks */,
+				50EB433E1C46FCD1006494F9 /* FBSDKLoginKit.framework in Frameworks */,
 				2C763399EF57B177CD9086FA /* Pods_party_on.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -599,7 +599,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.GreenlightStudios.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.BedlamBros.party-on";
 				PRODUCT_NAME = "party-on";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/party-on/$(PROJECT_NAME)-Bridging-Header.h";
@@ -624,7 +624,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.GreenlightStudios.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.BedlamBros.party-on";
 				PRODUCT_NAME = "party-on";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/party-on/$(PROJECT_NAME)-Bridging-Header.h";
