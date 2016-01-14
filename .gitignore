@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 # Stupid Macbooks make these files
 .DS_Store
+=======
+# Don't want iOS and Anroid stuff
+ios/
+android/
+>>>>>>> 0c331de0983d7cf3910bf9fbca941ff058e428da

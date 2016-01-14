@@ -18,11 +18,12 @@ var expect = require('expect.js'),
  * Globals
  */
 var user, party, loginToken;
+var invalidAddress = '405 s ronson';
 
 /**
  * Test Suites
  */
-describe('Create and save user', function() {
+describe('Create and save party', function() {
   describe('Model Party:', function() {
 
     beforeEach(function(done) {
@@ -133,16 +134,67 @@ describe('Create and save user', function() {
           request(requestConfig, function(err, resp, body) {
             expect(err).to.be(null);
             expect(resp.statusCode).to.be(200);
-            expect(body.formattedAddress).to.be
-            .equal(requestConfig.json.formattedAddress);
+            expect(body.startTime).to.be
+            .equal(requestConfig.json.startTime);
 
             crudParty = new Party(body);
             done();
           });
         });
+      
+      it('should be able to use geocoder for formattedAddres', function(done){
+	this.timeout(3000);
+
+	crudParty = new Party(_.omit(party.toJSON(), '_id'));
+        crudParty.startTime.setHours(party.startTime.getHours() + 4);
+
+        var requestConfig = {
+          uri: config.hostname + '/api/parties',
+          auth: {
+            bearer: loginToken
+          },
+          method: 'POST',
+          json: crudParty.toJSON()
+        };
+
+	request(requestConfig, function(err, resp, body) {
+            expect(err).to.be(null);
+            expect(resp.statusCode).to.be(200);
+            expect(body.formattedAddress).to.be
+            .equal('629 South Woodlawn Avenue');
+	    
+            crudParty = new Party(body);
+            done();
+          });
+      });
+
+      it('should be able to geocode an unkown address', function(done){
+	this.timeout(3000);
+	var ronsonParty = new Party(_.omit(party.toJSON(), '_id'));
+	ronsonParty.formattedAddress = invalidAddress;
+	ronsonParty.startTime.setHours(party.startTime.getHours() + 4);
+	var requestConfig = {
+          uri: config.hostname + '/api/parties',
+          auth: {
+            bearer: loginToken
+          },
+          method: 'POST',
+          json: ronsonParty.toJSON()
+        };
+	request(requestConfig, function(err, resp, body) {
+	  expect(err).to.be(null);
+          expect(resp.statusCode).to.be(200);
+	  expect(body.errorCode).to.be
+            .equal('UNKNOWN');
+          done();
+        });
+      });
 
       it('should be able to GET a party', function(done) {
         this.timeout(10000);
+
+	crudParty.formattedAddress = "629 S Woodlawn Ave.";
+
         request.get({
           uri: config.hostname + '/api/parties/' + crudParty.id.toString(), 
           auth: {
@@ -153,13 +205,14 @@ describe('Create and save user', function() {
           // @hack - re-serialize body because 
           // it uses some black magic that makes it
           // come as not a real json object at all
-          body = JSON.parse(body.toString());
-          
+          var newBody = JSON.parse(body.toString());
+          var expectedGeocodeAddress = '629 South Woodlawn Avenue';
+
           expect(err).to.be(null);
-          expect(body['_id']).to.be
+          expect(newBody['_id']).to.be
             .equal(crudParty.id.toString());
-          expect(body.formattedAddress).to.be
-            .equal(crudParty.formattedAddress);
+          expect(newBody['formattedAddress']).to.be
+            .equal(expectedGeocodeAddress);
           done();
           });
       });
@@ -196,6 +249,31 @@ describe('Create and save user', function() {
         });
       });
 
+      it('should not be able to PUT an invalid address', function(done) {
+ 	this.timeout(10000);
+	  
+	var invalidParty = new Party(crudParty.toJSON());
+	invalidParty.startTime.setHours(party.startTime.getHours() + 4);
+	invalidParty.formattedAddress = invalidAddress;
+	
+	var requestConfig = {
+	  uri: config.hostname + '/api/parties/' + invalidParty.id,
+	  auth: {
+	    bearer: loginToken
+	  },
+	  method: 'PUT',
+	  json: invalidParty.toJSON()
+	};
+	
+	request(requestConfig, function(err, resp, body) {
+	  expect(err).to.be(null);
+	  expect(resp.statusCode).to.be(200);
+	  expect(body.errorCode).to.be
+	    .equal('UNKNOWN');
+	  done();
+	});	
+      });
+
       it('should be able to DELETE a party', function(done) {
         this.timeout(10000);  
         
@@ -222,9 +300,9 @@ describe('Create and save user', function() {
       var oneHour = 60 * 60 * 1000;
 
       var tooOldDate = new Date(now.getTime() - (oneHour * 14));
-      var tooFarOffDate = new Date(now.getTime() + (oneHour * 48));
+      var tooFarOffDate = new Date(now.getTime() + (oneHour * 72));
       var justYoungEnoughDate = new Date(now.getTime() - (oneHour * 7));
-      var justCloseEnoughDate = new Date(now.getTime() + (oneHour * 23));
+      var justCloseEnoughDate = new Date(now.getTime() + (oneHour * 47));
 
       var tooOldParty, tooFarOffParty,
         justYoungEnoughParty, justCloseEnoughParty;
@@ -307,6 +385,43 @@ describe('Create and save user', function() {
             });
             done();
         });
+      });
+    });
+  });
+
+  describe('theWord', function() {
+
+    it('should be able to post a word', function(done) {
+      this.timeout(10000);
+
+      var user = User.findOne({}, function(err, user) {
+	Party.findOne({}, function(err, party) {
+
+	  var newParty = new Party(party);
+	  party.user = user._id;
+	  party.save(function(err) {
+	    
+	    var msg = 'Message number ' + Math.random();
+	    var oldMsgCount = party.theWord.length;
+	    var wordEndpoint = config.hostname + '/api/parties/' + party._id + '/word';
+	    request({
+	      method: 'PUT',
+	      uri: wordEndpoint,
+	      json: {
+		body: msg
+	      }
+	    }, function(err, resp, body) {
+	      expect(err).to.be(null);
+	      expect(resp.statusCode).to.be(200);
+	      var newParty = new Party(body);
+	      expect(newParty.theWord.length)
+		.to.be(oldMsgCount + 1);
+	      expect(newParty.theWord[newParty.theWord.length-1].body)
+		.to.be.equal(msg);
+	      done();
+	    });
+	  });
+	});
       });
     });
   });
