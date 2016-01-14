@@ -1,12 +1,16 @@
 'use strict';
+//in progress
 var geocoder = require('./geocoder.js');
 
 /**
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+    async = require('async'),
     Party = mongoose.model('Party'),
+    Word  = mongoose.model('Word'),
     config = require('meanio').loadConfig(),
+    geocoder = require('./geocoder.js'),
     _ = require('lodash');
 
 module.exports = function(Parties) {
@@ -31,55 +35,81 @@ module.exports = function(Parties) {
          * Create a party
          */
         create: function(req, res, next) {
-            var party = new Party(req.body);
-            party.user = req.user;
-            console.log(party);
-            
-            party.save(function(err) {
-                if (err) {
-                    res.status(500).json({
-                        error: 'Cannot save the party'
-                    });
-                }
-
-                /*Party.events.publish({
-                    action: 'created',
-                    user: {
-                        name: req.user.name
-                    },
-                    url: config.hostname + '/parties/' + parties._id,
-                    name: party.title
-                });*/
-                res.json(party);
-            })
+	  var party = new Party(req.body);
+	  var errorCode = null;
+	  party.user = req.user;
+	  // now using a callback pattern
+	  async.waterfall([function(cb) {
+	      geocoder.geocode(party.formattedAddress + " Bloomington, IN", cb);
+	    },
+	    function(geocodeResponse, cb) {
+	      party.formattedAddress = geocodeResponse[0].streetNumber 
+		+ " " + geocodeResponse[0].streetName;
+	      party.latitude = geocodeResponse[0].latitude;
+	      party.longitude = geocodeResponse[0].longitude;
+	      if (geocodeResponse[0].extra.confidence < 0.7){
+		//set an error code for unkown address
+		errorCode = "UNKNOWN";
+	      }
+	      if (!errorCode){
+	        party.save(cb);
+	      } else {
+	        cb();
+	      }
+	    }], 
+	    function(err, savedParty) {
+	      if (err) {
+		console.log(err);
+	      }
+	      //if an error exists, add it to the json
+	      if (errorCode == "UNKNOWN"){
+		party.errorCode = errorCode;
+		return res.json({
+		  errorCode: "UNKNOWN"
+		});
+	      }
+	      return res.json(party);
+	    });
         },
         /**
          * Update a party
          */
         update: function(req, res) {
-            var party = req.party;
-            party = new Party(_.extend(party.toJSON(), req.body));
-            party.isNew = false;
-            
-            party.save(function(err) {
-                if (err) {
-                    return res.status(500).json({
-                        error: 'Cannot update the party'
-                    });
-                }
-              
-                /*Parties.events.publish({
-                    action: 'updated',
-                    user: {
-                        name: req.user.name
-                    },
-                    name: article.title,
-                    url: config.hostname + '/parties/' + party._id
-                });*/
-
-                res.json(party);
-            });
-        },
+	  var errorCode = null;
+	  
+          var party = req.party;
+          party = new Party(_.extend(party.toJSON(), req.body));
+	  party.isNew = false;
+	  async.waterfall([function(cb) {
+	    geocoder.geocode(party.formattedAddress + " Bloomington, IN", cb);
+	    }],
+	    function(err, geocodeResponse) {
+	      if (err || geocodeResponse[0].extra.confidence < 0.7) {
+		errorCode = "UNKNOWN";
+	      }
+	      else if (geocodeResponse[0]) {
+		party.formattedAddress = geocodeResponse[0].streetNumber
+		  + " " + geocodeResponse[0].streetName;
+		party.latitude = geocodeResponse[0].latitude;
+		party.longitude = geocodeResponse[0].longitude;
+	      }
+	      
+	      if (errorCode){
+		return res.json({
+		  errorCode: errorCode
+	      	});
+	      } else {
+		party.save(function(err) {
+		  if (err) {
+   	            return res.status(500).json({
+        	      error: 'Cannot update the party'
+		    });
+              	  }
+		  return res.json(party);
+		});
+	      }
+	    });
+	  },
         /**
          * Delete a party
          */
@@ -134,6 +164,30 @@ module.exports = function(Parties) {
                 error: err.toString()
               });
             });
-        }
+        },
+	/**
+	 * Add a Word to a Party
+	 */
+	addAWord: function(req, res) {
+	  var word = new Word(req.body);
+	  req.party.theWord.push(word);
+	  req.party.save(function(err, saved) {
+	    if (err) return res.status(500).send(err.toString());
+	    return res.json(saved);
+	  });
+	}
     };
 };
+
+var getAddressEncoding = function(geocodeResponse){
+    //if no errors exist in the geocodeResponse, format the address and return
+    if (geocodeResponse[0].streetName){
+      return geocodeResponse[0].streetNumber 
+	+ " " + geocodeResponse[0].streetName;
+    } else {
+      return "UNKNOWN";
+    }
+    
+};
+
+

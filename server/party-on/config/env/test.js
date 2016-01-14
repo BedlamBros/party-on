@@ -16,16 +16,23 @@ module.exports = {
   app: {
     name: 'MEAN - A Modern Stack - Test'
   },
+  testUsers: {
+    // permanent test users that should not be deleted
+    facebook: {
+      userId: '135895850095335',
+      accessToken: 'CAABzpqkH5PgBAGTPOu8OJ5GfOXE728RJWmtUbKIDReoBOXLdFZAkURiSO77aFRN2usmM8L7dwjBwo9jDWwGZAodPZAxZAqnG5iwnUALMT5uuCFGfvcWDIwKle4AEZBS3uTDeGc78doMs16xQSziVZCOonOMzqhbNf8hRtdpG1ZBKRO9wdk0X28NsV4kAhZBvIvUoI99GuST4agZDZD'
+    }
+  },
   strategies: {
     local: {
       enabled: true
     },
     landingPage: '/',
     facebook: {
-      clientID: 'APP_ID',
-      clientSecret: 'APP_SECRET',
-      callbackURL: 'http://localhost:3000/auth/facebook/callback',
-      enabled: false
+      clientID: '127159637632248',
+      clientSecret: '195b073dc2194ae6b6fc2c5b1d198fdf',
+      callbackURL: 'http://ec2-52-10-210-220.us-west-2.compute.amazonaws.com/api/auth/facebook/callback',
+      enabled: true
     },
     twitter: {
       clientID: 'CONSUMER_KEY',

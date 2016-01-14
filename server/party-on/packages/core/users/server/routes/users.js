@@ -83,7 +83,6 @@ module.exports = function(MeanUser, app, auth, database, passport) {
       // Setting the facebook oauth routes
       app.route('/api/auth/facebook')
         .get(passport.authenticate('facebook', {
-          scope: ['email', 'user_about_me'],
           failureRedirect: '/auth/login',
         }), users.signin);
 
@@ -91,6 +90,17 @@ module.exports = function(MeanUser, app, auth, database, passport) {
         .get(passport.authenticate('facebook', {
           failureRedirect: '/auth/login',
         }), users.authCallback);
+
+      app.route('/api/auth/facebook/getorcreate')
+	.post(users.verifyFBToken, users.getOrCreateFB);
+
+      if (process.env.NODE_ENV === 'test') {
+	// create a route just to test auth.requiresLogin
+	app.route('/api/auth/test/requireslogin')
+	.post(auth.requiresLogin, function(req, res) {
+	  return res.status(200).json(req.user);
+	});
+      }
   }
 /*
   if(config.strategies.github.enabled)
