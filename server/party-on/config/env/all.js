@@ -49,7 +49,7 @@ module.exports = {
     facebook: {
       "clientID": "127159637632248", //is this the same as the app_id?
       "clientSecret": "1020894c3f6aeeda2b5ab661ab03effb",
-      "callbackURL", ""
+      "callbackURL": ""
     }
   },
   public: {

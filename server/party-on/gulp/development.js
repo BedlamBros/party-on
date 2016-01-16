@@ -72,7 +72,8 @@ gulp.task('coffee', function() {
 });
 
 gulp.task('watch', function () {
-  plugins.livereload.listen({interval:500});
+//turn off the live reload in development
+  //plugins.livereload.listen({interval:500});
 
   gulp.watch(paths.coffee,['coffee']);
   gulp.watch(paths.js, ['jshint']);

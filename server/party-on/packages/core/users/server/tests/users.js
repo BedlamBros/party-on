@@ -2,7 +2,9 @@
 /* Related to https://github.com/linnovate/mean/issues/898 */
 'use strict';
 
-var crypto = require('crypto');
+var crypto  = require('crypto'),
+    config  = require('meanio').loadConfig(),
+    request = require('request');
 
 /**
  * Create a random hex string of specific length and
@@ -22,6 +24,7 @@ function getRandomString(len) {
 
 var expect = require('expect.js'),
   	mongoose = require('mongoose'),
+  FBLogin = mongoose.model('FBLogin'),
   User = mongoose.model('User');
 
 /**
@@ -432,5 +435,74 @@ describe('<Unit Test>', function() {
 
       done();
     });
+  });
+
+  describe('Facebook login using access tokens', function() {
+    var user;
+    var fbTokenData = {
+      user_id: '150901598586601',
+      access_token: 'CAABzpqkH5PgBAPkrEQ6qZBSly46kr8vLScufozeYMIEsX68wbFIOeCoatNWopS0WDeQ8QhxMMUuXRRKoA1DG9dh4K0u3nsBEKUTC8goiLGVDAOt6YNWb6oLNaRWreQt7ZAv7xOypVdgQi6oYyjN943QZAtt9QCYklBYQbHU5vhaX4Mb60jNkdfGExmZB5JlhflfdmLZBPtB5B8xWirCZCioTdGcCrI2fklZBJEQZA5ipAAZDZD'
+    };
+
+    it('should create a user, then be able to retrieve it again', function(done) {
+      this.timeout(10000);
+
+      var postEndpoint = config.hostname + '/api/auth/facebook/getorcreate';
+      var requestConfig = {
+	  uri: postEndpoint,
+	  method: 'POST',
+	  json: fbTokenData
+      };
+      // POST the user via facebook
+      request(requestConfig, function(err, resp, body) {
+	expect(err).to.be(null);
+	expect(resp.statusCode).to.be(200);
+	user = new User(body);
+	expect(user.facebook).to.not.be(null);
+	// query for the user again by facebook token
+	request(requestConfig, function(err, resp, body) {
+	  expect(err).to.be(null);
+	  expect(resp.statusCode).to.be(200);
+	  // downloaded user should be same as POSTed one
+	  var downloadedUser = new User(body);
+	  expect(downloadedUser.id.toString())
+	    .to.equal(user.id.toString());
+	  downloadedUser.remove(function(err) {
+	    expect(err).to.be(null);
+	    // The user's associated FBLogin should be removed
+	    FBLogin.findOne({_id: downloadedUser.facebook},
+	      function(err, doc) {
+		expect(err).to.be(null);
+		expect(doc).to.be(null);
+		return done();
+	    });
+	  });
+	});
+      });
+    });
+
+    it('should authenticate when using facebook bearer token header', function(done) {
+      var fbTestUser = config.testUsers.facebook;
+      var authTestEndpoint = config.hostname + '/api/auth/test/requireslogin';
+      // make a test request to see if Bearer login will work
+      request({
+	uri: authTestEndpoint,
+	method: 'POST',
+	headers: {
+	  // headers necessary for Bearer login
+	  'Authorization': 'Bearer ' + fbTestUser.accessToken,
+	  'Passport-Auth-Strategy': 'Facebook'
+	}
+      }, function(err, resp, body) {
+	expect(err).to.be(null);
+	expect(resp.statusCode).to.be(200);
+	// parse out the body from string? data here
+	body = JSON.parse(body);
+	expect(body.facebook.userId)
+	  .to.be.equal(fbTestUser.userId);
+	done();
+      });
+    });
+
   });
 });
