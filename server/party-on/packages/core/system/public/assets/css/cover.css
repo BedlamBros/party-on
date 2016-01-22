@@ -27,7 +27,13 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #C93535;
+  /*background-color: #64B058;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#64b058+0,64b058+49,64b058+50,000000+100 */
+  /*background: #64b058; /* Old browsers */
+  /*background: -moz-radial-gradient(center, ellipse cover,  #64b058 0%, #64b058 49%, #64b058 50%, #000000 100%); /* FF3.6-15 */
+  /*background: -webkit-radial-gradient(center, ellipse cover,  #64b058 0%,#64b058 49%,#64b058 50%,#000000 100%); /* Chrome10-25,Safari5.1-6 */
+  /*background: radial-gradient(ellipse at center,  #64b058 0%,#64b058 49%,#64b058 50%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#64b058', endColorstr='#000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 body {
   color: #fff;
@@ -47,6 +53,7 @@ body {
 .site-wrapper-inner {
   display: table-cell;
   vertical-align: top;
+  background: radial-gradient(ellipse at left,  #64b058 0%,#64b058 49%,#64b058 50%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 .cover-container {
   background-color: #e0e0e0;
@@ -128,6 +135,9 @@ body {
 .cover .btn-lg {
   padding: 10px 20px;
   font-weight: bold;
+}
+.lead {
+  text-shadow: none;
 }
 
 
