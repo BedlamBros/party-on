@@ -27,6 +27,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
 
     private var requeryLock: NSLock = NSLock()
     private var navigationBarButtonTextAttributes: [String: AnyObject]!
+    private let locationManager = CLLocationManager()
     
     
     override func viewDidLoad() {
@@ -37,6 +38,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
         _ = self.view.frame
         
         self.mapView?.delegate = self
+        locationManager.requestWhenInUseAuthorization()
         
         let tableRefreshControl = UIRefreshControl()
         tableRefreshControl.layer.zPosition -= 1
@@ -175,6 +177,11 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - MKMapViewDelegate
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            // returning nil here displays user location as the blue dot
+            return nil
+        }
+        
         var annotationView: MKAnnotationView
         
         
@@ -329,6 +336,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     @IBAction func mapViewSegmentedControlClick(sender: AnyObject?) {
+        self.mapView?.showsUserLocation = true
         if sender != nil && sender === useMapViewSegmentedControl {
             switch (useMapViewSegmentedControl!.selectedSegmentIndex) {
             case 0:
