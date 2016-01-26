@@ -25,7 +25,8 @@ class MainUser: User {
         get {
             let userDefaults = NSUserDefaults.standardUserDefaults()
             return userDefaults.stringForKey(storedUserIdDefaultsKey)
-        } set(val) {
+        } set {
+            let val = newValue
             let userDefaults = NSUserDefaults.standardUserDefaults()
             if val != nil {
                 // setting the id

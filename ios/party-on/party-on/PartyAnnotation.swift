@@ -31,8 +31,8 @@ class PartyAnnotation: MKPointAnnotation {
             } else {
                 return ""
             }
-        } set(val) {
-            super.title = val
+        } set {
+            super.title = newValue
         }
     }
     
@@ -45,8 +45,8 @@ class PartyAnnotation: MKPointAnnotation {
             } else {
                 return ""
             }
-        } set(val) {
-            super.subtitle = val
+        } set {
+            super.subtitle = newValue
         }
     }
     
@@ -57,8 +57,8 @@ class PartyAnnotation: MKPointAnnotation {
             } else {
                 return super.coordinate
             }
-        } set(val) {
-            super.coordinate = val
+        } set {
+            super.coordinate = newValue
         }
     }
 }

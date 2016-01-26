@@ -20,13 +20,13 @@ class University: NSObject, ServerModel {
     static var currentUniversity: University! {
         get {
             return privateCurrentUniversity
-        } set(val) {
+        } set {
             // Remember the user's university preference
             let preferences = NSUserDefaults.standardUserDefaults()
-            preferences.setObject(val.name, forKey: universityPreferencesKey)
+            preferences.setObject(newValue.name, forKey: universityPreferencesKey)
             preferences.synchronize()
             
-            privateCurrentUniversity = val
+            privateCurrentUniversity = newValue
         }
     }
     private static var universitiesDB = [UniversityType.IndianaUniversity: University(name: UniversityType.IndianaUniversity.rawValue, location: CLLocationCoordinate2D(latitude: 39.1691355, longitude: -86.5149053))]
