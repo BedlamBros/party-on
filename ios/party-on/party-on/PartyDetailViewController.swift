@@ -19,7 +19,7 @@ protocol SinglePartyDidChangeResponder: class {
     func singlePartyDidChange(party: Party)
 }
 
-class PartyDetailViewController: UIViewController, MFMessageComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, CreateEditPartyViewControllerDelegate {
+class PartyDetailViewController: UIViewController, MFMessageComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, CreateEditPartyViewControllerDelegate {
     
     @IBOutlet weak var addressButton: UIButton?
     @IBOutlet weak var textFriendButton: UIButton?
@@ -38,11 +38,16 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     
     weak var singlePartyDidChangeResponder: SinglePartyDidChangeResponder?
     
+    // keep track of alert controllers
+    private weak var flagMessageAlertController: UIAlertController?
+    private weak var theWordMessageAlertController: UIAlertController?
+    
     var _party: Party!
     var party: Party! {
         get {
             return _party
-        } set(val) {
+        } set {
+            let val = newValue
             _party = val
             
             // Fill in Party data
@@ -91,6 +96,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         if MainUser.storedUserId != nil && MainUser.storedUserId == self.party.userId {
             // MainUser made this party
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editPartyButtonClick")
+            self.navigationItem.rightBarButtonItem?.setTitleTextAttributes(navigationBarTextAttrs, forState: .Normal)
         } else {
             // This is someone else's party, flag
             let flagImage = UIImage(named: "grayed_white_flag_icon.png")
@@ -170,15 +176,19 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     
     func flagTapped() {
         let flagDialog = UIAlertController(title: "Report Abuse", message: "If this posting got out of hand, or if the party got kind of scary, leave us a message and we'll take a look at it", preferredStyle: UIAlertControllerStyle.Alert)
+        self.flagMessageAlertController = flagDialog
         
         flagDialog.addTextFieldWithConfigurationHandler { (textField: UITextField!) -> Void in
             textField.autocapitalizationType = .Sentences
+            textField.addTarget(self, action: "alertTextFieldDidChange:", forControlEvents: .EditingChanged)
         }
         
         flagDialog.addAction(UIAlertAction(title: "Report", style: UIAlertActionStyle.Destructive, handler: { (action: UIAlertAction) -> Void in
             self.sendFlagRequest(flagDialog.textFields?.first?.text)
             flagDialog.dismissViewControllerAnimated(true, completion: nil)
         }))
+        // make the report action disabled until text appears in the textField
+        flagDialog.actions[0].enabled = false
         
         flagDialog.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
             flagDialog.dismissViewControllerAnimated(true, completion: nil)
@@ -220,37 +230,7 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             self.scheduleRefreshParty()
         })
     }
-    
-    
-    // MARK: - UIAlertViewDelegate methods
-    
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        if buttonIndex == 0 {
-            // Send button
-            if let alertTextField = alertView.textFieldAtIndex(0) {
-                if alertTextField.text != nil && alertTextField.text!.characters.count > 0 {
-                    let newWord = TheWordMessage(oID: nil, body: alertTextField.text!, created: NSDate(timeIntervalSinceNow: 0))
-                    PartiesDataStore.sharedInstance.sendword(newWord, party: self.party, callback: { (err, party) -> Void in
-                        if err == nil {
-                            // reload TheWord locally
-                            self.party = party
-                            print("\(self.party!.theWord.count) msgs in party word")
-                        } else {
-                            UIAlertView(title: "Uh-oh", message: "Had trouble sending message", delegate: nil, cancelButtonTitle: "Ok").show()
-                        }
-                    })
-                }
-            }
-        } else {
-            // Cancel button
-            alertView.dismissWithClickedButtonIndex(buttonIndex, animated: true)
-        }
-    }
-    
-    func alertViewCancel(alertView: UIAlertView) {
-        // WARN: - Because of the way I hacked this AlertView, it won't call alertViewCancel correctly. Don't use it.
-    }
-    
+
     
     // MARK: - Generic Selectors
     
@@ -275,6 +255,59 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             self.presentViewController(textController, animated: true, completion: nil)
         } else {
             UIAlertView(title: "Can't send message", message: "Looks like your phone isn't configured to send text messages", delegate: nil, cancelButtonTitle: "Ok").show()
+        }
+    }
+    
+    func alertTextFieldDidChange(sender: UITextField?) {
+        var indexOfButtonToDisable: Int!
+        var alertController: UIAlertController!
+        
+        if let textField = self.flagMessageAlertController?.textFields?.first {
+            // textField belongs to flagMessageAlertController
+            if sender === textField {
+                indexOfButtonToDisable = 0
+                alertController = self.flagMessageAlertController!
+            }
+        }
+        
+        if let textField = self.theWordMessageAlertController?.textFields?.first {
+            // textField belongs to theWordMessageAlertController
+            if sender === textField {
+                indexOfButtonToDisable = 1
+                alertController = self.theWordMessageAlertController!
+            }
+        }
+        
+        if indexOfButtonToDisable == nil || alertController == nil {
+            // we don't know who this textField is, ignore
+            return
+        }
+        
+        alertController.actions[indexOfButtonToDisable].enabled =
+            sender?.text != nil && sender!.text!.characters.count > 0
+    }
+    
+    func sendTheWordMessage(wordText: String?) {
+        let displayErrorDialog = { () -> Void in
+            UIAlertView(title: "Oh no", message: "Failed to send message. Try again another time.", delegate: nil, cancelButtonTitle: "Ok").show()
+        }
+        
+        if wordText != nil && wordText!.characters.count > 0 {
+            let newWord = TheWordMessage(oID: nil, body: wordText!, created: NSDate(timeIntervalSinceNow: 0))
+            SVProgressHUD.showAndBlockInteraction(self.view)
+            PartiesDataStore.sharedInstance.sendword(newWord, party: self.party, callback: { (err, party) -> Void in
+                SVProgressHUD.dismissAndUnblockInteraction(self.view)
+                
+                if err == nil {
+                    // reload TheWord locally
+                    self.party = party
+                    print("\(self.party!.theWord.count) msgs in party word")
+                } else {
+                    displayErrorDialog()
+                }
+            })
+        } else {
+            displayErrorDialog()
         }
     }
     
@@ -402,11 +435,26 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     }
     
     private func launchSendMessageDialog() {
-        // launch an alert view for sending a message
-        let dialog = UIAlertView(title: "Spread the word", message: "What's going on at this party?", delegate: self, cancelButtonTitle: "Send", otherButtonTitles: "Nevermind")
-        dialog.alertViewStyle = UIAlertViewStyle.PlainTextInput
-        dialog.textFieldAtIndex(0)?.autocapitalizationType = .Sentences
-        dialog.show()
+        let sendTheWordAlertController = UIAlertController(title: "Spread the word", message: "What's going on at this party?", preferredStyle: .Alert)
+        self.theWordMessageAlertController = sendTheWordAlertController
+        
+        sendTheWordAlertController.addTextFieldWithConfigurationHandler { (textField: UITextField!) -> Void in
+            textField.autocapitalizationType = .Sentences
+            textField.addTarget(self, action: "alertTextFieldDidChange:", forControlEvents: .EditingChanged)
+        }
+        
+        sendTheWordAlertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+            sendTheWordAlertController.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        sendTheWordAlertController.addAction(UIAlertAction(title: "Send", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            self.sendTheWordMessage(sendTheWordAlertController.textFields?.first?.text)
+            sendTheWordAlertController.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        // make the send action disabled until text appears in the textField
+        sendTheWordAlertController.actions[1].enabled = false
+        
+        self.presentViewController(sendTheWordAlertController, animated: true, completion: nil)
     }
     
     private func scrollToTheWordBottom(animated: Bool) {
