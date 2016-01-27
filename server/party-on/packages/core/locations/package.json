@@ -1,0 +1,21 @@
+{
+  "name": "parties",
+  "version": "0.0.1",
+  "description": "Parties Package",
+  "author": {
+    "name": "Max McLennan"
+  },
+  "mean": "0.4.x",
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.4.x"
+  },
+  "dependencies": {
+    "underscore": "latest",
+    "nodemailer": "latest",
+    "nodemailer-ses-transport": "latest"
+  },
+  "devDependencies": {
+    "request": "latest"
+  } 
+}

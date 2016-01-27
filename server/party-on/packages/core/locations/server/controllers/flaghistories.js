@@ -43,8 +43,8 @@ module.exports = function(FlagHistories) {
 	var subjectline = 'Flagged Party Received - ' + new Date().toString();
 
         var mailOptions = {
-	  from: 'bedlambros.llc@gmail.com',
-	  to: 'bedlambros.llc@gmail.com',
+	  from: 'greenlightstudios.llc@gmail.com',
+	  to: 'greenlightstudios.llc@gmail.com',
 	  subject: subjectline,
 	  text: complaint
         };
