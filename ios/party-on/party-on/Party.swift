@@ -28,15 +28,29 @@ class Party: NSObject, ServerModel {
     
     var startDay: String {
         get {
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.timeZone = NSTimeZone.systemTimeZone()
-            dateFormatter.dateFormat = "MMM d"
-            return dateFormatter.stringFromDate(self.startTime)
+            return Party.partyDayFormatter.stringFromDate(self.startTime)
+        }
+    }
+    
+    var isToday: Bool {
+        get {
+            return Party.partyDayFormatter.stringFromDate(self.startTime) ==
+                Party.partyDayFormatter.stringFromDate(NSDate())
+        }
+    }
+    
+    private static var setup_once_token: dispatch_once_t = 0
+    // class-level initialize: method
+    private static func setup() {
+        dispatch_once(&setup_once_token) {
+            partyDayFormatter.timeZone = NSTimeZone.systemTimeZone()
+            partyDayFormatter.dateFormat = "MMM d"
         }
     }
     
     override init() {
         super.init()
+        Party.setup()
     }
     
     required init(json: JSON) {
@@ -73,6 +87,7 @@ class Party: NSObject, ServerModel {
         }
         
         super.init()
+        Party.setup()
         
         if let _ = json["endTime"].number {
             self.endTime = NSDate(timeIntervalSince1970: json["endTime"].number!.doubleValue / 1000)
@@ -81,6 +96,7 @@ class Party: NSObject, ServerModel {
     
     convenience init(oID: String, formattedAddress: String, location: CLLocationCoordinate2D, startTime: NSDate, endTime: NSDate?, maleCost: UInt, femaleCost: UInt, byob: Bool, colloquialName: String?, description: String?) {
         self.init()
+        Party.setup()
         self.oID = oID
         self.formattedAddress = formattedAddress
         self.location = location
@@ -133,4 +149,6 @@ class Party: NSObject, ServerModel {
         }
         return nil
     }
+    
+    private static let partyDayFormatter = NSDateFormatter()
 }

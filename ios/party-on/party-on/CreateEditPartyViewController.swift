@@ -31,7 +31,12 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var girlsPay: UITextField?
     @IBOutlet weak var providedBool: UISegmentedControl?
     @IBOutlet weak var daySegmentedControl: UISegmentedControl?
+    
+    // time picker for the Party's start time
+    // this picker should ALWAYS be set to sometime today
+    // the submit() method will add a day if a party is tomorrow
     @IBOutlet weak var startTimePicker: UIDatePicker?
+    
     @IBOutlet weak var startsLabel: UILabel?
     @IBOutlet weak var submitButton: UIButton?
     private weak var existingTimeLabel: UILabel?
@@ -44,7 +49,8 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
     var timePickerIsHidden: Bool {
         get {
             return _timePickerIsHidden
-        } set(hidden) {
+        } set {
+            let hidden = newValue
             if self.method == .POST {
                 // force showing of time picker during POST
                 _timePickerIsHidden = false
@@ -64,17 +70,18 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
     var party: Party? {
         get {
             return _party
-        } set(val) {
-            if self.method == .POST || val == nil {
+        } set {
+            if self.method == .POST || newValue == nil {
                 // can't set a party for post
                 _party = nil
             } else {
-                _party = val
+                _party = newValue
                 
                 self.address?.text = _party!.formattedAddress
                 self.guysPay?.text = String(_party!.maleCost)
                 self.girlsPay?.text = String(_party!.femaleCost)
                 self.providedBool?.selectedSegmentIndex = _party!.byob ? 1 : 0
+                self.daySegmentedControl?.selectedSegmentIndex = _party!.isToday ? 0 : 1
                 
                 // Put date into existing time label
                 let dateFormatter = NSDateFormatter()
@@ -94,8 +101,14 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
         // Setup day switch to watch for day change
         self.daySegmentedControl?.addTarget(self, action: "didToggleDay", forControlEvents: .ValueChanged)
         self.daySegmentedControl?.selectedSegmentIndex = 0
-        didToggleDay()
         
+        if method == .POST {
+            // @hack - for creation of new parties, init the startTimePicker with its minimum
+            //         PUT doesn't need this b/c toggleEditingTime: will handle its init
+            didToggleDay()
+            self.startTimePicker?.date = self.startTimePicker!.minimumDate!
+        }
+
         // Font sizing for segmented controls
         let segmentedControlFont = UIFont.systemFontOfSize(11.0)
         self.daySegmentedControl?.setTitleTextAttributes([NSFontAttributeName: segmentedControlFont], forState: .Normal)
@@ -317,18 +330,27 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
     
     func didToggleDay() {
         // Change allowed range of date picker based on day
+        let now = NSDate(timeIntervalSinceNow: 0)
         let calendar = NSCalendar.currentCalendar()
-        let currentMinutes = calendar.component(.Minute, fromDate: NSDate(timeIntervalSinceNow: 0))
-        let minutesAwayFromPreviousFifteenInterval = currentMinutes % 15
-
+        let (minHours, minMinutes) = minimumPickableHoursAndMinutes()
+        
+        let minimumDateComponents = calendar.components([.Year, .Month, .Day], fromDate: now)
+        minimumDateComponents.calendar = calendar
+        minimumDateComponents.timeZone = calendar.timeZone
+        minimumDateComponents.hour = minHours
+        minimumDateComponents.minute = minMinutes
+        
+        self.startTimePicker?.minimumDate = minimumDateComponents.date!
+        
         if self.daySegmentedControl!.selectedSegmentIndex == 0 {
-            // Today
-            let minDate = NSDate(timeIntervalSinceNow: NSTimeInterval(-60 * minutesAwayFromPreviousFifteenInterval))
-            self.startTimePicker?.minimumDate = minDate
-            self.startTimePicker?.setDate(minDate, animated: true)
-        } else {
-            // Tomorrow
-            self.startTimePicker?.minimumDate = NSDate(timeIntervalSinceNow: -Double.infinity)
+            // We just chose Today
+            let currentPickerDateComponents = calendar.components([.Hour, .Minute], fromDate: self.startTimePicker!.date)
+            let (currentHours, currentMinutes) = (currentPickerDateComponents.hour, currentPickerDateComponents.minute)
+            
+            if (currentHours * 60) + currentMinutes < (minHours * 60) + minMinutes {
+                // we are overflowing the acceptable minimum
+                self.startTimePicker?.date = minimumDateComponents.date!
+            }
         }
     }
     
@@ -338,7 +360,53 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
         if self.method == .POST {
             fatalError("Should never be able to toggleEditingTime during POST")
         }
+        // toggle hidden property
         self.timePickerIsHidden = !self.timePickerIsHidden
+        
+        if !self.timePickerIsHidden {
+            let calendar = NSCalendar.currentCalendar()
+            let now = NSDate(timeIntervalSinceNow: 0)
+            // if unhiding, change the time in accordance with the party
+            if let existingParty = self.party {
+                let partyDateComponents = calendar.components([.Minute, .Hour], fromDate: existingParty.startTime)
+                let (partyHours, partyMinutes) = (partyDateComponents.hour, partyDateComponents.minute)
+                let (minHours, minMinutes) = minimumPickableHoursAndMinutes()
+                
+                var (hours, minutes) = (partyHours, partyMinutes)
+                
+                if existingParty.isToday && (partyHours * 60) + partyMinutes < (minHours * 60) + minMinutes {
+                    (hours, minutes) = (minHours, minMinutes)
+                }
+                
+                let pickerDateComponents = calendar.components([.Year, .Month, .Day], fromDate: now)
+                pickerDateComponents.calendar = calendar
+                pickerDateComponents.timeZone = calendar.timeZone
+                pickerDateComponents.hour = hours
+                pickerDateComponents.minute = minutes
+                self.startTimePicker?.setDate(pickerDateComponents.date!, animated: false)
+            }
+        }
+    }
+    
+    // returns the minimum hours and minutes that can be used on the startTimePicker
+    // does NOT return an NSDate because all times on startTimePicker are assumed to be TODAY
+    private func minimumPickableHoursAndMinutes() -> (Hours: Int, Minutes: Int) {
+        let now = NSDate(timeIntervalSinceNow: 0)
+        let calendar = NSCalendar.currentCalendar()
+        
+        if self.daySegmentedControl!.selectedSegmentIndex == 0 {
+            // Today
+            var currentMinutes = calendar.component(.Minute, fromDate: now)
+            let currentHours = calendar.component(.Hour, fromDate: now)
+            let minutesAwayFromPreviousFifteenInterval = currentMinutes % 15
+            
+            currentMinutes -= minutesAwayFromPreviousFifteenInterval
+            return (currentHours, currentMinutes)
+            
+        } else {
+            // Tomorrow
+            return (0, 0)
+        }
     }
 
     
