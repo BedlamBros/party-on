@@ -43,16 +43,18 @@ module.exports = function(FlagHistories) {
 	var subjectline = 'Flagged Party Received - ' + new Date().toString();
 
         var mailOptions = {
-	  from: 'greenlightstudios.llc@gmail.com',
-	  to: 'greenlightstudios.llc@gmail.com',
+	  from: 'bedlamcorp.llc@gmail.com',
+	  to: 'bedlamcorp.llc@gmail.com',
 	  subject: subjectline,
 	  text: complaint
         };
-    transport.sendMail(mailOptions, function(error, info){
+      transport.sendMail(mailOptions, function(error, info){
 	if (error){
-	  return console.log(error);
+	  console.log(error);
+	  error = {'status': 500, 'message': 'Failed to send flagging email'}
+	  return res.status(500).send(error);
 	}
-	next();
+	return next();
     });             
     },
     isBanned: function(req, res) {
