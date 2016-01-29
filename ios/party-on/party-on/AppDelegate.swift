@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     weak var partyDetailControllerInFocus: PartyDetailViewController?
+    
+    static let bannedAlertController = UIAlertController(title: "Sorry", message: "Your account has been banned for inappropriate content", preferredStyle: UIAlertControllerStyle.Alert)
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -54,7 +56,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController?.presentViewController(eulaController, animated: true, completion: nil)
         } else {
             // check for banned status immediately
-            self.checkForBanned()
+            MainUser.checkForBannedStatus({ (isBanned: Bool) -> Void in
+                if isBanned {
+                    let bannedCtrl = AppDelegate.bannedAlertController
+                    let alreadyLockedOut = bannedCtrl.presentingViewController?.presentedViewController == bannedCtrl
+                        || (bannedCtrl.navigationController != nil && bannedCtrl.navigationController?.presentingViewController?.presentedViewController == bannedCtrl.navigationController)
+                        || bannedCtrl.tabBarController?.presentingViewController is UITabBarController
+                    
+                    if !alreadyLockedOut {
+                        // show ban controller if it is not already visible
+                        self.window?.rootViewController?.presentViewController(AppDelegate.bannedAlertController, animated: true, completion: nil)
+                    }
+                }
+            })
         }
     }
 
@@ -64,15 +78,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
-    }
-    
-    func checkForBanned() {
-        MainUser.checkForBannedStatus { (isBanned) -> Void in
-            if isBanned {
-                let alert = UIAlertController(title: "Sorry", message: "Your account has been banned for inappropriate content", preferredStyle: UIAlertControllerStyle.Alert)
-                self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
-            }
-        }
     }
     
     static let didAcceptEULADefaultsKey = "did-accept-eula"

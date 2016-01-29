@@ -77,13 +77,18 @@ class UniversityPickerController: UIViewController {
                 } else {
                     SVProgressHUD.showAndBlockInteraction(self.view)
                     MainUser.loginWithFBToken({ (err) -> Void in
-                        SVProgressHUD.dismissAndUnblockInteraction(self.view)
                         if err != nil {
                             alertUserOfLoginError()
                         } else {
                             self.updateLoginLogoutButtonTitle()
-                            UIAlertView(title: "Welcome to Hangloose", message: "Now that you're logged in, you can create your own parties.", delegate: nil, cancelButtonTitle: "Ok").show()
-                            MainUser.checkForBannedStatus(nil)
+                            MainUser.checkForBannedStatus({ (isBanned: Bool) -> Void in
+                                SVProgressHUD.dismissAndUnblockInteraction(self.view)
+                                if isBanned {
+                                    self.presentViewController(AppDelegate.bannedAlertController, animated: true, completion: nil)
+                                } else {
+                                    UIAlertView(title: "Welcome to Hangloose", message: "Now that you're logged in, you can create your own parties.", delegate: nil, cancelButtonTitle: "Ok").show()
+                                }
+                            })
                         }
                     })
                 }

@@ -236,8 +236,8 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
     func loginDidSucceed() {
         print("login did succeed")
         // Now we need to check for banned status to be safe
-        if let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate {
-            appDelegate.checkForBanned()
+        MainUser.checkForBannedStatus { (isBanned: Bool) -> Void in
+            self.presentViewController(AppDelegate.bannedAlertController, animated: true, completion: nil)
         }
     }
     
@@ -253,6 +253,7 @@ class PartySearchViewController: UIViewController, UITableViewDataSource, UITabl
                 self.loginDidFail(err)
             } else {
                 // logged in and got our user data
+                self.loginDidSucceed()
                 self.performSegueWithIdentifier(self.createPartySegueIdentifier, sender: self)
             }
         })

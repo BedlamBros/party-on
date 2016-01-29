@@ -139,6 +139,17 @@ class CreateEditPartyViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // check to see if user is banned here
+        MainUser.checkForBannedStatus { (isBanned: Bool) -> Void in
+            if isBanned {
+                self.presentViewController(AppDelegate.bannedAlertController, animated: true, completion: nil)
+            }
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

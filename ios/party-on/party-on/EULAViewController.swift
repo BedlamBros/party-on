@@ -36,11 +36,7 @@ class EULAViewController: UIViewController {
         userDefaults.setBool(true, forKey: AppDelegate.didAcceptEULADefaultsKey)
         userDefaults.synchronize()
         
-        self.dismissViewControllerAnimated(true) { () -> Void in
-            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            // now check for banned status
-            appDelegate.checkForBanned()
-        }
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
 }

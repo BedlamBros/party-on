@@ -39,6 +39,13 @@ class MainUser: User {
         }
     }
     
+    private static var _confirmedAsBanned: Bool = false
+    static var userIsBanned: Bool {
+        get {
+            return _confirmedAsBanned
+        }
+    }
+    
     func logout() {
         MainUser.storedUserId = nil
         FBSDKLoginManager().logOut()
@@ -81,6 +88,11 @@ class MainUser: User {
     }
     
     class func checkForBannedStatus(callback: MainUserIsBannedCallback?) {
+        if MainUser.userIsBanned {
+            // return immediately if user was already banned
+            callback?(isBanned: true)
+            return
+        }
         if let _ = MainUser.storedUserId {
             // we do have a stored user, check it
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
@@ -94,7 +106,9 @@ class MainUser: User {
                 let endpoint = API_ROOT + "/users/bannedstatus"
                 self.applyAuthHeaders(self.httpManager)
                 self.httpManager.GET(endpoint, parameters: nil, success: { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
-                    return syncCallback(isBanned: JSON(response)["banned"].boolValue)
+                    let isBanned = JSON(response)["banned"].boolValue
+                    MainUser._confirmedAsBanned = isBanned
+                    return syncCallback(isBanned: isBanned)
                     }, failure: { (operation: AFHTTPRequestOperation?, err: NSError) -> Void in
                         // failed to ascertain if the user was banned, default to not banning them
                         return syncCallback(isBanned: false)
