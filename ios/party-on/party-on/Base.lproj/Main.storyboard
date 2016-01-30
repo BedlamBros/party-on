@@ -262,7 +262,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yrh-ed-zIT" userLabel="LaunchButtonContainer">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yrh-ed-zIT" userLabel="LaunchButtonContainer">
                                 <rect key="frame" x="16" y="525" width="288" height="35"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jgk-wm-ntI">
@@ -305,21 +305,24 @@
                                             <rect key="frame" x="0.0" y="0.0" width="288" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Time" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tps-U6-RDo">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Time" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tps-U6-RDo">
                                                     <rect key="frame" x="238" y="31" width="42" height="12"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="12" id="NBT-47-gul"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="11"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="tvh-BJ-13o">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="tvh-BJ-13o">
                                                     <rect key="frame" x="8" y="11" width="280" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="16"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="tvh-BJ-13o" firstAttribute="leading" secondItem="daw-Tt-Get" secondAttribute="leadingMargin" id="7MD-Yc-Kyn"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="tps-U6-RDo" secondAttribute="bottom" constant="-7" id="7wp-NM-5gS"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="tps-U6-RDo" secondAttribute="bottom" id="7wp-NM-5gS"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="tvh-BJ-13o" secondAttribute="trailing" id="8hY-gt-hmq"/>
                                                 <constraint firstItem="tps-U6-RDo" firstAttribute="trailing" secondItem="daw-Tt-Get" secondAttribute="trailingMargin" constant="6" id="I1b-SK-pTE"/>
                                                 <constraint firstItem="tvh-BJ-13o" firstAttribute="top" secondItem="daw-Tt-Get" secondAttribute="topMargin" id="Maq-Vi-Ju0"/>

@@ -47,8 +47,12 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         get {
             return _party
         } set {
-            let val = newValue
-            _party = val
+            var shouldUpdateTheWord = true
+            if newValue != nil && _party != nil {
+                shouldUpdateTheWord = newValue.theWord.count != _party.theWord.count
+            }
+            
+            _party = newValue
             
             // Fill in Party data
             self.navigationItem.title = _party.formattedAddress
@@ -63,16 +67,16 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             timeFormatter.timeZone = NSTimeZone.systemTimeZone()
             timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
             self.startsLabel?.text = timeFormatter.stringFromDate(_party.startTime)
-            
-            // update The Word
-            self.theWordTableView?.reloadData()
-            self.scrollToTheWordBottom(true)
+
+            if shouldUpdateTheWord {
+                self.theWordTableView?.reloadData()
+                self.scrollToTheWordBottom(true)
+            }
         }
     }
     
-    
-    private var wordTimeLabelHeight: CGFloat?
     private var refreshPartyTimer: NSTimer?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -258,33 +262,27 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
         }
     }
     
-    func alertTextFieldDidChange(sender: UITextField?) {
-        var indexOfButtonToDisable: Int!
-        var alertController: UIAlertController!
+    func alertTextFieldDidChange(sender: UITextField!) {
+        // decide if alert controller's buttons should be enabled or disabled
+        // based on the values of their text fields
         
         if let textField = self.flagMessageAlertController?.textFields?.first {
             // textField belongs to flagMessageAlertController
             if sender === textField {
-                indexOfButtonToDisable = 0
-                alertController = self.flagMessageAlertController!
+                self.flagMessageAlertController!.actions[0].enabled =
+                    sender.text != nil && sender.text!.characters.count > 0
             }
         }
         
         if let textField = self.theWordMessageAlertController?.textFields?.first {
             // textField belongs to theWordMessageAlertController
             if sender === textField {
-                indexOfButtonToDisable = 1
-                alertController = self.theWordMessageAlertController!
+                self.theWordMessageAlertController!.actions[1].enabled =
+                    sender.text != nil &&
+                    sender.text!.characters.count > 0 &&
+                    sender.text!.characters.count <= TheWordMessage.maxAllowedMessageLength
             }
         }
-        
-        if indexOfButtonToDisable == nil || alertController == nil {
-            // we don't know who this textField is, ignore
-            return
-        }
-        
-        alertController.actions[indexOfButtonToDisable].enabled =
-            sender?.text != nil && sender!.text!.characters.count > 0
     }
     
     func sendTheWordMessage(wordText: String?) {
@@ -357,10 +355,6 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             timeFormatter.dateFormat = "h:mm a"
             wordCell.dateLabel?.text = timeFormatter.stringFromDate(self.party.theWord[indexPath.row].created)
             
-            if let wordCellTimeHeight = wordCell.dateLabel?.frame.height {
-                self.wordTimeLabelHeight = wordCellTimeHeight
-            }
-            
             cell = wordCell
         } else {
             // last row in the table
@@ -378,23 +372,24 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
             text = message.body
         } else {
             // last row in table
-            text = ""
+            return minTheWordCellHeight
         }
         
         let width = tableView.frame.width
         
-        let font = UIFont.systemFontOfSize(16)
+        var font = UIFont.systemFontOfSize(16)
+        if let courierFont = UIFont(name: "AmericanTypewriter", size: 15) {
+            font = courierFont
+        }
         
         let attributedString = NSAttributedString(string: text, attributes: [NSFontAttributeName: font])
-        let boundingRect = attributedString.boundingRectWithSize(CGSizeMake(width, CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
+        
+        let bodySize = attributedString.size()
+        let linesOfText = ceil(bodySize.width / width) + 1
+        let requiredBodyDrawHeight = max(bodySize.height, minTheWordBodyLabelHeight) * linesOfText
 
-        var timeLabelHeight: CGFloat
-        if let h = wordTimeLabelHeight {
-            timeLabelHeight = h
-        } else {
-            timeLabelHeight = minTheWordDateLabelHeight
-        }
-        return max(ceil(boundingRect.height) + timeLabelHeight, minTheWordCellHeight)
+        let timeLabelHeight = constTheWordDateLabelHeight
+        return max(ceil(requiredBodyDrawHeight) + timeLabelHeight, minTheWordCellHeight)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -476,7 +471,8 @@ class PartyDetailViewController: UIViewController, MFMessageComposeViewControlle
     private let theWordWriteCellReuseIdentifier = "TheWordWriteCell"
     private let editPartySegueIdentifier = "EditPartySegue"
     private let minTheWordCellHeight: CGFloat = 44
-    private let minTheWordDateLabelHeight: CGFloat = 12
+    private let constTheWordDateLabelHeight: CGFloat = 12
+    private let minTheWordBodyLabelHeight: CGFloat = 21
     private let refreshPartyTimeInterval: NSTimeInterval = 10
 }
 

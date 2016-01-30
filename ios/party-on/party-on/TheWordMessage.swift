@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 
 class TheWordMessage: NSObject, ServerModel {
+    static let maxAllowedMessageLength: Int = 140
     
     var oID: String?
     var body: String!
