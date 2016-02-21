@@ -11,7 +11,9 @@
     "npm": "1.4.x"
   },
   "dependencies": {
-    "underscore": "latest"                 
+    "underscore": "latest",
+    "nodemailer": "latest",
+    "nodemailer-ses-transport": "latest"
   },
   "devDependencies": {
     "request": "latest"

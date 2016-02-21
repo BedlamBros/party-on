@@ -72,7 +72,7 @@ class MainUser: User {
                 self.storedUserId = self.sharedInstance?.oID
                 
                 return syncCallback(err: nil)
-                }, failure: { (operation: AFHTTPRequestOperation, err: NSError) -> Void in
+                }, failure: { (operation: AFHTTPRequestOperation?, err: NSError) -> Void in
                 // failure
                 return syncCallback(err: err)
             })
@@ -94,7 +94,7 @@ class MainUser: User {
                 self.applyAuthHeaders(self.httpManager)
                 self.httpManager.GET(endpoint, parameters: nil, success: { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
                     return syncCallback(isBanned: JSON(response)["banned"].boolValue)
-                    }, failure: { (operation: AFHTTPRequestOperation, err: NSError) -> Void in
+                    }, failure: { (operation: AFHTTPRequestOperation?, err: NSError) -> Void in
                         // failed to ascertain if the user was banned, default to not banning them
                         return syncCallback(isBanned: false)
                 })

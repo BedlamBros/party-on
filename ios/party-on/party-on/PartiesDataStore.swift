@@ -61,7 +61,7 @@ class PartiesDataStore: NSObject {
                     let err = NSError(domain: "MMcLennan.party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "could not decode party json"])
                     return syncCallback(err: err, parties: nil)
                 }
-                }, failure: { (operation: AFHTTPRequestOperation!, err: NSError!) -> Void in
+                }, failure: { (operation: AFHTTPRequestOperation?, err: NSError!) -> Void in
                     // ON ERROR
                     return syncCallback(err: err, parties: nil)
             })
@@ -83,7 +83,7 @@ class PartiesDataStore: NSObject {
                 let party = Party(json: JSON(response))
                 self.updateSingleParty(party)
                 return syncCallback(err: nil, party: party)
-                }, failure: { (operation: AFHTTPRequestOperation, err: NSError) -> Void in
+                }, failure: { (operation: AFHTTPRequestOperation?, err: NSError) -> Void in
                     return syncCallback(err: err, party: nil)
             })
         })
@@ -108,7 +108,7 @@ class PartiesDataStore: NSObject {
             
             self.httpManager.POST(endpoint, parameters: params.dictionaryObject, success: { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
                     return syncCallback(nil)
-                }, failure: { (operation: AFHTTPRequestOperation, err: NSError) -> Void in
+                }, failure: { (operation: AFHTTPRequestOperation?, err: NSError) -> Void in
                     return syncCallback(err)
             })
         })
@@ -143,7 +143,7 @@ class PartiesDataStore: NSObject {
                     } else {
                         return syncCallback(err: NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not send word for party not stored locally"]), party: nil)
                     }
-                    }, failure: { (operation: AFHTTPRequestOperation, err: NSError) -> Void in
+                    }, failure: { (operation: AFHTTPRequestOperation?, err: NSError) -> Void in
                     return syncCallback(err: err, party: nil)
                 })
             })
@@ -196,7 +196,7 @@ class PartiesDataStore: NSObject {
                 
                 return syncCallback(err: nil, party: party)
             }
-            let failure: (AFHTTPRequestOperation, AnyObject) -> Void = { (operation: AFHTTPRequestOperation, response: AnyObject) -> Void in
+            let failure: (AFHTTPRequestOperation?, AnyObject) -> Void = { (operation: AFHTTPRequestOperation?, response: AnyObject) -> Void in
                 let err = NSError(domain: "party-on", code: 1, userInfo: [NSLocalizedDescriptionKey: "Server request failed"])
                 return syncCallback(err: err, party: nil)
             }

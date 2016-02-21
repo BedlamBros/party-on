@@ -1,53 +1,134 @@
-.page-header {
-    padding-bottom: 0 !important;
-    margin: 0 !important;
-    border-bottom: 0 !important;
-}
-.page-header .navbar-nav {
-    float: right;
-}
-.page-header > div > div, .page-header > div > ul {
-    display: inline-block;
-}
-.text-edit {
-    float: right; 
-    margin-top: 12px;
-}
-.account {
-    text-align:right;
-}
-.account > div, .account > ul {
-    text-align: left;
-}
-.navbar .nav > li > a.brand {
-    padding-left: 20px;
-    margin-left: 0
-}
-.content {
-    margin-top: 70px;
-    width: 100%
-}
-footer {
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	height: 30px;
-	width: 100%;
-	background: #ddd;
-	-webkit-box-shadow: 0 8px 6px 6px black;
-	-moz-box-shadow: 0 8px 6px 6px black;
-	box-shadow: 0 8px 6px 6px black
-}
-footer p {
-	padding: 5px 0 12px 10px
+html, body {
+  height: 100%;
+  width: 100%;
+  background: #f0f0f0;
+  text-align: center;
 }
 
-.featuredpic img{
-  width:510px;
+/* padded section */
+.pad-section {
+  padding: 50px;
+  height: 100vh;
 }
-/*.ng-invalid.ng-dirty{*/
-    /*border-color:#FA787E;*/
-/*}*/
-/*.ng-valid.ng-dirty{*/
-    /*border-color:#78FA89;*/
-/*}*/
+
+h1, h2 {
+    color: #C93535;
+}
+img {
+    height: 600px;
+    width: auto;
+}
+
+.selected {
+    background-color: #f0f0f0;
+    color: #C93535;
+}
+
+nav li {
+    font-size: 18px;
+}
+
+.selected a {
+    color: #C93535;
+    text-decoration: underline;
+}
+
+/* vertical-centered text */
+.text-vcenter {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.text-center-title {
+    text-align: center;
+}
+
+.text-vcenter h1 {
+  text-align: center;
+  font-size: 4.5em;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+/* additional sections */
+#home {
+  background-image: url('../../assets/img/Bokeh1-Stock Video.gif');
+  margin-top: -100px;
+  padding-top: 200px;
+  padding: bottom 100px;
+  color: #FFFFFF;
+  display: table;
+  position: relative;
+  width: 100%;
+  height: 120vh;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+#opacity {
+    background: rgba(100, 100, 100, 0.2);
+}
+
+#home .text-center-title h1{
+    font-size: 48px;
+}
+
+#about {
+}
+
+#services {
+  background-color: #306d9f;
+  color: #ffffff;
+}
+#services .glyphicon {
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  display: inline-block;
+  font-size: 60px;
+  height: 140px;
+  line-height: 140px;
+  text-align: center;
+  vertical-align: middle;
+  width: 140px;
+}
+
+#information .panel {
+  opacity: 0.85;
+}
+
+footer {
+  padding: 20px 0;
+}
+footer .glyphicon {
+  color: #333333;
+  font-size: 60px;
+}
+footer .glyphicon:hover {
+  color: #306d9f;
+}
+
+.navbar-brand {
+    font-size: 36px;
+}
+
+/*
+ * Footer
+ */
+.mastfoot a {
+    color: #C93535;
+}
+.mastfoot {
+  color: #999; /* IE8 proofing */
+  width: 100%;
+  border-radius: 15px;
+  border: 3px solid #000000;
+  background-color: rgba(100, 100, 100, 0.8);
+  color: rgba(255,255,255,.5);
+  text-align: center;
+  position: fixed;
+  bottom: 0px;
+  height: 60px;
+}

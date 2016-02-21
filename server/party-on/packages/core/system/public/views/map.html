@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<!--<link rel="stylesheet" type="text/css" href="assets/css/styles.css">-->
+<style>
+html {
+	padding: 0px;
+	margin: 0px;
+	display: inline;
+}
+#map {
+	float: left;
+	margin-right: 30px;
+}
+#tack {
+	visibility: none;
+	position: absolute;
+}
+b {
+	padding-top: 30px;
+}
+#list {
+
+}
+</style>
+
+<title>The Imperial City</title>
+
+<img id="map" src="http://i.imgur.com/Zh0Ww0g.jpg?1" />
+
+<h3>Known Locations</h3>
+<ul id="list">
+	<b>Points of Interest</b>
+	<li>The Boozey Barnacle</li>
+	<li>The People's Tower</li>
+	<li>Temple of Pelor</li>
+	<li>Temple of Lesser Deities</li>
+	<li>Gladiator Arena</li>
+	<li>Mercenaries' Guild</li>
+	<hr>
+	<b>Shops</b>
+	<li>Essential Armaments</li>
+	<li>Yllavuia’s Alchemical Wares</li>
+	<li>The Modern Magician</li>
+	<li>Hunting Buddy</li>
+	<li>Victaire's Forge</li>
+	<li>Malek's General Store</li>
+</ul>
+
+<img id="tack" src="http://files.softicons.com/download/application-icons/free-developer-icons-by-designkode/png/32/thumbtack-blue.png" />
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"> </script>
+<script type="text/javascript"> 
+map = document.getElementById("map");
+pin = document.getElementById("tack");
+
+$( "li" ).hover(
+  function(){
+  	var text = $(this).text();
+  	console.log(text);
+  	moveCursor(text);
+  }
+);
+
+$(map).click(function(e){
+   var mapOffset = $(this).parent().offset(); 
+   var relX = e.pageX - mapOffset.left;
+   var relY = e.pageY - mapOffset.top;
+   console.log(relX + " , " + relY);
+});
+
+var locations = [
+	{
+		"name": "The Boozey Barnacle",
+		"x": 436,
+		"y": 228 
+	},
+	{
+		"name": "The People's Tower",
+		"x": 664,
+		"y": 430 
+	},
+	{
+		"name": "Temple of Pelor",
+		"x": 933,
+		"y": 595 
+	},
+	{
+		"name": "Gladiator Arena",
+		"x": 359,
+		"y": 500 
+	},
+	{
+		"name": "Mercenaries' Guild",
+		"x": 403,
+		"y": 520 
+	},
+	{
+		"name": "Temple of Lesser Deities",
+		"x": 769,
+		"y": 515 
+	},
+	{
+		"name": "Essential Armaments",
+		"x": 626,
+		"y": 610 
+	},
+	{
+		"name": "Yllavuia’s Alchemical Wares",
+		"x": 805,
+		"y": 620 
+	},
+	{
+		"name": "The Modern Magician",
+		"x": 744,
+		"y": 650 
+	},
+	{
+		"name": "Hunting Buddy",
+		"x": 885,
+		"y": 425 
+	},
+	{
+		"name": "Victaire's Forge",
+		"x": 527,
+		"y": 468 
+	},
+	{
+		"name": "Malek's General Store",
+		"x": 545,
+		"y": 280 
+	}
+]
+
+$("shadow").css({visibility: "none"});
+
+moveCursor = function(text){
+	for (var i = 0; i < locations.length; i++){
+		if (locations[i].name === text){
+			var mapOffset = $("#map").offset();
+			var x = locations[i].x + mapOffset.left - 8;
+			var y = locations[i].y + mapOffset.top - 9;
+			$("#tack").css({left: x + "px"});
+			$("#tack").css({top: y + "px"});
+		}
+	}
+}
+</script>
+
+</html>
+
