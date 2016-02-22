@@ -48,11 +48,13 @@ module.exports = function(FlagHistories) {
 	  subject: subjectline,
 	  text: complaint
         };
-    transport.sendMail(mailOptions, function(error, info){
+      transport.sendMail(mailOptions, function(error, info){
 	if (error){
-	  return console.log(error);
+	  console.log(error);
+	  error = {'status': 500, 'message': 'Failed to send flagging email'}
+	  return res.status(500).send(error);
 	}
-	next();
+	return next();
     });             
     },
     isBanned: function(req, res) {
