@@ -1,13 +1,40 @@
+/* set font sizes by media width 
+the order of these matters*/
+@media (max-width: 623px) {
+    #legal-text-container {
+    	font-size: 18px;
+    }
+}
+
+@media (min-width: 724px) {
+    #legal-text-container {
+    	font-size: 17px;
+    }
+}
+
+@media (min-width: 780px) {
+    #legal-text-container {
+    	font-size: 16px;
+    }
+}
+
+
+@media (min-width: 858px) {
+    #legal-text-container {
+    	font-size: 14px;
+    }
+}
 #legal-text-container {
 	border: 2px solid black;
 	border-radius: 10px;
 	width: auto;
 	margin: 0 auto;
-	font-size: 28px;
+	font-size: 18px;
 	text-align: left;
 	padding: 15px;
 	padding-bottom: 5px;
 	background: #fff;
+	display: block;
 }
 .container {
 	margin-top: 100px;
