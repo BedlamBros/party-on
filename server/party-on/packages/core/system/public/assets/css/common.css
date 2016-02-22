@@ -37,11 +37,15 @@ nav li {
 .text-vcenter {
   display: table-cell;
   text-align: center;
+  margin: 0 auto;
   vertical-align: middle;
+  position: relative;
+  top: 200px;
 }
 
 .text-center-title {
     text-align: center;
+    vertical-align: middle;
 }
 
 .text-vcenter h1 {
@@ -52,12 +56,16 @@ nav li {
   padding: 0;
 }
 
+.btn {
+    background-color: #C93535;
+    color: #fff;
+}
+
 /* additional sections */
 #home {
   background-image: url('../../assets/img/Bokeh1-Stock Video.gif');
   margin-top: -100px;
-  padding-top: 200px;
-  padding: bottom 100px;
+  padding-top: 300px;
   color: #FFFFFF;
   display: table;
   position: relative;
@@ -67,13 +75,21 @@ nav li {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  vertical-align: middle;
+  font-family: "Courier New", Courier, monospace;
+  -webkit-text-stroke: 1px black;
+
 }
+#home h3 {
+    font-size: 36px;
+}
+
 #opacity {
-    background: rgba(100, 100, 100, 0.2);
 }
 
 #home .text-center-title h1{
-    font-size: 48px;
+    color: #fff;
+    font-size: 82px;
 }
 
 #about {
@@ -121,14 +137,15 @@ footer .glyphicon:hover {
     color: #C93535;
 }
 .mastfoot {
-  color: #999; /* IE8 proofing */
-  width: 100%;
-  border-radius: 15px;
-  border: 3px solid #000000;
-  background-color: rgba(100, 100, 100, 0.8);
+  color: #fff; /* IE8 proofing */
+  width: 30%;
+  margin: 0 auto;
+  background-color: #000
   color: rgba(255,255,255,.5);
   text-align: center;
   position: fixed;
+  padding-bottom: 50px;
+  margin-left: 35%;
   bottom: 0px;
   height: 60px;
 }

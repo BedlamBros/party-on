@@ -15,6 +15,8 @@
     <!-- Bootstrap core CSS -->
     <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../assets/css/common.css" rel="stylesheet">
+    <link href="../../assets/css/legal.css" rel="stylesheet">
+
 
     <body>
 
@@ -31,13 +33,13 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="#">The Docket</a>
+	      <a class="navbar-brand" href="index.html">The Docket</a>
 	    </div>
 
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="#home">Home</a></li>
-	        <li><a href="#about">About</a></li>
+	        <li><a href="index.html">Home</a></li>
+	        <li><a href="#index.html#about">About</a></li>
 	        <li class="selected"><a href="#services">Legal</a></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
@@ -45,34 +47,26 @@
 	</nav>
 
 	<!-- first section - Home -->
-	<div id="home" class="home">
-	  <div class="text-vcenter">
-	    <h1>Your Night, Your Choice</h1>
-	    <h3>The Docket is an events bulletin for college towns.</h3>
-	    <a href="#about" class="btn btn-default btn-lg">Learn More</a>
-	  </div>
+	<div class="container">
+	    <ul class="pagination">
+	    	<li class="active"><a href="#/eula">EULA</a></li>
+	    	<li><a href="#privacy">Privacy Policy</a></li>
+	    	<li><a href="#terms">Terms of Use</a></li>
+	    </ul>
+	    <div id="legal-text-container">
+			Culture Page, LLC
+			End-User License Agreement
+			Culture Page, LLC does not endorse or promote underage drinking or any use or distribution of any contraband substance. Culture Page, LLC is not liable for any damages, injuries, death or any other forms of legal liability.  Any illegal action that takes place outside of this application are neither controlled nor endorsed by Culture Page LLC.
+	    </div>
 	</div>
 	<!-- /first section -->
-
-	<!-- second section - About -->
-	<div id="about" class="pad-section">
-	  <div class="container">
-	    <div class="row">
-	      <div class="col-sm-6">
-	        <img src="../../assets/img/party-preview-5.5in.png" alt="" />
-	      </div>
-	      <div class="col-sm-6 text-center">
-	        <h2>Get instant feedback on events as they happen.</h2>
-	        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum metus et ligula venenatis, at rhoncus nisi molestie. Pellentesque porttitor elit suscipit massa laoreet metus.</p>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!-- /second section -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="../../assets/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/skrollr.min.js"></script>
+    <script src="../../assets/js/legal-pagination.js"></script>
+
 </html>	
