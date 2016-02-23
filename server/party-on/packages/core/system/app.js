@@ -36,7 +36,7 @@ SystemPackage.register(function(app, auth, database, circles) {
   }
 
   // Adding robots and humans txt
-  app.useStatic(__dirname + '/public/assets/static');
+  app.useStatic(__dirname + '/public/assets');
 
   SystemPackage.menus.add({
     title: 'Log Out',
@@ -47,5 +47,4 @@ SystemPackage.register(function(app, auth, database, circles) {
   
 
   return SystemPackage;
-
 });

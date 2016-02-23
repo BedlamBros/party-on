@@ -59,6 +59,12 @@ angular.module('mean.system').config(['$meanStateProvider', '$urlRouterProvider'
         templateUrl: 'system/views/index.html'
       });
 
+	  $mesnStateProvider
+		.state('TheDocket',{
+			url: '/the-docket',
+			templateUrl: 'system/views/TheDocket/index.html'
+		});
+
     $meanStateProvider
       .state('Log Out', {
         controller: function () {
