@@ -41,10 +41,15 @@ module.exports = function(app, db) {
 
   // assign the template engine to .html files
   app.engine('html', consolidate[config.templateEngine]);
+	app.use(express.static(__dirname + '/../packages/core/system/public'));
 
   // set .html as the default extension
   app.set('view engine', 'html');
+	app.set('views', __dirname + '/../packages/core/system/public/views');
 
+	app.get('/testing', function(req, res) {
+		res.send('hello from config/express.js');
+	});
 
   // Dynamic helpers
   app.use(helpers(config.app.name));

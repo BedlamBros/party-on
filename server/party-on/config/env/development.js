@@ -7,7 +7,7 @@ module.exports = {
     format: 'tiny'
   },
   //  aggregate: 'whatever that is not false, because boolean false value turns aggregation off', //false
-  aggregate: false,
+  aggregate: true,
   mongoose: {
     debug: false
   },
@@ -16,7 +16,7 @@ module.exports = {
   },
   hostname: 'http://localhost:80',
   app: {
-    name: 'The Docket - Get to the party faster, safer, and easier'
+    name: 'The Docket'
   },
   strategies: {
     local: {

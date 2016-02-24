@@ -61,16 +61,28 @@ angular.module('mean.system').config(['$meanStateProvider', '$urlRouterProvider'
 
     $meanStateProvider
       .state('map', {
-	url: '/map',
-	templateUrl: 'system/views/map.html'
+			url: '/map',
+			templateUrl: 'system/views/map.html'
       });
 
-    $meanStateProvider
-      .state('Log Out', {
-        controller: function () {
-          window.location = '/logout';
-        }
-      });
+		$meanStateProvider
+			.state('test', {
+				url: '/test',
+				templateUrl: '../views/thedocket/index.html'
+		})
+
+    var icons = 'admin/assets/img/icons/';
+
+    Admin.aggregateAsset('js', '../lib/ng-clip/src/ngClip.js', {
+        absolute: false,
+        global: true
+    });
+
+    Admin.aggregateAsset('js', '../lib/zeroclipboard/dist/ZeroClipboard.js', {
+        absolute: false,
+        global: true
+    });
+
   }
 ]).config(['$locationProvider',
   function($locationProvider) {
