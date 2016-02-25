@@ -16,12 +16,16 @@ var SystemPackage = new Module('system');
  */
 SystemPackage.register(function(app, auth, database, circles) {
   app.set('views', __dirname + '/server/views');
+	console.log('System module views registering at ' + 
+						 __dirname + '/server/views');
   //We enable routing. By default the Package Object is passed to the routes
   SystemPackage.routes(app, auth, database);
-
-  SystemPackage.aggregateAsset('css', 'common.css');
+	SystemPackage.aggregateAsset('css', 'public/assets/css/common.css');
 	SystemPackage.aggregateAsset('css', 'bootstrap.min.css');
-  SystemPackage.angularDependencies(['mean-factory-interceptor']);
+	SystemPackage.aggregateAsset('css', 'cover.css');
+
+  //SystemPackage.aggregateAsset('css', 'common.css');
+	//SystemPackage.aggregateAsset('css', 'bootstrap.min.css');
   
   // The middleware in config/express will run before this code
 
@@ -33,8 +37,7 @@ SystemPackage.register(function(app, auth, database, circles) {
   }
 
   // Adding robots and humans txt
-  app.useStatic(__dirname + '/public/assets');
-	console.log('USING VIEW DIR' + __dirname + '/public/assets');
+  app.useStatic(__dirname + '/public/assets/');
 
   return SystemPackage;
 });

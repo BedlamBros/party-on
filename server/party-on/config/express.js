@@ -28,8 +28,7 @@ module.exports = function(app, db) {
   // Should be placed before express.static
   // To ensure that all assets and data are compressed (utilize bandwidth)
   app.use(compression({
-    // Levels are specified in a range of 0 to 9, where-as 0 is
-    // no compression and 9 is best compression, but slowest
+		//best but slowest compression
     level: 9
   }));
 
@@ -41,16 +40,25 @@ module.exports = function(app, db) {
 
   // assign the template engine to .html files
   app.engine('html', consolidate[config.templateEngine]);
-	app.use(express.static(__dirname + '/../packages/core/system/public'));
 
   // set .html as the default extension
   app.set('view engine', 'html');
 	app.set('views', __dirname + '/../packages/core/system/public/views');
-
-	app.get('/testing', function(req, res) {
-		res.send('hello from config/express.js');
+	app.use('/assets', express.static(__dirname + '/../packages/core/system/public/assets'));
+	//override routing in the modules
+	var views_abs_path = '/home/ec2-user/party-on/server/party-on/packages/core/system/public/views';
+	app.get('/', function(req, res) {
+		res.sendFile(views_abs_path + '/index.html');
 	});
-
+	app.get('/about', function(req, res) {
+		res.sendFile(views_abs_path + '/about.html');
+	})
+	app.get('/the-docket', function(req, res) {
+		res.sendFile(views_abs_path + '/thedocket/index.html');
+	});
+	app.get('/the-docket/legal', function(req, res) {
+		res.sendFile(views_abs_path + '/thedocket/legal.html');
+	});
   // Dynamic helpers
   app.use(helpers(config.app.name));
 
@@ -58,10 +66,8 @@ module.exports = function(app, db) {
   app.use(flash());
 
   app.use(modRewrite([
-    
     '!^/api/.*|\\_getModules|\\.html|\\.js|\\.css|\\.swf|\\.jp(e?)g|\\.png|\\.ico|\\.gif|\\.svg|\\.eot|\\.ttf|\\.woff|\\.pdf$ / [L]'    
-
   ]));
 
   // app.use(seo());
-};
+}

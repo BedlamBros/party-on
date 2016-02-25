@@ -122,6 +122,10 @@ img {
     margin-top: 100px;
 }
 
+#home .btn-lrg {
+	font-size: 36px
+}
+
 /* additional sections */
 #home {
   background-image: url('../../assets/img/Bokeh1-Stock Video.gif');
@@ -194,7 +198,7 @@ footer .glyphicon:hover {
     color: #C93535;
 }
 .mastfoot {
-  color: #fff; /* IE8 proofing */
+  color: rgba(69, 69, 69, 69); /* IE8 proofing */
   width: 30%;
   margin: 0 auto;
   background-color: #000

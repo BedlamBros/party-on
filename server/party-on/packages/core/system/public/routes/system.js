@@ -50,7 +50,7 @@ angular.module('mean.system').provider('$meanState', ['$stateProvider', '$viewPa
 angular.module('mean.system').config(['$meanStateProvider', '$urlRouterProvider',
   function($meanStateProvider, $urlRouterProvider) {
     // For unmatched routes:
-    $urlRouterProvider.otherwise('/');
+    //$urlRouterProvider.otherwise('/');
 
     // states for my app
     $meanStateProvider
@@ -60,28 +60,18 @@ angular.module('mean.system').config(['$meanStateProvider', '$urlRouterProvider'
       });
 
     $meanStateProvider
-      .state('map', {
-			url: '/map',
-			templateUrl: 'system/views/map.html'
+      .state('legal', {
+			url: '/legal',
+			templateUrl: 'system/views/thedocket/legal.html'
       });
 
+			/*
 		$meanStateProvider
-			.state('test', {
-				url: '/test',
-				templateUrl: '../views/thedocket/index.html'
-		})
-
-    var icons = 'admin/assets/img/icons/';
-
-    Admin.aggregateAsset('js', '../lib/ng-clip/src/ngClip.js', {
-        absolute: false,
-        global: true
-    });
-
-    Admin.aggregateAsset('js', '../lib/zeroclipboard/dist/ZeroClipboard.js', {
-        absolute: false,
-        global: true
-    });
+		.state('thedocket', {
+			url: 'the-docket',
+			templateUrl: 'system/views/thedocket/index.html'
+		});
+	 */
 
   }
 ]).config(['$locationProvider',
