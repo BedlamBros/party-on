@@ -1,4 +1,4 @@
-html, body {
+html{
   height: 100%;
   width: 100%;
   background: #f0f0f0;
@@ -188,7 +188,7 @@ footer .glyphicon:hover {
 }
 
 .navbar-brand {
-    font-size: 36px;
+    font-size: 16px;
 }
 
 /*
@@ -208,5 +208,5 @@ footer .glyphicon:hover {
   padding-bottom: 50px;
   margin-left: 35%;
   bottom: 0px;
-  height: 60px;
+  height: 30px;
 }
