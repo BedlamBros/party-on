@@ -79,7 +79,9 @@ body {
   padding: 30px;
 }
 #inner-featurettes {
-  padding-top: 100px;
+  text-align: middle;
+  margin: 0 auto;
+  padding-top: 50px;
 }
 
 /* the app store badge */
@@ -123,6 +125,10 @@ body {
   }
 }
 
+.section h3, h1, p {
+  cursor: default;
+}
+
 /*
  * Cover
  */
@@ -145,8 +151,19 @@ body {
 .brand {
   letter-spacing: 0.1em;
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
-} 
-
+}
+.circlebg-white {
+  width: 200px;
+  height: 200px;
+  border-radius:100px;
+  padding-top: 15px;
+  text-align: center;
+  margin: 0 auto;
+  background-color: #fff;
+}
+#inner-featurettes h3 {
+  font-size: 32px;
+}
 /*
  * Footer
  */

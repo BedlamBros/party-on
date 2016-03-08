@@ -33,7 +33,7 @@
 
   <!-- <img id="green-bulb" src="../assets/img/light.png"/> -->
 
-    <div class="site-wrapper">
+    <div class="site-wrapper" id="top">
 
         <!-- navigation panel -->
           <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -46,7 +46,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="masthead-brand brand" href="#home">GreenLight Studios LLC.</a>
+                <a class="masthead-brand brand" href="#top">GreenLight Studios LLC.</a>
               </div>
 
               <div class="collapse navbar-collapse" id="navbar-collapse-main">
@@ -69,17 +69,20 @@
             <h1 class="cover-heading brand">GreenLight Studios</h1>
             <p class="lead">We are a full-stack web and app development team focused on making mobile devices usable, useful, and fun.</p>
             <p class="lead">
-              <a href="https://github.com/BedlamBros" class="btn btn-lg btn-default">Look at our work</a>
+              <!-- <a href="https://github.com/BedlamBros" class="btn btn-lg btn-default">Look at our work</a> -->
             </p>
           </div>
+
           <div class="row" id="inner-featurettes">
             <div class="col-sm-6">
-              <h3>Here are some tools we use:</h3>
-              <img style="width:150px;height:150px" src="../assets/img/icons.png" />
+              <h3>Here are some tools we use:</h3><br>
+              <div class="circlebg-white">
+                <img style="width:150px;height:150px;" src="../assets/img/icons.png" />
+              </div>
             </div>
             <div class="col-sm-6">
               <h3>Here are some things we've made:</h3>
-              <a href="https://github.com/BedlamBros"><img style="width:200px;height:200px" src="../assets/img/ic_github_lg.png" /></a>
+              <a href="https://github.com/BedlamBros"><img style="width:250px;height:250px;margin-top:-15px" src="../assets/img/ic_github_lg.png" /></a>
             </div>
           </div>
         </div>
@@ -123,4 +126,5 @@
     <script src="../assets/js/skrollr.min.js"></script>
     <script src="../assets/js/skrollr.menu.min.js"></script>
     <script src="../assets/js/landing-page-parallax.js"></script>
+    <script src="../assets/js/landing-page-brandhead.js"></script>
 </html>
