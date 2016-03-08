@@ -8,7 +8,9 @@
     <meta name="description" content="">
     <meta name="author" content="Greenlight Studios, LLC.">
   
-    <title>Greenlight Studios, LLC.</title>
+    <title>Greenlight Studios</title>
+
+    <link rel="shortcut icon" href="../assets/img/favicon.png" />
 
     <!-- Bootstrap core CSS -->
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
@@ -27,49 +29,80 @@
     <![endif]-->
   </head>
 
-  <body>
+  <body id="skrollr-body">
 
-  <img id="green-bulb" src="../assets/img/light.png"/>
+  <!-- <img id="green-bulb" src="../assets/img/light.png"/> -->
 
     <div class="site-wrapper">
 
+        <!-- navigation panel -->
+          <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="masthead-brand brand" href="#home">GreenLight Studios LLC.</a>
+              </div>
+
+              <div class="collapse navbar-collapse" id="navbar-collapse-main">
+                <ul class="nav navbar-nav navbar-right" id="nav-menu">
+                  <li class="selected"><a href="#home">Home</a></li>
+                  <li><a href="#work">Our Work</a></li>
+                  <li><a href="#contact">Contact</a></li>
+                  <li><a href="/about">Abouts Us</a></li>
+
+                  <!-- <li><a href="https://github.com/BedlamBros"><img src="../assets/img/ic_github.png" /></a></li> -->
+                </ul>
+              </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+          </nav>
+
       <div class="site-wrapper-inner">
 
-
-        <div class="cover-container">
-
-          <div class="masthead clearfix">
-            <div class="inner">
-              <!-- <img src="../assets/img/ic_iteration_3.png" style="width:50px;height:50px;dislpay:inline-block" /> -->
-              <h3 class="masthead-brand" href="/">GreenLight Studios, LLC.</h3>
-              <nav>
-                <ul class="nav masthead-nav">
-                  <li class="active"><a href="#">Home</a></li>
-                  <li><a href="/about">Abouts Us</a></li>
-                  <li><a href="/the-docket">The Docket</a></li>
-                  <li><a href="https://github.com/BedlamBros"><img src="../assets/img/ic_github.png" /></a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-
-          <div class="inner cover">
-            <h1 class="cover-heading">GreenLight Studios</h1>
-            <p class="lead">GreenLight Studios is a full-stack app development team focused on making mobile applications usable, useful, and fun.</p>
+        <div class="cover-container section" id="home">
+          <div class="row">
+            <h1 class="cover-heading brand">GreenLight Studios</h1>
+            <p class="lead">We are a full-stack web and app development team focused on making mobile devices usable, useful, and fun.</p>
             <p class="lead">
               <a href="https://github.com/BedlamBros" class="btn btn-lg btn-default">Look at our work</a>
             </p>
           </div>
+          <div class="row" id="inner-featurettes">
+            <div class="col-sm-6">
+              <h3>Here are some tools we use:</h3>
+              <img style="width:150px;height:150px" src="../assets/img/icons.png" />
+            </div>
+            <div class="col-sm-6">
+              <h3>Here are some things we've made:</h3>
+              <a href="https://github.com/BedlamBros"><img style="width:200px;height:200px" src="../assets/img/ic_github_lg.png" /></a>
+            </div>
+          </div>
+        </div>
 
+          <div id="work" class="section">
+            <div class="container">
 
+            </div> 
+          </div>
 
+          <div id="contact" class="section">
+
+          </div>
+
+          <!-- Remove links to legal docs
           <div class="mastfoot">
             <div class="inner">
               <p>Read our terms and conditions:<a href="../assets/legal/terms.txt.">Terms</a>, <a href="../assets/legal/privacy_policy.txt">Privacy Policy</a>, <a href="../assets/legal/eula.txt">End-User Licensing Agreement</a>.</p>
             </div>
           </div>
+          -->
 
-        </div>
+      </div>
 
         <!---
         <div class="badge">
@@ -80,13 +113,14 @@
       </div>
 
     </div>
+  </body>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../assets/js/jquery-1.12.0.min.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
+    <script src="../assets/js/skrollr.min.js"></script>
+    <script src="../assets/js/skrollr.menu.min.js"></script>
+    <script src="../assets/js/landing-page-parallax.js"></script>
 </html>

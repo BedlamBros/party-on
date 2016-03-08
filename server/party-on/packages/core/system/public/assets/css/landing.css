@@ -38,7 +38,11 @@ body {
 body {
   color: #fff;
   text-align: left;
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  /* text-shadow: 0 1px 3px rgba(0,0,0,.5); */
+}
+
+.section {
+  height: 100vh;
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -53,10 +57,17 @@ body {
 .site-wrapper-inner {
   display: table-cell;
   vertical-align: top;
-  background: radial-gradient(ellipse at left,  #64b058 0%,#64b058 49%,#64b058 50%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: #64b058;
+  /*background: radial-gradient(ellipse at left,  #64b058 0%,#64b058 49%,#64b058 80%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.col-sm-4 h3 {
+  padding-top: 25%;
+  font-size: 36px;
+  text-align: center;
 }
 .cover-container {
-  background-color: #e0e0e0;
+  color: #fff;
   margin-right: auto;
   margin-left: auto;
   padding: 20px;
@@ -66,6 +77,9 @@ body {
 /* Padding for spacing */
 .inner {
   padding: 30px;
+}
+#inner-featurettes {
+  padding-top: 100px;
 }
 
 /* the app store badge */
@@ -83,34 +97,21 @@ body {
 .masthead-brand {
   margin-top: 10px;
   margin-bottom: 10px;
+  /* border-bottom: groove #fff; */
+  cursor: default;
+  font-size: 24px;
 }
 
-.masthead-nav > li {
-  display: inline-block;
-}
-.masthead-nav > li + li {
-  margin-left: 20px;
-}
-.masthead-nav > li > a {
-  padding-right: 0;
-  padding-left: 0;
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff; /* IE8 proofing */
-  color: rgba(255,255,255,.75);
-  border-bottom: 2px solid transparent;
-}
-.masthead-nav > li > a:hover,
-.masthead-nav > li > a:focus {
-  background-color: transparent;
-  border-bottom-color: #a9a9a9;
-  border-bottom-color: rgba(255,255,255,.25);
-}
-.masthead-nav > .active > a,
-.masthead-nav > .active > a:hover,
-.masthead-nav > .active > a:focus {
+.navbar-fixed-top {
+  background-color: #64b058;
   color: #fff;
-  border-bottom-color: #fff;
+}
+.navbar-nav li {
+  font-size: 24px;
+  padding-top: 10px;
+}
+#nav-menu > li > a{
+  color: #fff;
 }
 
 @media (min-width: 768px) {
@@ -122,26 +123,29 @@ body {
   }
 }
 
-#green-bulb {
-  display: none;
-}
-
 /*
  * Cover
  */
 .cover {
-  color: #000;
-  padding: 0 20px;
   text-align: left;
+  text-shadow: none;
 }
 .cover .btn-lg {
   padding: 10px 20px;
   font-weight: bold;
+  border-width: 4px;
 }
 .lead {
   text-shadow: none;
 }
 
+/*
+ * Snazz
+ */
+.brand {
+  letter-spacing: 0.1em;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+} 
 
 /*
  * Footer
@@ -162,6 +166,9 @@ body {
   .masthead {
     position: fixed;
     top: 0;
+    background-color: #64b058;
+    margin-top:-2px;
+    border: solid 2px #fff;
   }
   .mastfoot {
     position: fixed;
@@ -180,15 +187,87 @@ body {
   }
 }
 
+.masthead-brand {
+  font-size: 36px;
+}
+#home {
+  text-align: center;
+}
+
+.masthead,
+.mastfoot,
+.cover-container {
+  width: 100vh;
+}
+
+@media (max-width: 600px) {
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 540px;
+  }
+  .cover-heading {
+    font-size: 24px;
+    letter-spacing: 0.3em;
+    padding-bottom: 30px;
+  }
+  .cover-heading {
+    font-size: 42px;
+    letter-spacing: 0.3em;
+    padding-bottom: 30px;
+  }
+  .cover {
+    margin-top: 100px;
+  }
+  .section {
+    padding-top: 100px;
+  }
+  .masthead-brand {
+    font-size: 36px;
+  }
+}
+
 @media (min-width: 992px) {
   .masthead,
   .mastfoot,
   .cover-container {
-    width: 700px;
+    width: 880px;
   }
+}
+
+@media (min-width: 1100px) {
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 980px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 1260px;
+  }
+  .cover-heading {
+    font-size: 42px;
+    letter-spacing: 0.3em;
+    padding-bottom: 30px;
+  }
+  .cover {
+    margin-top: 100px;
+  }
+  #home {
+    margin-top: 150px;
+  }
+  #home {
+    text-align: center;
+  }
+}
+  /*
   #green-bulb {
     display: inline;
     position: absolute;
     left: 150px;
   }
-}
+  */
