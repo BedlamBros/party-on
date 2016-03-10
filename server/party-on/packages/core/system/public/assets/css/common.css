@@ -141,9 +141,7 @@ img {
   -o-background-size: cover;
   background-size: cover;
   vertical-align: middle;
-  font-family: "Courier New", Courier, monospace;
-  -webkit-text-stroke: 1px black;
-
+  font-family: 'Special Elite';
 }
 
 #opacity {
