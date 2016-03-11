@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Greenlight Studios, LLC.">
   
-    <title>Greenlight Studios</title>
+    <title>GreenLight Studios</title>
 
     <link rel="shortcut icon" href="../assets/img/favicon.png" />
 
@@ -48,10 +48,10 @@
 
               <div class="collapse navbar-collapse" id="navbar-collapse-main">
                 <ul class="nav navbar-nav navbar-right" id="nav-menu">
-                  <li class="selected"><a href="#home">Home</a></li>
-                  <li><a href="#work">Our Work</a></li>
-                  <li><a href="#contact">Contact</a></li>
-                  <li><a href="/about">Abouts Us</a></li>
+                  <li class="selected"><a id="home-link" href="#top">Home</a></li>
+                  <li><a id="work-link" href="#work">Our Work</a></li>
+                  <li><a id="contact-link" href="#contact">Contact</a></li>
+                  <li><a id="about-link" href="/about">Abouts Us</a></li>
 
                   <!-- <li><a href="https://github.com/BedlamBros"><img src="../assets/img/ic_github.png" /></a></li> -->
                 </ul>
@@ -63,12 +63,14 @@
 
         <div class="cover-container section" id="home">
           <div class="row">
+            <div class="up-arrow">
+            </div>
             <h1 class="cover-heading brand">GreenLight Studios</h1>
             <p class="lead">We are a full-stack web and app development team focused on making mobile devices usable, useful, and fun.</p>
             <p class="lead">
               <!-- <a href="https://github.com/BedlamBros" class="btn btn-lg btn-default">Look at our work</a> -->
             </p>
-            <div class="arrow">
+            <div class="down-arrow">
             </div>
           </div>
 
@@ -86,17 +88,35 @@
           </div>
         </div>
 
-          <div id="work" class="section">
+          <div id="work" class="cover-container section">
             <div class="container">
-
+              <div class="row">
+                <div class="col-sm-4">
+                  <p>The Docket is an app we have been working on.</p>
+                </div>
+                <div class="col-sm-8">
+                <em>Screencap here</em>
+                </div>
+              </div>
             </div> 
           </div>
 
           <div id="contact" class="section">
-
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-4">
+                  <p>You can email us <a href="mailto://bedlambros.llc@gmail.com">here</a></p>
+                </div>
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-4">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mattis nunc vitae rutrum molestie. Nulla sem enim, dapibus vel luctus at, fermentum id nisl. Sed nulla orci, sollicitudin vel leo quis, condimentum ullamcorper mauris. Praesent laoreet gravida arcu, at fringilla urna pellentesque ac. Aliquam</p>
+                </div>
+              </div>
+            </div> 
           </div>
 
-          <!-- Remove links to legal docs
+          <!-- commented out links to legal docs
           <div class="mastfoot">
             <div class="inner">
               <p>Read our terms and conditions:<a href="../assets/legal/terms.txt.">Terms</a>, <a href="../assets/legal/privacy_policy.txt">Privacy Policy</a>, <a href="../assets/legal/eula.txt">End-User Licensing Agreement</a>.</p>
